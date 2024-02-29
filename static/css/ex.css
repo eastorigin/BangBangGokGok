@@ -1,1 +1,8 @@
 /* 여기에는 css 파일들 모아두기! 폴더 만들어서 */
+#btn_signin {
+    background-color: #ff6f0f;
+    color: white;
+}
+#btn_signup {
+    border: 1px solid #ff6f0f;
+}
