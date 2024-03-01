@@ -98,8 +98,7 @@ exports.postAccessToken = async (req, res) => {
         console.log("POST /accesstoken", error);
         res.status(500).send("server error");
     }
-
-
+};
 
 // 유효성 검증
 const { validationResult } = require("express-validator");
@@ -126,3 +125,4 @@ exports.postSignup = (req, res) => {
         console.log("회원가입 완료 result 확인", result);
         res.end();
     });
+};
