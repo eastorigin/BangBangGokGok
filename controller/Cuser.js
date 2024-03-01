@@ -1,5 +1,4 @@
 const User = require("../models").User;
-const models = require("../models/index");
 const jwt = require("jsonwebtoken");
 
 exports.getSignin = (req, res) => {
@@ -109,18 +108,18 @@ exports.getSignup = (req, res) => {
 };
 
 // 회원가입
-exports.postSignup = (req, res) => {
+exports.postSignup = async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
+        return res.send({ errors: errors.array() });
     }
-    models.User.create({
+    await User.create({
         u_seq: null,
-        u_id: req.body.userId,
-        u_pw: req.body.userPw,
-        u_nick: req.body.userNick,
-        u_name: req.body.userName,
-        u_email: req.body.userEmail,
+        id: req.body.userId,
+        pw: req.body.userPw,
+        email: req.body.email,
+        name: req.body.name,
+        nickname: req.body.nickname,
     }).then((result) => {
         console.log("회원가입 완료 result 확인", result);
         res.end();

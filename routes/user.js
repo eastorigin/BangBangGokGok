@@ -14,7 +14,6 @@ router.post("/signin", controller.postSignin);
 // POST /users/accesstoken
 router.post("/accesstoken", controller.postAccessToken);
 
-
 // 회원가입 요청
 router.get("/signup", controller.getSignup);
 
@@ -28,7 +27,7 @@ router.post(
             .withMessage("아이디를 입력해주세요.")
             .bail()
             .isLength({ min: 7 })
-            .withMessage("7글자 이상 입력해주세요.")
+            .withMessage("아이디를 7글자 이상 입력해주세요.")
             .bail(),
         body("userPw")
             .trim()
@@ -36,25 +35,25 @@ router.post(
             .withMessage("비밀번호를 입력해주세요.")
             .bail()
             .isLength({ min: 7 })
-            .withMessage("7글자 이상 입력해주세요.")
+            .withMessage("비밀번호를 7글자 이상 입력해주세요.")
             .bail(),
-        body("userNick")
+        body("nickname")
             .trim()
             .exists()
             .withMessage("닉네임을 입력해주세요.")
             .bail()
             .isLength({ min: 3 })
-            .withMessage("3글자 이상 입력해주세요.")
+            .withMessage("닉네임을 3글자 이상 입력해주세요.")
             .bail(),
-        body("userName")
+        body("name")
             .trim()
             .exists()
             .withMessage("이름을 입력해주세요.")
             .bail()
             .isLength({ min: 2 })
-            .withMessage("2글자 이상 입력해주세요.")
+            .withMessage("이름을 2글자 이상 입력해주세요.")
             .bail(),
-        body("userEmail")
+        body("email")
             .trim()
             .exists()
             .withMessage("이메일을 입력해주세요.")
