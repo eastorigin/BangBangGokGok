@@ -58,4 +58,9 @@ router.post(
     controller.postSignup
 );
 
+router.get("/signin", controller.getSignin);
+
+router.post("/signin", controller.postSignin);
+
+
 module.exports = router;

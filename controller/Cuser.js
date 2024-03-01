@@ -1,4 +1,5 @@
 // 유저 관련 컨트롤러
+
 const models = require("../models/index");
 
 // 유효성 검증
@@ -25,5 +26,18 @@ exports.postSignup = (req, res) => {
     }).then((result) => {
         console.log("회원가입 완료 result 확인", result);
         res.end();
+
+exports.getSignin = (req, res) => {
+    res.render("user/signin");
+};
+
+exports.postSignin = (req, res) => {
+    User.postSignin(req.body, (result) => {
+        if (result.length > 0) {
+            res.send(true);
+        } else {
+            res.send(false);
+        }
+
     });
 };
