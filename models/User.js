@@ -1,5 +1,5 @@
 // 유저 관련 모델
-const User = function (Sequelize, DataTypes) {
+const User = (Sequelize, DataTypes) => {
     return Sequelize.define(
         "User",
         {
@@ -9,29 +9,28 @@ const User = function (Sequelize, DataTypes) {
                 primaryKey: true,
                 autoIncrement: true,
             },
-            u_id: {
+            id: {
                 type: DataTypes.STRING(30),
                 allowNull: false,
             },
-            u_pw: {
+            pw: {
                 type: DataTypes.STRING(30),
                 allowNull: false,
             },
-            u_nick: {
-                type: DataTypes.STRING(36),
-                allowNull: false,
-            },
-            u_name: {
-                type: DataTypes.STRING(36),
-                allowNull: false,
-            },
-            u_email: {
+            email: {
                 type: DataTypes.STRING(50),
                 allowNull: false,
             },
+            name: {
+                type: DataTypes.STRING(36),
+                allowNull: false,
+            },
+            nickname: {
+                type: DataTypes.STRING(36),
+            },
         },
         {
-            table: "user",
+            tableName: "user",
             freezeTableName: true,
             timestamps: false,
         }

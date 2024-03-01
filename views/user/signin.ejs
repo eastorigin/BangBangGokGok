@@ -1,58 +1,43 @@
 <!-- 로그인 ejs -->
 <!DOCTYPE html>
-<html lang="ko">
+
+<html lang="en">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>로그인</title>
         <link rel="stylesheet" href="../../static/css/ex.css" />
+        <%-include('../include/head')%>
     </head>
     <body>
         <img src="" alt="로고" />
-        <form name="formInfo">
-            <input type="hidden" name="userId" />
-        </form>
-
-        <form name="logInForm">
-            <input type="text" id="userId" name="userId" placeholder="아이디 입력" required />
-            <br />
-            <input type="password" id="userPw" name="userPw" placeholder="비밀번호 입력" required />
-            <br />
-            <button type="submit" onclick="signin()" id="btn_signin">로그인</button>
-            <br /><br />
-            <button type="submit" onclick="location.href='signup.ejs'" id="btn_signup">
-                회원가입
-            </button>
+        <!-- 임시 로그인폼 -->
+        <form name="login-form">
+            <input type="text" id="id" placeholder="아이디" />
+            <input type="password" id="pw" placeholder="비밀번호" />
+            <button type="button" onclick="login()" id="btn_signin">로그인</button>
+            <button type="button" onclick="location.href='signup.ejs'" id="btn_signup">회원가입</button>
         </form>
         <script>
-            function signin() {
-                const form = document.forms["logInForm"];
-                const formInfo = document.forms["formInfo"];
-
-                if (!form.checkValidity()) {
-                    form.reportValidity();
-                    return;
-                }
-
-                axios({
+            async function login() {
+                const form = document.forms["login-form"];
+                const response = await axios({
                     method: "POST",
                     url: "/users/signin",
                     data: {
-                        userId: form.userId.value,
-                        userPw: form.userPw.value,
+                        id: form.id.value,
+                        pw: form.pw.value,
                     },
-                }).then((res) => {
-                    console.log(res);
-                    const { data } = res;
-
-                    if (data) {
-                        formInfo.userId.value = form.userId.value;
-                        formInfo.submit();
-                    } else {
-                        form.reset();
-                    }
                 });
-            }
+                const { result, accessToken, refreshToken, message } = response.data;
+                if (result) {
+                    localStorage.setItem("accessToken", accessToken);
+                    localStorage.setItem("refreshToken", refreshToken);
+                    document.location.href = "/";
+                } else {
+                    alert(message);
+                    document.location.reload();
+                }
         </script>
     </body>
 </html>

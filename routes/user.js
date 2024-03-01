@@ -1,11 +1,19 @@
 // 유저 관련 라우터
 const express = require("express");
-const router = express.Router();
-
 const controller = require("../controller/Cuser");
-
+const router = express.Router();
 // 유효성 검증
 const { body } = require("express-validator");
+
+// GET /users/signin
+router.get("/signin", controller.getSignin);
+
+// POST /users/signin
+router.post("/signin", controller.postSignin);
+
+// POST /users/accesstoken
+router.post("/accesstoken", controller.postAccessToken);
+
 
 // 회원가입 요청
 router.get("/signup", controller.getSignup);
@@ -57,10 +65,5 @@ router.post(
     ],
     controller.postSignup
 );
-
-router.get("/signin", controller.getSignin);
-
-router.post("/signin", controller.postSignin);
-
 
 module.exports = router;

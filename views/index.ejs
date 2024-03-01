@@ -7,9 +7,45 @@
         <%-include('./include/head')%>
     </head>
     <body>
-        <%-include('./include/header')%>
-        <h1>Landing Page</h1>
-        <p>Welcome to Yelpcamp</p>
-        <a href="/campgrounds"> Back to campgrounds page </a>
+        <div id="info"></div>
     </body>
+    <script>
+        (async () => {
+            const info = document.getElementById("info");
+            const accessToken = localStorage.getItem("accessToken");
+            const refreshToken = localStorage.getItem("refreshToken");
+
+            console.log("인덱스: ", info);
+            console.log("인덱스: ", accessToken);
+            console.log("인덱스: ", refreshToken);
+
+            let data = "";
+            if (!accessToken) {
+                data = '<a href="/users/signin">로그인</a>';
+            } else {
+                const response = await axios({
+                    method: "POST",
+                    url: "/users/accesstoken",
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                });
+                console.log("index.ejs응답값: ", response);
+                if (response.data.result) {
+                    data = `
+                    <p>${response.data.name}님 환영합니다.</p>
+                    <button type="button" onclick="signout()">로그아웃</button>
+                    `;
+                }
+            }
+            info.innerHTML = data; // 로그인 버튼 나오도록 하기
+        })();
+        function signout() {
+            // 로컬 스토리지에서 jwt 정보 삭제
+            localStorage.clear();
+
+            // 새로고침으로 뷰 화면 변경
+            document.location.reload();
+        }
+    </script>
 </html>
