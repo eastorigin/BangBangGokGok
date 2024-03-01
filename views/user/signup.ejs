@@ -8,17 +8,24 @@
         <link rel="stylesheet" href="../../static/css/ex.css" />
     </head>
     <body>
+        <img src="../../static/css/image/signup image.png" alt="signup img" id="img_signup" />
         <form name="signupForm">
             <fieldset>
                 <h1>Signup</h1>
                 <p>There is no change upon registration!</p>
-                <label for="email">이메일</label>
+                <div class="info">
+                    <label for="email">이메일</label>
+                    <br />
+                    <input type="email" id="email" name="email" required />
+                    <button>중복 확인</button>
+                </div>
                 <br />
-                <input type="email" id="email" name="email" required />
-                <br />
-                <label for="id">아이디</label>
-                <br />
-                <input type="text" id="userId" name="userId" required />
+                <div class="info">
+                    <label for="id">아이디</label>
+                    <br />
+                    <input type="text" id="userId" name="userId" required />
+                    <button>중복 확인</button>
+                </div>
                 <br />
                 <label for="userPw">비밀번호</label>
                 <br />
@@ -26,8 +33,11 @@
                 <br />
                 <label for="name">이름</label>
                 <input type="text" id="name" name="name" required />
-                <label for="nickname">닉네임</label>
-                <input type="text" id="nickname" name="nickname" required />
+                <div class="info">
+                    <label for="nickname">닉네임</label>
+                    <input type="text" id="nickname" name="nickname" required />
+                    <button>중복 확인</button>
+                </div>
                 <br />
                 <button type="button" onclick="signup()" id="btn_signupNow">Signup now</button>
             </fieldset>
