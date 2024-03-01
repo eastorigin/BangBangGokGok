@@ -1,0 +1,15 @@
+#img_signup {
+    width: 608px;
+    height: 714px;
+    float: left;
+    margin-right: 100px;
+}
+
+p {
+    color: #748aa1;
+}
+
+#btn_signupNow {
+    background-color: #ff6f0f;
+    color: white;
+}
