@@ -14,6 +14,9 @@ app.use(express.json());
 const indexRouter = require("./routes/index");
 app.use("/", indexRouter);
 
+const userRouter = require("./routes/user");
+app.use("/users", userRouter);
+
 app.get("*", (req, res) => {
     res.render("404");
 });
