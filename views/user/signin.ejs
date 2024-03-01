@@ -1,1 +1,40 @@
 <!-- 로그인 ejs -->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <%-include('../include/head')%>
+    </head>
+    <body>
+        <!-- 임시 로그인폼 -->
+        <form name="login-form">
+            <input type="text" id="id" placeholder="아이디" />
+            <input type="password" id="pw" placeholder="비밀번호" />
+            <button type="button" onclick="login()">로그인</button>
+        </form>
+        <script>
+            async function login() {
+                const form = document.forms["login-form"];
+                const response = await axios({
+                    method: "POST",
+                    url: "/users/signin",
+                    data: {
+                        id: form.id.value,
+                        pw: form.pw.value,
+                    },
+                });
+                const { result, accessToken, refreshToken, message } = response.data;
+                if (result) {
+                    localStorage.setItem("accessToken", accessToken);
+                    localStorage.setItem("refreshToken", refreshToken);
+                    document.location.href = "/";
+                } else {
+                    alert(message);
+                    document.location.reload();
+                }
+            }
+        </script>
+    </body>
+</html>

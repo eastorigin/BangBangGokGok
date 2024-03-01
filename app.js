@@ -14,14 +14,17 @@ app.use(express.json());
 const indexRouter = require("./routes/index");
 app.use("/", indexRouter);
 
+const userRouter = require("./routes/user");
+app.use("/users", userRouter);
+
 app.get("*", (req, res) => {
-  res.render("404");
+    res.render("404");
 });
 
 db.sequelize.sync({ force: false }).then((result) => {
-  console.log("DB연결 성공");
+    console.log("DB연결 성공");
 });
 
 app.listen(PORT, () => {
-  console.log(`http://localhost:${PORT}`);
+    console.log(`http://localhost:${PORT}`);
 });
