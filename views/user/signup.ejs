@@ -22,7 +22,7 @@
                 </div>
                 <br />
                 <div class="info">
-                    <label for="id">아이디</label>
+                    <label for="userId">아이디</label>
                     <br />
                     <input type="text" id="userId" name="userId" required />
                     <button>중복 확인</button>
@@ -62,8 +62,15 @@
                         nickname: form.nickname.value,
                     },
                 }).then((res) => {
-                    alert("회원가입 완료");
-                    document.location.href = "/";
+                    if (res.data.errors) {
+                        for (i = 0; i < res.data.errors.length; i++) {
+                            console.log(res.data.errors[i].msg);
+                            alert(res.data.errors[i].msg);
+                        }
+                    } else {
+                        alert("회원가입 완료");
+                        document.location.href = "/";
+                    }
                 });
             }
         </script>
