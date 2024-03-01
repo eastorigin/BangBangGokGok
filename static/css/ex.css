@@ -6,3 +6,7 @@
 #btn_signup {
     border: 1px solid #ff6f0f;
 }
+#btn_signupNow {
+    background-color: #ff6f0f;
+    color: white;
+}
