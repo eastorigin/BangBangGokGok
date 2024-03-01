@@ -1,18 +1,22 @@
 <!-- 로그인 ejs -->
 <!DOCTYPE html>
+
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
+        <title>로그인</title>
+        <link rel="stylesheet" href="../../static/css/ex.css" />
         <%-include('../include/head')%>
     </head>
     <body>
+        <img src="" alt="로고" />
         <!-- 임시 로그인폼 -->
         <form name="login-form">
             <input type="text" id="id" placeholder="아이디" />
             <input type="password" id="pw" placeholder="비밀번호" />
-            <button type="button" onclick="login()">로그인</button>
+            <button type="button" onclick="login()" id="btn_signin">로그인</button>
+            <button type="button" onclick="location.href='signup.ejs'" id="btn_signup">회원가입</button>
         </form>
         <script>
             async function login() {
@@ -34,7 +38,6 @@
                     alert(message);
                     document.location.reload();
                 }
-            }
         </script>
     </body>
 </html>

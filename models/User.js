@@ -27,7 +27,6 @@ const User = (Sequelize, DataTypes) => {
             },
             nickname: {
                 type: DataTypes.STRING(36),
-                allowNull: false,
             },
         },
         {
