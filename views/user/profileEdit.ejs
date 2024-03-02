@@ -18,11 +18,15 @@
                 <%-include('../include/head')%>
             </head>
             <body>
-                <div class="img_signup">
-                    <img src="/static/css/image/signup_img.png" alt="signup_img" id="img_signup" />
+                <div class="img_profileEdit">
+                    <img
+                        src="/static/css/image/profileEdit_img.png"
+                        alt="profileEdit_img"
+                        id="img_profileEdit"
+                    />
                 </div>
-                <div class="signUpWallPaper">
-                    <form name="signupForm" id="signupForm">
+                <div class="profileEditWallPaper">
+                    <form name="profileEditForm" id="profileEditForm">
                         <h1>회원정보 수정</h1>
                         <p>There is no charge upon registration!</p>
                         <div class="container">
@@ -61,7 +65,7 @@
                             />
                             <button class="btn_check">중복 확인</button>
                             <br /><br />
-                            <button type="button" onclick="profileEdit()" id="btn_signupNow">
+                            <button type="button" onclick="profileEdit()" id="btn_profileEdit">
                                 수정하기
                             </button>
                         </div>
