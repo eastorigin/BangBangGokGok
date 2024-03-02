@@ -9,42 +9,39 @@
         <%-include('../include/head')%>
     </head>
     <body>
-        <img src="/static/css/image/signup_img.png" alt="signup_img" id="img_signup" />
+        <div class="img_signup">
+            <img src="/static/css/image/signup_img.png" alt="signup_img" id="img_signup" />
+        </div>
         <div class="signUpWallPaper">
             <form name="signupForm" id="signupForm">
-                <fieldset>
-                    <h1>Signup</h1>
-                    <p>There is no charge upon registration!</p>
-                    <div class="info">
-                        <label for="email"><span>이메일</span></label>
-                        <br />
-                        <input type="email" id="email" name="email" class="big" required />
-                        <button class="btn_check">중복 확인</button>
-                    </div>
+                <h1>Signup</h1>
+                <p>There is no charge upon registration!</p>
+                <div class="container">
+                    <label for="email"><span> 이메일</span></label>
                     <br />
-                    <div class="info">
-                        <label for="userId"><span>아이디</span></label>
-                        <br />
-                        <input type="text" id="userId" name="userId" class="big" required />
-                        <button class="btn_check">중복 확인</button>
-                    </div>
+                    <input type="email" id="email" name="email" class="input" required />
+                    <button class="btn_check">중복 확인</button>
                     <br />
-                    <label for="userPw"><span>비밀번호</span></label>
+                    <label for="userId"><span> 아이디</span></label>
                     <br />
-                    <input type="password" id="userPw" name="userPw" class="big" required />
+                    <input type="text" id="userId" name="userId" class="input" required />
+                    <button class="btn_check">중복 확인</button>
+                    <br />
+                    <label for="userPw"><span> 비밀번호</span></label>
+                    <br />
+                    <input type="password" id="userPw" name="userPw" class="input" required />
                     <br /><br />
-                    <label for="name"><span>이름</span></label>
+                    <label for="name"><span> 이름</span></label>
                     <br />
-                    <input type="text" id="name" name="name" required />
-                    <div class="info">
-                        <label for="nickname"><span>닉네임</span></label>
-                        <br />
-                        <input type="text" id="nickname" name="nickname" required />
-                        <button class="btn_check">중복 확인</button>
-                    </div>
+                    <input type="text" id="name" name="name" class="input" required />
+                    <br /><br />
+                    <label for="nickname"><span> 닉네임</span></label>
                     <br />
+                    <input type="text" id="nickname" name="nickname" class="input" required />
+                    <button class="btn_check">중복 확인</button>
+                    <br /><br />
                     <button type="button" onclick="signup()" id="btn_signupNow">Signup now</button>
-                </fieldset>
+                </div>
             </form>
         </div>
         <script>
