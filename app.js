@@ -17,6 +17,9 @@ app.use("/", indexRouter);
 const userRouter = require("./routes/user");
 app.use("/users", userRouter);
 
+const chatRouter = require("./routes/chat");
+app.use("/chats", chatRouter);
+
 app.get("*", (req, res) => {
     res.render("404");
 });
