@@ -1,25 +1,48 @@
 <!-- 로그인 ejs -->
 <!DOCTYPE html>
-
-<html lang="en">
+<html lang="ko">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>로그인</title>
-        <link rel="stylesheet" href="../../static/css/ex.css" />
+        <link rel="stylesheet" href="/static/css/signin.css" />
         <%-include('../include/head')%>
     </head>
     <body>
-        <img src="" alt="로고" />
         <!-- 임시 로그인폼 -->
-        <form name="login-form">
+        <!-- <form name="login-form">
             <input type="text" id="id" placeholder="아이디" />
             <input type="password" id="pw" placeholder="비밀번호" />
             <button type="button" onclick="login()" id="btn_signin">로그인</button>
             <button type="button" onclick="location.href='/users/signup'" id="btn_signup">
                 회원가입
             </button>
+        </form> -->
+        <div class="logo">
+            <img src="" alt="로고" />
+        </div>
+        <br /><br />
         </form>
+        <div class="loginWrapper">
+            <form name="login-form">
+                <input type="text" id="id" name="id" placeholder=" 아이디 입력" required />
+                <br /><br />
+                <input
+                    type="password"
+                    id="pw"
+                    name="pw"
+                    placeholder=" 비밀번호 입력"
+                    required
+                />
+                <br /><br />
+                <button type="button" onclick="login()" id="btn_signin">로그인</button>
+                <br /><br />
+                <button type="button" onclick="location.href='/users/signup'" id="btn_signup">
+                    회원 가입
+                </button>
+            </form>
+        </div>
+
         <script>
             async function login() {
                 const form = document.forms["login-form"];
