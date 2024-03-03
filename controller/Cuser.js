@@ -125,3 +125,8 @@ exports.postSignup = async (req, res) => {
         res.end();
     });
 };
+
+// 회원정보 수정
+exports.getProfileEdit = (req, res) => {
+    res.render("user/profileEdit");
+};
