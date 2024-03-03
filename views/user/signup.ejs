@@ -20,7 +20,7 @@
                     <label for="email"><span> 이메일</span></label>
                     <br />
                     <input type="email" id="email" name="email" class="input" required />
-                    <button class="btn_check">중복 확인</button>
+                    <button class="btn_check" onclick="checkId()">중복 확인</button>
                     <br />
                     <label for="userId"><span> 아이디</span></label>
                     <br />
@@ -30,11 +30,21 @@
                     <label for="userPw"><span> 비밀번호</span></label>
                     <br />
                     <input type="password" id="userPw" name="userPw" class="input" required />
-                    <br /><br />
+                    <br />
+                    <label for="userPwConfirm"><span>비밀번호 확인</span></label>
+                    <br />
+                    <input
+                        type="password"
+                        id="userPwConfirm"
+                        name="userPwConfirm"
+                        class="input"
+                        required
+                    />
+                    <br />
                     <label for="name"><span> 이름</span></label>
                     <br />
                     <input type="text" id="name" name="name" class="input" required />
-                    <br /><br />
+                    <br />
                     <label for="nickname"><span> 닉네임</span></label>
                     <br />
                     <input type="text" id="nickname" name="nickname" class="input" required />
@@ -50,6 +60,13 @@
                 if (!form.checkValidity()) {
                     form.reportValidity();
                     return;
+                }
+
+                if (p1 === p2) {
+                    return true;
+                } else {
+                    alert("비밀번호가 일치하지 않습니다");
+                    return false;
                 }
 
                 axios({
@@ -73,6 +90,15 @@
                         document.location.href = "/";
                     }
                 });
+            }
+
+            function checkId() {
+                const userId = document.getElementById("userId").value;
+                if (userId) {
+                    alert("사용 가능한 아이디입니다.");
+                } else {
+                    alert("사용 불가능한 아이디입니다.");
+                }
             }
         </script>
     </body>

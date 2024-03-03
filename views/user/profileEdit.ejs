@@ -19,7 +19,7 @@
         <div class="profileEditWallPaper">
             <form name="profileEditForm" id="profileEditForm">
                 <h1>회원정보 수정</h1>
-                <p>There is no charge upon registration!</p>
+                <p>비밀번호, 닉네임만 수정 가능</p>
                 <!-- <form name="form_profile">
                     <label for="userid">ID</label>
                     <input type="hidden" id="userId" value="" />               -->
@@ -35,11 +35,21 @@
                     <label for="userPw"><span> 비밀번호</span></label>
                     <br />
                     <input type="password" id="userPw" name="userPw" class="input" required />
-                    <br /><br />
+                    <br />
+                    <label for="userPwConfirm"><span>비밀번호 확인</span></label>
+                    <br />
+                    <input
+                        type="password"
+                        id="userPwConfirm"
+                        name="userPwConfirm"
+                        class="input"
+                        required
+                    />
+                    <br />
                     <label for="name"><span> 이름</span></label>
                     <br />
                     <input type="text" id="name" name="name" class="input" value="" readonly />
-                    <br /><br />
+                    <br />
                     <label for="nickname"><span> 닉네임</span></label>
                     <br />
                     <input type="text" id="nickname" name="nickname" class="input" required />
@@ -52,25 +62,35 @@
             </form>
         </div>
     </body>
-    <!-- <script>
+    <script>
         function profileEdit() {
             const form = document.forms["profileEditForm"];
-            if (!form.checkValidity()) {
-                return form.reportValidity();
+            const p1 = document.getElementById("userPw").value;
+            const p2 = document.getElementById("userPwConfirm").value;
+
+            if (p1 === p2) {
+                return true;
+            } else {
+                alert("비밀번호가 일치하지 않습니다");
+                return false;
             }
-            axios({
-                method: "POST",
-                url: "/users/profile/edit",
-                data: {
-                    email: form.email.value,
-                    userId: form.userId.value,
-                    userPw: form.userPw.value,
-                    name: form.name.value,
-                    nickname: form.nickname.value,
-                },
-            }).then((res) => {
-                alert("회원정보 수정 완료");
-            });
+
+            // if (!form.checkValidity()) {
+            //     return form.reportValidity();
+            // }
+            // axios({
+            //     method: "POST",
+            //     url: "/users/profile/edit",
+            //     data: {
+            //         email: form.email.value,
+            //         userId: form.userId.value,
+            //         userPw: form.userPw.value,
+            //         name: form.name.value,
+            //         nickname: form.nickname.value,
+            //     },
+            // }).then((res) => {
+            //     alert("회원정보 수정 완료");
+            // });
         }
-    </script> -->
+    </script>
 </html>
