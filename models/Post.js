@@ -20,10 +20,11 @@ const Post = (Sequelize, DataTypes) => {
             date: {
                 type: DataTypes.DATE,
                 allowNull: false,
+                defaultValue: Sequelize.fn("NOW"),
             },
             file: {
                 type: DataTypes.STRING(255),
-                allowNull: false,
+                allowNull: true,
             },
             category: {
                 type: DataTypes.STRING(20),
