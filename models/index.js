@@ -8,6 +8,7 @@ const sequelize = new Sequelize(config.database, config.username, config.passwor
 
 const UserModel = require("./User")(sequelize, Sequelize);
 const ChatModel = require("./Chat")(sequelize, Sequelize);
+const PostModel = require("./Post")(sequelize, Sequelize);
 
 // User:Chat = 1:N
 UserModel.hasMany(ChatModel, {
@@ -19,9 +20,20 @@ ChatModel.belongsTo(UserModel, {
     foreignKey: "u_seq",
 });
 
+// User:Post = 1:N
+UserModel.hasMany(PostModel, {
+    sourceKey: "u_seq",
+    foreignKey: "u_seq",
+});
+PostModel.belongsTo(UserModel, {
+    target: "u_seq",
+    foreignKey: "u_seq",
+});
+
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 db.User = UserModel;
 db.Chat = ChatModel;
+db.Post = PostModel;
 
 module.exports = db;
