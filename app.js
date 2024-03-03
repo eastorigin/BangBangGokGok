@@ -20,6 +20,9 @@ app.use("/users", userRouter);
 const chatRouter = require("./routes/chat");
 app.use("/chats", chatRouter);
 
+const postRouter = require("./routes/post");
+app.use("/posts", postRouter);
+
 app.get("*", (req, res) => {
     res.render("404");
 });
