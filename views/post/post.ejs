@@ -5,6 +5,7 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>글 상세 페이지</title>
+        <%-include('../include/head')%>
     </head>
     <body>
         <img src="" alt="main_img" />
@@ -16,5 +17,32 @@
         </div>
         <button></button>
         <button>채팅하기</button>
+        <!-- 임시 글 작성 폼 -->
+        <form name="post-form">
+            <input type="text" id="title" />
+            <input type="text" id="content" />
+            <input type="file" id="file" />
+            <input type="text" id="category" />
+            <button type="button" onclick="post()">작성하기</button>
+        </form>
+        <script>
+            async function post() {
+                const form = document.forms["post-form"];
+                const accessToken = localStorage.getItem("accessToken");
+                const response = await axios({
+                    method: "POST",
+                    url: "/posts",
+                    data: {
+                        title: form.title.value,
+                        content: form.content.value,
+                        file: form.file.value,
+                        category: form.category.value,
+                    },
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`, // 토큰을 Authorization 헤더에 포함
+                    },
+                });
+            }
+        </script>
     </body>
 </html>
