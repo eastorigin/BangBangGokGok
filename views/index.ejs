@@ -14,11 +14,6 @@
         (async () => {
             const info = document.getElementById("info");
             const accessToken = localStorage.getItem("accessToken");
-            const refreshToken = localStorage.getItem("refreshToken");
-
-            console.log("인덱스: ", info);
-            console.log("인덱스: ", accessToken);
-            console.log("인덱스: ", refreshToken);
 
             let data = "";
             if (!accessToken) {
@@ -31,16 +26,25 @@
                         Authorization: `Bearer ${accessToken}`,
                     },
                 });
-                console.log("index.ejs응답값: ", response);
                 if (response.data.result) {
+                    // 사용자 이름을 포함한 데이터 생성
                     data = `
-                    <p>${response.data.name}님 환영합니다.</p>
-                    <button type="button" onclick="signout()">로그아웃</button>
-                    `;
+        <p>${response.data.name}님 환영합니다.</p>
+        <button type="button" onclick="signout()">로그아웃</button>
+    `;
+                    // 로그인 버튼을 로그아웃 버튼으로 변경
+                    const loginButton = document.getElementById("btn-login");
+                    loginButton.innerHTML = "logout";
+                    loginButton.removeAttribute("href"); // 로그인 링크 제거
+                    loginButton.onclick = signout; // onclick 이벤트에 signout 함수 할당
+
+                    const userButton = document.getElementById("btn-user");
+                    userButton.innerHTML = `${response.data.name}님`;
                 }
             }
-            info.innerHTML = data; // 로그인 버튼 나오도록 하기
+            // info.innerHTML = data; // 로그인 버튼 나오도록 하기
         })();
+
         function signout() {
             // 로컬 스토리지에서 jwt 정보 삭제
             localStorage.clear();
