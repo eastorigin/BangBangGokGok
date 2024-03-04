@@ -109,6 +109,7 @@ exports.getSignup = (req, res) => {
 
 // 회원가입
 exports.postSignup = async (req, res) => {
+    console.log("===========");
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.send({ errors: errors.array() });
