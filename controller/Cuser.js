@@ -107,13 +107,35 @@ exports.getSignup = (req, res) => {
     res.render("user/signup");
 };
 
+// 회원가입 중복 체크
+exports.checkDuplicate = async (req, res) => {
+    try {
+        const { field, value } = req.body;
+
+        console.log("회원가입 중복 체크", field, value);
+
+        // 해당 옵션(아이디, 이메일, 닉네임)의 값과 동일한 값을 가지는 유저가 있는지 확인
+        const userInfoInstance = await User.findOne({
+            where: { [field]: value },
+        });
+
+        if (userInfoInstance) {
+            // 있을 경우
+            return res.send(false);
+        }
+        return res.send(true); // 없을 경우
+    } catch (err) {
+        res.status(500).send("server error");
+    }
+};
+
 // 회원가입
 exports.postSignup = async (req, res) => {
-    console.log("===========");
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.send({ errors: errors.array() });
     }
+
     await User.create({
         u_seq: null,
         id: req.body.userId,

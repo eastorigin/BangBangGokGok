@@ -17,6 +17,9 @@ router.post("/accesstoken", controller.postAccessToken);
 // 회원가입 요청
 router.get("/signup", controller.getSignup);
 
+// 회원가입 중복 확인
+router.post("/check-duplicate", controller.checkDuplicate);
+
 // 회원가입 처리
 router.post(
     "/signup",
