@@ -33,4 +33,5 @@ db.sequelize.sync({ force: false }).then((result) => {
 
 app.listen(PORT, () => {
     console.log(`http://localhost:${PORT}`);
+    console.log(`http://49.50.164.79:${PORT}`);
 });
