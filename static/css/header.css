@@ -36,6 +36,16 @@ body {
     text-align: center;
     text-decoration: none;
 }
+#btn-user {
+    background-color: #ffffff;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    width: 120px;
+    padding: 10px 10px;
+    text-align: center;
+    text-decoration: none;
+}
 
 #btn-login {
     background-color: #ff6f0f;
