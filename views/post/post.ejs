@@ -4,26 +4,48 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>글 상세 페이지</title>
+        <title>글 작성</title>
         <%-include('../include/head')%>
+        <link rel="stylesheet" href="/static/css/post.css" />
     </head>
     <body>
-        <img src="" alt="main_img" />
-        <div class="title">
-            <h2></h2>
-        </div>
-        <div class="content">
-            <p></p>
-        </div>
-        <button></button>
-        <button>채팅하기</button>
-        <!-- 임시 글 작성 폼 -->
         <form name="post-form">
-            <input type="text" id="title" />
-            <input type="text" id="content" />
-            <input type="file" id="file" />
-            <input type="text" id="category" />
-            <button type="button" onclick="post()">작성하기</button>
+            <h2>글 작성</h2>
+            <label for="title"><span>글 제목</span></label>
+            <br />
+            <input
+                type="text"
+                id="title"
+                name="title"
+                placeholder="글 제목을 입력해주세요."
+                required
+            />
+            <br /><br />
+            <label for="category"><span>카테고리</span></label>
+            <select id="category" name="category">
+                <option value="서울">서울</option>
+                <option value="경기도">경기도</option>
+                <option value="강원도">강원도</option>
+                <option value="충청북도">충청북도</option>
+                <option value="충청남도">충청남도</option>
+                <option value="전라북도">전라북도</option>
+                <option value="전라남도">전라남도</option>
+                <option value="경상북도">경상북도</option>
+                <option value="경상남도">경상남도</option>
+                <option value="제주도">제주도</option>
+            </select>
+
+            <br />
+            <label for="content"><span>글 내용</span></label>
+            <br />
+            <textarea name="content" id="content" cols="110" rows="18"></textarea>
+            <br />
+            <div class="file" onclick="document.getElementById('file').click();">
+                <i class="bi bi-file-earmark-plus"></i>여기에 첨부파일을 첨부해주세요
+                <input type="file" id="file" name="file" />
+            </div>
+            <br />
+            <button type="button" onclick="post()" id="btn_post">완료</button>
         </form>
         <script>
             async function post() {
