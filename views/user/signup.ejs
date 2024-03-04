@@ -20,12 +20,16 @@
                     <label for="email"><span> 이메일</span></label>
                     <br />
                     <input type="email" id="email" name="email" class="input" required />
-                    <button class="btn_check" onclick="checkId()">중복 확인</button>
+                    <button type="button" class="btn_check" onclick="checkDuplicate('email')">
+                        중복 확인
+                    </button>
                     <br />
-                    <label for="userId"><span> 아이디</span></label>
+                    <label for="id"><span> 아이디</span></label>
                     <br />
-                    <input type="text" id="userId" name="userId" class="input" required />
-                    <button class="btn_check">중복 확인</button>
+                    <input type="text" id="id" name="id" class="input" required />
+                    <button type="button" class="btn_check" onclick="checkDuplicate('id')">
+                        중복 확인
+                    </button>
                     <br />
                     <label for="userPw"><span> 비밀번호</span></label>
                     <br />
@@ -48,7 +52,9 @@
                     <label for="nickname"><span> 닉네임</span></label>
                     <br />
                     <input type="text" id="nickname" name="nickname" class="input" required />
-                    <button class="btn_check">중복 확인</button>
+                    <button type="button" class="btn_check" onclick="checkDuplicate('nickname')">
+                        중복 확인
+                    </button>
                     <br /><br />
                     <button type="button" onclick="signup()" id="btn_signupNow">Signup now</button>
                 </div>
@@ -59,13 +65,12 @@
                 const form = document.forms["signupForm"];
                 const p1 = document.getElementById("userPw").value;
                 const p2 = document.getElementById("userPwConfirm").value;
-                console.log("==========프론트 확인1");
+                const i3 = document.getElementById("id").value;
 
                 if (!form.checkValidity()) {
                     form.reportValidity();
                     return;
                 }
-                console.log("==========프론트 확인2");
 
                 if (p1 === p2) {
                     axios({
@@ -73,7 +78,7 @@
                         url: "/users/signup",
                         data: {
                             email: form.email.value,
-                            userId: form.userId.value,
+                            userId: form.id.value,
                             userPw: form.userPw.value,
                             name: form.name.value,
                             nickname: form.nickname.value,
@@ -100,13 +105,21 @@
                 }
             }
 
-            function checkId() {
-                const userId = document.getElementById("userId").value;
-                if (userId) {
-                    alert("사용 가능한 아이디입니다.");
-                } else {
-                    alert("사용 불가능한 아이디입니다.");
-                }
+            function checkDuplicate(field) {
+                const value = document.getElementById(field).value;
+                axios
+                    .post("/users/check-duplicate", { field, value })
+                    .then((response) => {
+                        if (response.data) {
+                            alert("사용 가능합니다.");
+                        } else {
+                            alert("이미 사용 중입니다.");
+                        }
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                        alert("서버 오류가 발생했습니다.");
+                    });
             }
         </script>
     </body>
