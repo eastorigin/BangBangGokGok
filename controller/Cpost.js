@@ -1,1 +1,141 @@
 // 게시글 관련 컨트롤러
+const Post = require("../models").Post;
+const { Op } = require("sequelize");
+const jwt = require("jsonwebtoken");
+
+// GET /posts/list 게시글 목록 (전체 지역)
+exports.getPostsList = async (req, res) => {
+    try {
+        const postList = await Post.findAll({
+            order: [["p_seq", "DESC"]],
+        });
+        console.log(postList);
+        res.render("post/postList", { postList: postList });
+    } catch (error) {
+        res.status(500).send("server error");
+    }
+};
+
+// GET /posts/:category 게시글 목록 (지역별)
+exports.getPostsByCategory = async (req, res) => {
+    try {
+        const { category } = req.params;
+        const postListByCategory = await Post.findAll({
+            where: {
+                category: category,
+            },
+            order: [["p_seq", "DESC"]],
+        });
+        res.render("post/postList", { postList: postListByCategory });
+    } catch (error) {
+        res.status(500).send("server error");
+    }
+};
+
+// GET /posts/:keyword 게시글 목록 (검색 결과)
+exports.getPostsByKeyword = async (req, res) => {
+    try {
+        const { keyword } = req.params;
+        const postsByKeyword = await Post.findAll({
+            where: {
+                [Op.or]: [
+                    { title: { [Op.like]: `%${keyword}%` } },
+                    { category: { [Op.like]: `%${keyword}%` } },
+                ],
+            },
+        });
+        res.render("post/postList", { postList: postsByKeyword });
+    } catch (error) {
+        res.status(500).send("server error");
+    }
+};
+
+// GET /posts 게시글 작성 페이지
+exports.getPosts = (req, res) => {
+    res.render("post/post");
+};
+
+// POST /posts 게시글 작성
+exports.postPosts = async (req, res) => {
+    try {
+        // 클라이언트로부터 JWT 토큰을 받아옴
+        const accessToken = req.headers.authorization.split(" ")[1];
+
+        // JWT 토큰을 검증하고 토큰에 포함된 사용자 정보를 추출
+        const decodedToken = jwt.verify(accessToken, process.env.ACCESS_SECRET);
+        const u_seq = decodedToken.u_seq;
+
+        const { title, content, file, category } = req.body;
+
+        // 게시글을 작성할 때 토큰에서 추출한 u_seq 값을 사용하여 작성자 정보를 저장
+        const newPost = await Post.create({
+            title,
+            content,
+            file,
+            category,
+            u_seq, // 작성자의 u_seq 값을 저장
+        });
+
+        res.json(newPost);
+    } catch (error) {
+        res.status(500).send("server error");
+    }
+};
+
+// GET /posts/detail/:p_seq
+exports.getPostsDetail = async (req, res) => {
+    try {
+        const { p_seq } = req.params;
+        const postDetail = await Post.findOne({
+            where: {
+                p_seq,
+            },
+        });
+        console.log(postDetail);
+        res.render("post/postDetail", { postDetail: postDetail });
+    } catch (error) {
+        res.status(500).send("server error");
+    }
+};
+
+// PATCH /posts/detail/:p_seq
+exports.patchPostsDetail = async (req, res) => {
+    try {
+        const { p_seq } = req.params;
+        const { title, content, file, category } = req.body;
+        const updatedPost = await Post.update(
+            {
+                title,
+                content,
+                file,
+                category,
+            },
+            {
+                where: p_seq,
+            }
+        );
+        res.json(updatedPost);
+    } catch (error) {
+        res.status(500).send("server error");
+    }
+};
+
+// DELETE /posts/detail/:p_seq
+exports.deletePostsDetail = async (req, res) => {
+    try {
+        const { p_seq } = req.params;
+        const isDeleted = await Post.destroy({
+            where: {
+                p_seq,
+            },
+        });
+        console.log(isDeleted);
+        if (isDeleted) {
+            res.send("삭제 성공");
+        } else {
+            res.send("삭제 실패");
+        }
+    } catch (error) {
+        res.status(500).send("server error");
+    }
+};

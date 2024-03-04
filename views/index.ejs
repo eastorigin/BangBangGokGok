@@ -5,19 +5,165 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Index Page</title>
         <%-include('./include/head')%>
+        <link rel="stylesheet" href="styles/reset.min.css" />
+        <link rel="stylesheet" href="styles/style.css" />
+        <link rel="stylesheet" href="/static/css/index.css" />
+</head>
     </head>
     <body>
+        <%-include('./include/header')%>
         <div id="info"></div>
+        <div class="main">
+
+        <div class="advertiseSection">
+            <div class="adLeft">
+                <img class="adLeftImg" src="https://cdn.pixabay.com/photo/2020/08/09/11/31/business-5475283_1280.jpg" alt="메인 첫이미지">
+            </div>
+            <div class="adRight">
+                <!-- <div class="adRightLeftButton"></div>
+                <div class="adRightRightButton"></div> -->
+                <div class="rightImgContainer">
+                    <img src="https://st2.depositphotos.com/1561359/9092/v/950/depositphotos_90921658-stock-illustration-south-korea-travel-map.jpg" alt="메인 오른쪽이미지" class="adRightImg">
+                </div>
+            </div>
+        </div>
+        <div class="iconSection">
+            <a href="" class=""><img src="/static/css/image/region/region_1.png" alt="서울지역이미지"><span></span></a>
+            <a href="" class=""><img src="/static/css/image/region/region_2.png" alt="경기도지역이미지"><span></span></a>
+            <a href="" class=""><img src="/static/css/image/region/region_3.png" alt="강원도지역이미지"><span></span></a>
+            <a href="" class=""><img src="/static/css/image/region/region_4.png" alt="충청남도지역이미지"><span></span></a>
+            <a href="" class=""><img src="/static/css/image/region/region_5.png" alt="충청북도지역이미지"><span></span></a>
+            <a href="" class=""><img src="/static/css/image/region/region_6.png" alt="전라북도지역이미지"><span></span></a>
+            <a href="" class=""><img src="/static/css/image/region/region_7.png" alt="전라남도지역이미지"><span></span></a>
+            <a href="" class=""><img src="/static/css/image/region/region_8.png" alt="경상남도지역이미지"><span></span></a>
+            <a href="" class=""><img src="/static/css/image/region/region_9.png" alt="경상북도지역이미지"><span></span></a>
+            <a href="" class=""><img src="/static/css/image/region/region_10.png" alt="제주도지역이미지"><span></span></a>
+        </div>
+ 
+        <div class="findPhotoSection">
+            <div class="findPhotoSectionHeadSection">
+                <div>
+                    <div class="findPhotoSectionHead">이런 음식 찾고 있나요?</div>
+                    <div class="findPhotoSectionText">좋아하실 만한 게시물을 추천해드려요</div>
+                </div>
+                <div class="findPhotoSectionButtonSection">
+                    <button class="findPhotoSectionButton">더보기</button>
+                </div>
+            </div>
+            <div class="findPhotoSectionPhotoSection">
+                <div class="findPhotoSectionPhotoSectionUIWrap">
+                    <ul class="findPhotoSectionPhotoSectionUl">
+                        <li>
+                            <div class="findPhotoSectionPhotoSectionPhoto1">
+                                <img
+                                    src="https://cdn.pixabay.com/photo/2016/05/09/02/24/food-1380275_1280.jpg"
+                                    alt="원하는사진1"
+                                    class="photoSectionPhoto1"
+                                />
+                                <a href=""></a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="findPhotoSectionPhotoSectionPhoto2">
+                                <img
+                                    src="https://cdn.pixabay.com/photo/2016/08/20/13/06/toppokki-1607479_640.jpg"
+                                    alt="원하는사진2"
+                                    class="photoSectionPhoto2"
+                                />
+                            </div>
+                        </li>
+                        <li>
+                            <div class="findPhotoSectionPhotoSectionPhoto3">
+                                <img
+                                    src="https://cdn.pixabay.com/photo/2018/03/29/19/32/bibimbap-3273405_640.jpg"
+                                    alt="원하는사진3"
+                                    class="photoSectionPhoto3"
+                                />
+                            </div>
+                        </li>
+                        <li>
+                            <div class="findPhotoSectionPhotoSectionPhoto4">
+                                <img
+                                    src="https://cdn.pixabay.com/photo/2015/12/18/13/00/pork-1098553_640.jpg"
+                                    alt="원하는사진4"
+                                    class="photoSectionPhoto4"
+                                />
+                            </div>
+                        </li>
+                        <li>
+                            <div class="findPhotoSectionPhotoSectionPhoto5">
+                                <img
+                                    src="https://cdn.pixabay.com/photo/2015/04/06/16/34/kimchi-photos-709623_640.jpg"
+                                    alt="원하는사진5"
+                                    class="photoSectionPhoto5"
+                                />
+                            </div>
+                        </li>
+                        <li>
+                            <div class="findPhotoSectionPhotoSectionPhoto6">
+                                <img
+                                    src="https://cdn.pixabay.com/photo/2015/04/17/04/39/time-726739_640.jpg"
+                                    alt="원하는사진6"
+                                    class="photoSectionPhoto6"
+                                />
+                            </div>
+                        </li>
+                        <li>
+                            <div class="findPhotoSectionPhotoSectionPhoto7">
+                                <img
+                                    src="https://cdn.pixabay.com/photo/2018/12/10/00/27/tang-fish-cakes-3866060_640.jpg"
+                                    alt="원하는사진7"
+                                    class="photoSectionPhoto7"
+                                />
+                            </div>
+                        </li>
+                        <li>
+                            <div class="findPhotoSectionPhotoSectionPhoto8">
+                                <img
+                                    src="https://cdn.pixabay.com/photo/2018/12/10/00/27/tang-fish-cakes-3866060_640.jpg"
+                                    alt="원하는사진8"
+                                    class="photoSectionPhoto8"
+                                />
+                            </div>
+                        </li>
+                        <li>
+                            <div class="findPhotoSectionPhotoSectionPhoto9">
+                                <img
+                                    src="https://cdn.pixabay.com/photo/2018/12/10/00/27/tang-fish-cakes-3866060_640.jpg"
+                                    alt="원하는사진9"
+                                    class="photoSectionPhoto9"
+                                />
+                            </div>
+                        </li>
+                        <li>
+                            <div class="findPhotoSectionPhotoSectionPhoto10">
+                                <img
+                                    src="https://cdn.pixabay.com/photo/2018/12/10/00/27/tang-fish-cakes-3866060_640.jpg"
+                                    alt="원하는사진10"
+                                    class="photoSectionPhoto10"
+                                />
+                            </div>
+                        </li>
+                        <li>
+                            <div class="findPhotoSectionPhotoSectionPhoto11">
+                                <div class="findePhotoSectionMore">
+                                    <div></div>
+                                    <div>더보기</div>
+                                </div>
+                            </div>
+                        </li>
+                        <li></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        </div>
     </body>
     <script>
         (async () => {
             const info = document.getElementById("info");
             const accessToken = localStorage.getItem("accessToken");
-            const refreshToken = localStorage.getItem("refreshToken");
-
-            console.log("인덱스: ", info);
-            console.log("인덱스: ", accessToken);
-            console.log("인덱스: ", refreshToken);
 
             let data = "";
             if (!accessToken) {
@@ -30,16 +176,25 @@
                         Authorization: `Bearer ${accessToken}`,
                     },
                 });
-                console.log("index.ejs응답값: ", response);
                 if (response.data.result) {
+                    // 사용자 이름을 포함한 데이터 생성
                     data = `
-                    <p>${response.data.name}님 환영합니다.</p>
-                    <button type="button" onclick="signout()">로그아웃</button>
-                    `;
+        <p>${response.data.name}님 환영합니다.</p>
+        <button type="button" onclick="signout()">로그아웃</button>
+    `;
+                    // 로그인 버튼을 로그아웃 버튼으로 변경
+                    const loginButton = document.getElementById("btn-login");
+                    loginButton.innerHTML = "logout";
+                    loginButton.removeAttribute("href"); // 로그인 링크 제거
+                    loginButton.onclick = signout; // onclick 이벤트에 signout 함수 할당
+
+                    const userButton = document.getElementById("btn-user");
+                    userButton.innerHTML = `${response.data.name}님`;
                 }
             }
-            info.innerHTML = data; // 로그인 버튼 나오도록 하기
+            // info.innerHTML = data; // 로그인 버튼 나오도록 하기
         })();
+
         function signout() {
             // 로컬 스토리지에서 jwt 정보 삭제
             localStorage.clear();
@@ -47,5 +202,23 @@
             // 새로고침으로 뷰 화면 변경
             document.location.reload();
         }
-    </script>
+
+let findPhotoSectionPhotoSectionUl = document.getElementsByClassName('findPhotoSectionPhotoSectionUl');
+let findPhotoSectionPhotoSectionLeftButtonSection = document.getElementsByClassName(
+    'findPhotoSectionPhotoSectionLeftButtonSection'
+);
+
+function findPhotoSectionRightButtonClick() {
+    findPhotoSectionPhotoSectionUl.item(0).classList.add('findPhoToSectionFirstHide');
+    findPhotoSectionPhotoSectionLeftButtonSection
+        .item(0)
+        .classList.remove('findPhotoSectionPhotoSectionLeftButtonSectionHide');
+}
+function findPhotoSectionleftButtonClick() {
+    findPhotoSectionPhotoSectionLeftButtonSection
+        .item(0)
+        .classList.add('findPhotoSectionPhotoSectionLeftButtonSectionHide');
+    findPhotoSectionPhotoSectionUl.item(0).classList.remove('findPhoToSectionFirstHide');
+}
+</script>
 </html>

@@ -20,7 +20,7 @@
                     <label for="email"><span> 이메일</span></label>
                     <br />
                     <input type="email" id="email" name="email" class="input" required />
-                    <button class="btn_check">중복 확인</button>
+                    <button class="btn_check" onclick="checkId()">중복 확인</button>
                     <br />
                     <label for="userId"><span> 아이디</span></label>
                     <br />
@@ -30,11 +30,21 @@
                     <label for="userPw"><span> 비밀번호</span></label>
                     <br />
                     <input type="password" id="userPw" name="userPw" class="input" required />
-                    <br /><br />
+                    <br />
+                    <label for="userPwConfirm"><span>비밀번호 확인</span></label>
+                    <br />
+                    <input
+                        type="password"
+                        id="userPwConfirm"
+                        name="userPwConfirm"
+                        class="input"
+                        required
+                    />
+                    <br />
                     <label for="name"><span> 이름</span></label>
                     <br />
                     <input type="text" id="name" name="name" class="input" required />
-                    <br /><br />
+                    <br />
                     <label for="nickname"><span> 닉네임</span></label>
                     <br />
                     <input type="text" id="nickname" name="nickname" class="input" required />
@@ -47,32 +57,56 @@
         <script>
             function signup() {
                 const form = document.forms["signupForm"];
+                const p1 = document.getElementById("userPw").value;
+                const p2 = document.getElementById("userPwConfirm").value;
+                console.log("==========프론트 확인1");
+
                 if (!form.checkValidity()) {
                     form.reportValidity();
                     return;
                 }
+                console.log("==========프론트 확인2");
 
-                axios({
-                    method: "POST",
-                    url: "/users/signup",
-                    data: {
-                        email: form.email.value,
-                        userId: form.userId.value,
-                        userPw: form.userPw.value,
-                        name: form.name.value,
-                        nickname: form.nickname.value,
-                    },
-                }).then((res) => {
-                    if (res.data.errors) {
-                        for (i = 0; i < res.data.errors.length; i++) {
-                            console.log(res.data.errors[i].msg);
-                            alert(res.data.errors[i].msg);
-                        }
-                    } else {
-                        alert("회원가입 완료");
-                        document.location.href = "/";
-                    }
-                });
+                if (p1 === p2) {
+                    axios({
+                        method: "POST",
+                        url: "/users/signup",
+                        data: {
+                            email: form.email.value,
+                            userId: form.userId.value,
+                            userPw: form.userPw.value,
+                            name: form.name.value,
+                            nickname: form.nickname.value,
+                        },
+                    })
+                        .then((res) => {
+                            if (res.data.errors) {
+                                for (i = 0; i < res.data.errors.length; i++) {
+                                    console.log(res.data.errors[i].msg);
+                                    alert(res.data.errors[i].msg);
+                                }
+                            } else {
+                                alert("회원가입 완료");
+                                document.location.href = "/";
+                            }
+                        })
+                        .catch((error) => {
+                            console.error("회원가입 에러", error);
+                            alert("회원가입 중 오류가 발생했습니다. 나중에 다시 시도해주세요.");
+                        });
+                } else {
+                    alert("비밀번호가 일치하지 않습니다");
+                    return false;
+                }
+            }
+
+            function checkId() {
+                const userId = document.getElementById("userId").value;
+                if (userId) {
+                    alert("사용 가능한 아이디입니다.");
+                } else {
+                    alert("사용 불가능한 아이디입니다.");
+                }
             }
         </script>
     </body>

@@ -109,6 +109,7 @@ exports.getSignup = (req, res) => {
 
 // 회원가입
 exports.postSignup = async (req, res) => {
+    console.log("===========");
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.send({ errors: errors.array() });
@@ -124,4 +125,9 @@ exports.postSignup = async (req, res) => {
         console.log("회원가입 완료 result 확인", result);
         res.end();
     });
+};
+
+// 회원정보 수정
+exports.getProfileEdit = (req, res) => {
+    res.render("user/profileEdit");
 };

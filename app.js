@@ -25,6 +25,10 @@ app.use("/users", userRouter);
 const chatRouter = require("./routes/chat");
 app.use("/chats", chatRouter);
 
+const postRouter = require("./routes/post");
+app.use("/posts", postRouter);
+
+
 // 클라이언트가 서버에 socket.io를 통해 접속한다면 발생하는 이벤트
 io.on("connection", (socket) => {
     // socket: 접속한 클라이언트
@@ -48,6 +52,7 @@ io.on("connection", (socket) => {
     });
 });
 
+
 app.get("*", (req, res) => {
     res.render("404");
 });
@@ -58,4 +63,5 @@ db.sequelize.sync({ force: false }).then((result) => {
 
 server.listen(PORT, () => {
     console.log(`http://localhost:${PORT}`);
+    console.log(`http://49.50.164.79:${PORT}`);
 });

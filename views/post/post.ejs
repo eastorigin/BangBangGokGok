@@ -1,1 +1,70 @@
 <!-- 게시글 상세 ejs -->
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>글 작성</title>
+        <%-include('../include/head')%>
+        <link rel="stylesheet" href="/static/css/post.css" />
+    </head>
+    <body>
+        <form name="post-form">
+            <h2>글 작성</h2>
+            <label for="title"><span>글 제목</span></label>
+            <br />
+            <input
+                type="text"
+                id="title"
+                name="title"
+                placeholder="글 제목을 입력해주세요."
+                required
+            />
+            <br /><br />
+            <label for="category"><span>카테고리</span></label>
+            <select id="category" name="category">
+                <option value="서울">서울</option>
+                <option value="경기도">경기도</option>
+                <option value="강원도">강원도</option>
+                <option value="충청북도">충청북도</option>
+                <option value="충청남도">충청남도</option>
+                <option value="전라북도">전라북도</option>
+                <option value="전라남도">전라남도</option>
+                <option value="경상북도">경상북도</option>
+                <option value="경상남도">경상남도</option>
+                <option value="제주도">제주도</option>
+            </select>
+
+            <br />
+            <label for="content"><span>글 내용</span></label>
+            <br />
+            <textarea name="content" id="content" cols="110" rows="18"></textarea>
+            <br />
+            <div class="file" onclick="document.getElementById('file').click();">
+                <i class="bi bi-file-earmark-plus"></i>여기에 첨부파일을 첨부해주세요
+                <input type="file" id="file" name="file" />
+            </div>
+            <br />
+            <button type="button" onclick="post()" id="btn_post">완료</button>
+        </form>
+        <script>
+            async function post() {
+                const form = document.forms["post-form"];
+                const accessToken = localStorage.getItem("accessToken");
+                const response = await axios({
+                    method: "POST",
+                    url: "/posts",
+                    data: {
+                        title: form.title.value,
+                        content: form.content.value,
+                        file: form.file.value,
+                        category: form.category.value,
+                    },
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`, // 토큰을 Authorization 헤더에 포함
+                    },
+                });
+            }
+        </script>
+    </body>
+</html>

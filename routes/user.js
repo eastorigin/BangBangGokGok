@@ -64,5 +64,10 @@ router.post(
     ],
     controller.postSignup
 );
+// GET /users/profile/edit
+router.get("/profile/edit", controller.getProfileEdit);
+
+// POST /users/profile/edit
+// router.post("/profile/edit", controller.postProfileEdit);
 
 module.exports = router;
