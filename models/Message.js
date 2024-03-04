@@ -1,40 +1,40 @@
-// 채팅 관련 모델
-const Chat = (Sequelize, DataTypes) => {
+// 메세지 관련 모델
+const Message = (Sequelize, DataTypes) => {
     return Sequelize.define(
-        "Chat",
+        "Message",
         {
-            c_seq: {
+            m_seq: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
                 primaryKey: true,
                 autoIncrement: true,
             },
-            p_seq: {
+            c_seq: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
             },
             u_seq: {
-                // 채팅방 생성자
+                // 현재 접속 유저
                 type: DataTypes.INTEGER,
                 allowNull: false,
             },
-            b_seq: {
-                // 구매자(= 글 작성자)
-                type: DataTypes.INTEGER,
+            content: {
+                // 메세지 내용
+                type: DataTypes.STRING(255),
                 allowNull: false,
             },
-            c_title: {
-                // 채팅방 제목(= 상대방의 닉네임)
-                type: DataTypes.STRING(36),
+            isread: {
+                // 읽음 여부
+                type: DataTypes.TINYINT(1),
                 allowNull: false,
             },
         },
         {
-            tableName: "chat",
+            tableName: "message",
             freezeTableName: true,
             timestamps: true,
         }
     );
 };
 
-module.exports = Chat;
+module.exports = Message;
