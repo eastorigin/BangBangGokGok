@@ -96,15 +96,29 @@
             <button id="exitButton">Exit</button>
         </div>
 
+        <div id="unreadMessages"></div>
+
         <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.js"></script>
         <script>
             const socket = io();
             console.log("============접속자 u_seq", "<%= u_seq%>");
 
-            socket.emit("join", "<%= c_seq %>"); // 클라이언트가 접속하면 채팅방 번호를 서버에게 송신
+            joinUser("<%= c_seq %>", "<%= u_seq %>"); // 클라이언트가 접속하면 채팅방/유저 번호를 서버에게 송신
+
+            readMessage("<%= c_seq %>", "<%= u_seq %>");
+            // 메세지를 읽었을 때 호출되는 함수
+            function readMessage(c_seq, u_seq) {
+                socket.emit("readMessage", { c_seq, u_seq });
+            }
+
+            function joinUser(c_seq, u_seq) {
+                socket.emit("join", { c_seq, u_seq });
+            }
+
             const messageForm = document.getElementById("messageForm");
             const messageInput = document.getElementById("messageInput");
 
+            // 메세지 전송 이벤트
             messageForm.addEventListener("submit", (e) => {
                 e.preventDefault();
                 const content = messageInput.value.trim();
@@ -118,6 +132,7 @@
                     });
                     messageInput.value = "";
                 }
+                readMessage("<%= c_seq %>", "<%= u_seq %>");
             });
 
             // 메세지 수신 이벤트: 서버 -> 클라이언트
@@ -131,13 +146,11 @@
                 p.textContent = message.content;
                 messagesDiv.appendChild(p);
 
-                // 새로운 메시지가 추가되면 스크롤을 아래로 자동 이동
                 messagesDiv.scrollTop = messagesDiv.scrollHeight;
             });
 
             const exitButton = document.getElementById("exitButton");
             exitButton.addEventListener("click", () => {
-                console.log("123456789", "<%=id%>");
                 // 해당 채팅방 채널을 나가기 위해 서버로 c_seq 값을 보냄
                 socket.emit("leave", "<%= c_seq %>");
                 window.location.href = "/chats/lists/<%=id%>"; // 채팅방 목록 페이지로 이동

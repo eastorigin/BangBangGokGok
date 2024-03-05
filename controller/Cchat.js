@@ -13,11 +13,11 @@ exports.getChats = async (req, res) => {
         });
         const chatLists = await Chat.findAll({
             where: {
-                [Op.or]: [{ u_seq: u_seq.u_seq }, { b_seq: u_seq.u_seq }],
+                [Op.or]: [{ u_seq: u_seq.u_seq }, { b_seq: u_seq.u_seq }], // 본인이 채팅방 생성자이거나 글 작성자인 경우
             },
             order: [["c_seq", "DESC"]],
         });
-        console.log("chatLists================", chatLists);
+
         res.render("chat/chatList", { chatLists: chatLists, u_seq: u_seq.u_seq });
     } catch (error) {
         res.status(500).send("server error");

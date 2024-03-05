@@ -28,6 +28,17 @@ const Chat = (Sequelize, DataTypes) => {
                 type: DataTypes.STRING(36),
                 allowNull: false,
             },
+            unreadcnt: {
+                // 채팅방 제목(= 상대방의 닉네임)
+                type: DataTypes.INTEGER,
+                allowNull: false,
+                defaultValue: 0,
+            },
+            last_user: {
+                // 채팅방 마지막 접속 유저
+                type: DataTypes.INTEGER,
+                allowNull: false,
+            },
         },
         {
             tableName: "chat",

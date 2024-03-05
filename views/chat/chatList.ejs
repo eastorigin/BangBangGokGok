@@ -4,16 +4,36 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Chat List</title>
+        <title>Chat Room List</title>
+        <style>
+            .notification {
+                background-color: #f8d7da;
+                color: #721c24;
+                padding: 5px;
+                border-radius: 5px;
+                margin-left: 10px;
+            }
+        </style>
     </head>
     <body>
-        <h1>Chat List</h1>
+        <h1>Chat Room List</h1>
         <ul>
-            <% chatLists.forEach(chat => { %>
+            <% for (let i = 0; i < chatLists.length; i++) { %>
             <li>
-                <a href="/chats/rooms/<%= chat.c_seq %>?u_seq=<%= u_seq %>"><%= chat.c_title %></a>
+                <a
+                    href="/chats/rooms/<%= chatLists[i].c_seq %>?u_seq=<%= u_seq %>"
+                    onclick="joinChatRoom('<%= chatLists[i].c_seq %>', '<%= u_seq %>')"
+                >
+                    <%= chatLists[i].c_title %>
+                    <!-- 읽지 않은 메세지의 값이 0이 아니고 last_user 값이 현재 사용자와 다를 때  -->
+                    <% if (chatLists[i].unreadcnt !== 0 && chatLists[i].last_user !== u_seq) { %>
+                    <span class="notification" id="unreadCount_<%= chatLists[i].c_seq %>">
+                        <%= chatLists[i].unreadcnt %>
+                    </span>
+                    <% } %>
+                </a>
             </li>
-            <% }); %>
+            <% } %>
         </ul>
     </body>
 </html>
