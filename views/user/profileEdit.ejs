@@ -53,7 +53,9 @@
                     <label for="nickname"><span> 닉네임</span></label>
                     <br />
                     <input type="text" id="nickname" name="nickname" class="input" required />
-                    <button class="btn_check">중복 확인</button>
+                    <button class="btn_check" onclick="checkDuplicate('nickname')">
+                        중복 확인
+                    </button>
                     <br /><br />
                     <button type="button" onclick="profileEdit()" id="btn_profileEdit">
                         수정하기
@@ -92,5 +94,22 @@
             //     alert("회원정보 수정 완료");
             // });
         }
+
+        // function checkDuplicate(field) {
+        //     const value = document.getElementById(field).value;
+        //     axios
+        //         .post("/users/check-duplicate", { field, value })
+        //         .then((response) => {
+        //             if (response.data) {
+        //                 alert("사용 가능합니다.");
+        //             } else {
+        //                 alert("이미 사용 중입니다.");
+        //             }
+        //         })
+        //         .catch((error) => {
+        //             console.error(error);
+        //             alert("서버 오류가 발생했습니다.");
+        //         });
+        // }
     </script>
 </html>
