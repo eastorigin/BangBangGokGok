@@ -1,5 +1,6 @@
 // 게시글 관련 컨트롤러
 const Post = require("../models").Post;
+const User = require("../models").User;
 const { Op } = require("sequelize");
 const jwt = require("jsonwebtoken");
 
@@ -90,10 +91,17 @@ exports.getPostsDetail = async (req, res) => {
             where: {
                 p_seq,
             },
+            include: [
+                {
+                    model: User,
+                    attributes: ["u_seq", "nickname"],
+                },
+            ],
         });
         console.log(postDetail);
         res.render("post/postDetail", { postDetail: postDetail });
     } catch (error) {
+        console.log(error);
         res.status(500).send("server error");
     }
 };
