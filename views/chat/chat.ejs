@@ -1,1 +1,147 @@
 <!-- 채팅방 ejs -->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Chat</title>
+        <style>
+            body {
+                display: flex;
+                height: 100vh;
+                margin: 0;
+            }
+
+            #chatList {
+                flex: 1;
+                padding: 20px;
+                background-color: #f0f0f0;
+            }
+
+            #chatRoom {
+                flex: 3;
+                padding: 20px;
+                display: flex;
+                flex-direction: column;
+            }
+
+            #messages {
+                flex-grow: 1;
+                overflow-y: scroll;
+                border: 1px solid #ccc;
+                padding: 10px;
+                margin-bottom: 10px;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .message {
+                margin-bottom: 5px;
+                max-width: 80%; /* 가장 큰 폭을 제한하거나 필요에 따라 조절하세요 */
+                word-wrap: break-word;
+                padding: 8px;
+                border-radius: 8px;
+            }
+
+            .my-message {
+                align-self: flex-end;
+                background-color: #4caf50; /* 내 메시지 배경 색상 */
+                color: white;
+            }
+
+            .other-message {
+                align-self: flex-start;
+                background-color: #ddd; /* 상대방 메시지 배경 색상 */
+            }
+
+            #messageForm {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            #messageInput {
+                flex: 2;
+                margin-right: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="chatList">
+            <h2>Chat Rooms</h2>
+            <ul>
+                <% chatLists.forEach(chat => { %>
+                <li>
+                    <a href="/chats/rooms/<%= chat.c_seq %>?u_seq=<%= u_seq %>"
+                        ><%= chat.c_title %></a
+                    >
+                </li>
+                <% }); %>
+            </ul>
+        </div>
+
+        <div id="chatRoom">
+            <h1>Chat Room <%= c_title %></h1>
+            <div id="messages">
+                <% messages.forEach(message => { %>
+                <p class="message <%= message.u_seq ==u_seq ? 'my-message' : 'other-message' %>">
+                    <%= message.content %>
+                </p>
+                <% }); %>
+            </div>
+            <form id="messageForm">
+                <input type="text" id="messageInput" placeholder="Type your message" />
+                <button type="submit">Send</button>
+            </form>
+            <button id="exitButton">Exit</button>
+        </div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.js"></script>
+        <script>
+            const socket = io();
+            console.log("============접속자 u_seq", "<%= u_seq%>");
+
+            socket.emit("join", "<%= c_seq %>"); // 클라이언트가 접속하면 채팅방 번호를 서버에게 송신
+            const messageForm = document.getElementById("messageForm");
+            const messageInput = document.getElementById("messageInput");
+
+            messageForm.addEventListener("submit", (e) => {
+                e.preventDefault();
+                const content = messageInput.value.trim();
+                if (content !== "") {
+                    // 메세지 송신 이벤트: 클라이언트 -> 서버
+                    socket.emit("sendMessage", {
+                        c_seq: "<%= c_seq %>",
+                        content,
+                        u_seq: "<%= u_seq %>",
+                        isread: 0,
+                    });
+                    messageInput.value = "";
+                }
+            });
+
+            // 메세지 수신 이벤트: 서버 -> 클라이언트
+            socket.on("newMessage", (message) => {
+                const messagesDiv = document.getElementById("messages");
+                const p = document.createElement("p");
+
+                p.className = `message ${
+                    message.u_seq === "<%= u_seq %>" ? "my-message" : "other-message"
+                }`;
+                p.textContent = message.content;
+                messagesDiv.appendChild(p);
+
+                // 새로운 메시지가 추가되면 스크롤을 아래로 자동 이동
+                messagesDiv.scrollTop = messagesDiv.scrollHeight;
+            });
+
+            const exitButton = document.getElementById("exitButton");
+            exitButton.addEventListener("click", () => {
+                console.log("123456789", "<%=id%>");
+                // 해당 채팅방 채널을 나가기 위해 서버로 c_seq 값을 보냄
+                socket.emit("leave", "<%= c_seq %>");
+                window.location.href = "/chats/lists/<%=id%>"; // 채팅방 목록 페이지로 이동
+            });
+        </script>
+    </body>
+</html>

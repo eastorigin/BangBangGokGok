@@ -4,15 +4,16 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
-        <%-include('../include/head')%>
+        <title>Chat List</title>
     </head>
     <body>
-        <h1>채팅방 목록</h1>
-        <%for(let i=0; i<chatLists.length; i++){%>
-            <p><%= chatLists[i].c_title%></p>
-            <%}%>
+        <h1>Chat List</h1>
+        <ul>
+            <% chatLists.forEach(chat => { %>
+            <li>
+                <a href="/chats/rooms/<%= chat.c_seq %>?u_seq=<%= u_seq %>"><%= chat.c_title %></a>
+            </li>
+            <% }); %>
+        </ul>
     </body>
-    <script>
-    </script>
 </html>
