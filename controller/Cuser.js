@@ -1,5 +1,8 @@
 const User = require("../models").User;
 const jwt = require("jsonwebtoken");
+exports.example = (req, res) => {
+    res.render("user/profile");
+};
 
 exports.getSignin = (req, res) => {
     res.render("user/signin");

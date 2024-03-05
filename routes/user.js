@@ -69,7 +69,7 @@ router.post(
 );
 // GET /users/profile/edit
 router.get("/profile/edit", controller.getProfileEdit);
-
+router.get("/profile", controller.example);
 // POST /users/profile/edit
 // router.post("/profile/edit", controller.postProfileEdit);
 
