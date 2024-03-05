@@ -11,18 +11,40 @@
     <body>
         <div class="container">
             <div class="left">
-                <img src="" alt="img_main" class="img_main" />
+                <img src="<%= postDetail.file %>" alt="img_main" class="img_main" />
                 <div class="author">작성자: <%= postDetail.User.nickname %></div>
             </div>
             <div class="right">
-                <div class="titleBox"><%= postDetail.title %></div>
-                <div class="contentBox"><%= postDetail.content %></div>
+                <% if (postDetail.User.nickname === postDetail.User.u_seq) { %>
+                    <input type="text" id="title" name="title" value="<%= postDetail.title %>">
+                    <select id="category" name="category">
+                        <option value="서울" <%= postDetail.category === '서울' ? 'selected' : '' %>>서울</option>
+                        <option value="경기도" <%= postDetail.category === '경기도' ? 'selected' : '' %>>경기도</option>
+                        <option value="강원도" <%= postDetail.category === '강원도' ? 'selected' : '' %>>강원도</option>
+                        <option value="충청북도" <%= postDetail.category === '충청북도' ? 'selected' : '' %>>충청북도</option>
+                        <option value="충청남도" <%= postDetail.category === '충청남도' ? 'selected' : '' %>>충청남도</option>
+                        <option value="전라북도" <%= postDetail.category === '전라북도' ? 'selected' : '' %>>전라북도</option>
+                        <option value="전라남도" <%= postDetail.category === '전라남도' ? 'selected' : '' %>>전라남도</option>
+                        <option value="경상북도" <%= postDetail.category === '경상북도' ? 'selected' : '' %>>경상북도</option>
+                        <option value="경상남도" <%= postDetail.category === '경상남도' ? 'selected' : '' %>>경상남도</option>
+                        <option value="제주도" <%= postDetail.category === '제주도' ? 'selected' : '' %>>제주도</option>
+                    </select>
+                    <textarea name="content" id="content" cols="30" rows="10"><%= postDetail.content %></textarea>
+                    <% } else { %>
+                        <div class="titleBox"><%= postDetail.title %>"></div>
+                        <div class="contentBox"><%= postDetail.content %></div>
+                        <% } %>
+
                 <div class="icons">
-                    <i class="bi bi-heart" id="heart-icon"></i>
-                    <button class="btn_chat">채팅하기</button>
+                    <% if (postDetail.User.nickname === postDetail.User.u_seq) { %>
+                        <button class="btn_edit">수정하기</button>
+                        <button class="btn_delete">삭제하기</button>
+                    <% } else { %>
+                        <i class="bi bi-heart" id="heart-icon"></i>
+                        <button class="btn_chat">채팅하기</button>
+                    <% } %>
                 </div>
             </div>
-        </div>
         <script>
             document.getElementById("heart-icon").addEventListener("click", function () {
                 this.classList.toggle("bi-heart");
