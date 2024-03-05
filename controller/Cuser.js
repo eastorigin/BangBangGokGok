@@ -153,3 +153,5 @@ exports.postSignup = async (req, res) => {
 exports.getProfileEdit = (req, res) => {
     res.render("user/profileEdit");
 };
+
+// 회원정보 수정 PATCH
