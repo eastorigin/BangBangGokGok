@@ -193,11 +193,29 @@ exports.getMyPage = async (req, res) => {
     try {
         const id = req.params.id;
 
+        // 유저 정보
         const userInfo = await User.findOne({
             where: { id: id },
         });
 
-        res.render("user/profile", { data: userInfo }); // 마이페이지에서의 페이지 이동이 일어날 때 id 값을 전송하며 이동하기 위함
+        // 내 글 최신순 3개
+        const myPosts = await Post.findAll({
+            where: { u_seq: userInfo.u_seq },
+            limit: 3,
+            order: [["p_seq", "DESC"]],
+        });
+
+        // 관심 목록 최신순 3개
+        const myLikes = await Likes.findAll({
+            where: { u_seq: userInfo.u_seq },
+            limit: 3,
+            order: [["created_at", "DESC"]],
+        });
+
+        console.log("=======최신순 글", myPosts);
+        console.log("=======관심 목록", myLikes);
+
+        res.render("user/profile", { data: userInfo, myPosts: myPosts, myLikes: myLikes }); // 마이페이지에서의 페이지 이동이 일어날 때 id 값을 전송하며 이동하기 위함
     } catch (error) {
         res.status(500).send("server error");
     }

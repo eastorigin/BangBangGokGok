@@ -1,19 +1,18 @@
--- Active: 1707101283066@@127.0.0.1@3306@bbgg_db
-
+-- Active: 1707101286054@@127.0.0.1@3306@prac
 
 show DATABASES;
 use prac;
 show TABLES;
 
+drop DATABASE sesac;
+create DATABASE sesac DEFAULT CHARACTER set utf8 COLLATE utf8_general_ci;
+use sesac;
 
--- dw
-drop database bbgg_db;
-create DATABASE bbgg_db DEFAULT CHARACTER set utf8 COLLATE utf8_general_ci;
-use bbgg_db;
--- dw
-
-DROP TABLE visitor;
-
+DROP TABLE likes;
+DROP TABLE post;
+DROP TABLE user;
+DROP TABLE chat;
+DROP TABLE message;
 DROP TABLE IF EXISTS user;
 CREATE TABLE user (
 	u_seq	BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -98,7 +97,7 @@ INSERT INTO chat (p_seq, u_seq, b_seq, c_title1, c_title2, createdAt, updatedAt,
 VALUES (2,1,1,'testid1','fgdfgdfgd', now(), now(), 1);
 
 -- sfdssffd
-SELECT * FROM chat;
+SELECT * FROM user;
 
 DESC post;
 
@@ -136,11 +135,9 @@ VALUES (1,4,3,'test123','sfdssffd', now(), now(), 4);
 INSERT INTO chat (p_seq, u_seq, b_seq, c_title1, c_title2, createdAt, last_user) 
 VALUES (2,1,2,'testid1','fgdfgdfgd', now(), now(), 1);
 
-SELECT * FROM likes;
-
 
 INSERT INTO likes (p_seq, u_seq, created_at) 
-VALUES (1, 4,now());
+VALUES (8, 1,now());
 
 INSERT INTO likes (p_seq, u_seq, created_at) 
 VALUES (2, 4,now());
@@ -153,5 +150,14 @@ VALUES (3, 4,now());
 
 INSERT INTO likes (p_seq, u_seq, created_at) 
 VALUES (3, 2,now());
-
+INSERT INTO likes (p_seq, u_seq, created_at) 
+VALUES (1, 1,now());
+INSERT INTO likes (p_seq, u_seq, created_at) 
+VALUES (2, 1,now());
+INSERT INTO likes (p_seq, u_seq, created_at) 
+VALUES (4, 1,now());
+INSERT INTO likes (p_seq, u_seq, created_at) 
+VALUES (9, 1,now());
+INSERT INTO likes (p_seq, u_seq, created_at) 
+VALUES (5, 1,now());
 SELECT * FROM likes where u_seq=4 ORDER BY created_at DESC;
