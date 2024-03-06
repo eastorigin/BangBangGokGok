@@ -98,3 +98,17 @@ VALUES (1, '제목2', '내용내용내용222', '2024-03-03', 'aa.png', '제주�
 
 INSERT INTO post (u_seq, title, content, date, file, category) 
 VALUES (2, '제목3', '내용내용내용333', '2024-03-03', 'b.png', '강원도');
+
+INSERT INTO post (u_seq, title, content, date, file, category) 
+VALUES (3, '제목4', '내용내용내용444', '2024-03-03', 'b.png', '서울특별시');
+
+INSERT INTO post (u_seq, title, content, date, file, category) 
+VALUES (3, '제목5', '내용내용내용555', '2024-03-03', 'b.png', '강원도');
+
+INSERT INTO post (u_seq, title, content, date, file, category) 
+VALUES (4, '제목6', '내용내용내용666', '2024-03-05', 'c.png', '서울특별시');
+
+INSERT INTO post (u_seq, title, content, date, file, category) 
+VALUES (4, '제목7', '내용내용내용777', '2024-03-09', 'd.png', '강원도');
+
+SELECT * FROM post;

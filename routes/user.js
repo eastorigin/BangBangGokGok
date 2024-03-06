@@ -74,4 +74,10 @@ router.get("/profile/:id", controller.getProfile);
 // 프로필 수정
 router.patch("/profile", controller.patchProfile);
 
+// GET /users/mypage/:id
+router.get("/mypage/:id", controller.getMyPage);
+
+// GET /users/mypost/:id
+router.get("/mypost/:id", controller.getMyPost);
+
 module.exports = router;
