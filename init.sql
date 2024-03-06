@@ -1,4 +1,4 @@
--- Active: 1707101283066@@127.0.0.1@3306@bbgg_db
+-- Active: 1707101286054@@127.0.0.1@3306@prac
 
 show DATABASES;
 use prac;
@@ -72,6 +72,24 @@ VALUES ('eee', '1234', 'eee@naver.com', '마마마', '마닉넴');
 
 SELECT * FROM user;
 
+SELECT * FROM chat;
+
+DROP TABLE chat;
+
+DROP TABLE message;
+
+INSERT INTO chat (p_seq, u_seq, b_seq, c_title, createdAt, updatedAt, last_user) 
+VALUES (1,4,3,'고래밥', now(), now(), 4);
+INSERT INTO chat (p_seq, u_seq, b_seq, c_title, createdAt, updatedAt, last_user) 
+VALUES (1,4,3,'초코송이', now(), now(), 4);
+INSERT INTO chat (p_seq, u_seq, b_seq, c_title, createdAt, updatedAt, last_user) 
+VALUES (2,1,2,'고래밥', now(), now(), 1);
+
+-- sfdssffd
+SELECT * FROM chat;
+
+DESC post;
+
 INSERT INTO post (u_seq, title, content, date, file, category) 
 VALUES (1, '제목1', '내용내용내용111', '2024-03-03', 'a.png', '서울특별시');
 
@@ -79,6 +97,4 @@ INSERT INTO post (u_seq, title, content, date, file, category)
 VALUES (1, '제목2', '내용내용내용222', '2024-03-03', 'aa.png', '제주특별자치도');
 
 INSERT INTO post (u_seq, title, content, date, file, category) 
-VALUES (2, '제목3', '내용내용내용333sdakl;jfffffffffeiajksldffcxzvm,.aiwejvlkasdvmsav,mjeiejlkdsvjjjjjjjjjjjjjjjjewijafe파ㅣㅁㄴ엊댜퍼ㅣㅁ나어;얃ㅈ머피만음ㅈ디;ㅓㅑㅈㄷ리ㅏㅁㅈㄷㄷㄷㄷㄷㄷㄷㄷㄷㄷㄷㄷㄷ프.,ㅡ먖대ㅡㅁ자ㅣㅍ느ㅏㅣㅁㅈ더럊ㅁ더피ㅏ므;ㅣㅁㄷ퍄ㅓㅈ먀ㅣㅈ더피ㅏㄴㅁ읖ㅁㅈ댜밎더피ㅏㄴㅇㅁ픰자드먀ㅐㅈㄷㅁ', '2024-03-03', 'b.png', '강원도');
-
-SELECT * FROM post;
+VALUES (2, '제목3', '내용내용내용333', '2024-03-03', 'b.png', '강원도');

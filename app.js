@@ -66,14 +66,8 @@ io.on("connection", (socket) => {
     socket.on("join", async ({ c_seq, u_seq }) => {
         socket.join(`chatroom-${c_seq}`); // 클라이언트로부터 수신한 채팅방 번호로 room에 참여
 
-        console.log("=============채팅방 마지막 접속 유저", u_seq);
         // 채팅방의 마지막 접속 유저를 업데이트
         await db.Chat.update({ last_user: u_seq }, { where: { c_seq: c_seq } });
-    });
-
-    // 채팅 리스트 접속
-    socket.on("joinChatList", (u_seq) => {
-        console.log("채팅 리스트 접속 유저", u_seq);
     });
 
     // 클라이언트로부터 메세지 수신
@@ -86,7 +80,6 @@ io.on("connection", (socket) => {
     // 채팅방 나가기
     socket.on("leave", (c_seq) => {
         socket.leave(`chatroom-${c_seq}`);
-        console.log("채팅방 나가기 완료");
     });
 });
 

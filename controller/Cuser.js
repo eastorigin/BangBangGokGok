@@ -152,9 +152,38 @@ exports.postSignup = async (req, res) => {
     });
 };
 
-// 회원정보 수정
-exports.getProfileEdit = (req, res) => {
-    res.render("user/profileEdit");
+// 프로필 페이지 요청
+exports.getProfile = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const userInfo = await User.findOne({
+            where: { id: id },
+        });
+        console.log("프로필 페이지 접속 유저 확인", userInfo);
+        res.render("user/profileEdit", { data: userInfo });
+    } catch (error) {
+        res.status(500).send("server error");
+    }
+};
+
+// 프로필 정보 수정
+exports.patchProfile = async (req, res) => {
+    try {
+        await User.update(
+            {
+                nickname: req.body.nickname,
+                pw: req.body.pw,
+            },
+            {
+                where: {
+                    id: req.body.id,
+                },
+            }
+        );
+        res.send(true);
+    } catch (error) {
+        res.status(500).send("server error");
+    }
 };
 
 // 회원정보 수정 PATCH

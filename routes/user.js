@@ -67,10 +67,11 @@ router.post(
     ],
     controller.postSignup
 );
-// GET /users/profile/edit
-router.get("/profile/edit", controller.getProfileEdit);
-router.get("/profile", controller.example);
-// POST /users/profile/edit
-// router.post("/profile/edit", controller.postProfileEdit);
+
+// GET /users/profile/:id
+router.get("/profile/:id", controller.getProfile);
+
+// 프로필 수정
+router.patch("/profile", controller.patchProfile);
 
 module.exports = router;
