@@ -1,6 +1,7 @@
 // 게시글 관련 라우터
 const express = require("express");
 const controller = require("../controller/Cpost");
+// const uploadDetail = require("../middlewares/uploadDetail");
 const router = express.Router();
 
 // GET /posts/list
@@ -16,6 +17,7 @@ router.get("/search/:keyword", controller.getPostsByKeyword);
 router.get("/", controller.getPosts);
 
 // POST /posts
+// router.post("/", uploadDetail.single("file"), controller.postPosts);
 router.post("/", controller.postPosts);
 
 // GET /posts/detail/:p_seq
