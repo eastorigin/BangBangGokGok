@@ -191,7 +191,12 @@ exports.patchProfile = async (req, res) => {
 exports.getMyPage = async (req, res) => {
     try {
         const id = req.params.id;
-        res.render("user/profile", { id: id }); // 마이페이지에서의 페이지 이동이 일어날 때 id 값을 전송하며 이동하기 위함
+
+        const userInfo = await User.findOne({
+            where: { id: id },
+        });
+
+        res.render("user/profile", { data: userInfo }); // 마이페이지에서의 페이지 이동이 일어날 때 id 값을 전송하며 이동하기 위함
     } catch (error) {
         res.status(500).send("server error");
     }

@@ -20,6 +20,8 @@ router.get("/signup", controller.getSignup);
 // 회원가입 중복 확인
 router.post("/check-duplicate", controller.checkDuplicate);
 
+router.get("/profile", controller.example);
+
 // 회원가입 처리
 router.post(
     "/signup",

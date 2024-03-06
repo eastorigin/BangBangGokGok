@@ -1,10 +1,18 @@
--- Active: 1707101286054@@127.0.0.1@3306@prac
+-- Active: 1707101296801@@127.0.0.1@3306@sesac
 
 show DATABASES;
-use prac;
+use sesac;
 show TABLES;
 
-DROP TABLE visitor;
+drop DATABASE sesac;
+create DATABASE sesac DEFAULT CHARACTER set utf8 COLLATE utf8_general_ci;
+use sesac;
+
+DROP TABLE likes;
+DROP TABLE post;
+DROP TABLE user;
+DROP TABLE chat;
+DROP TABLE message;
 DROP TABLE IF EXISTS user;
 CREATE TABLE user (
 	u_seq	BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -73,6 +81,7 @@ VALUES ('eee', '1234', 'eee@naver.com', '마마마', '마닉넴');
 SELECT * FROM user;
 
 SELECT * FROM chat;
+SELECT * FROM post;
 
 DROP TABLE chat;
 
@@ -90,6 +99,23 @@ SELECT * FROM chat;
 
 DESC post;
 
+INSERT INTO user (id, pw, email, name, nickname) 
+VALUES ('aaa', '1234', 'aaa@naver.com', '가가가', '가닉넴');
+
+INSERT INTO user (id, pw, email, name, nickname) 
+VALUES ('bbb', '1234', 'bbb@naver.com', '나나나', '나닉넴');
+
+INSERT INTO user (id, pw, email, name, nickname) 
+VALUES ('ccc', '1234', 'ccc@naver.com', '다다다', '다닉넴');
+
+INSERT INTO user (id, pw, email, name, nickname) 
+VALUES ('ddd', '1234', 'ddd@naver.com', '라라라', '라닉넴');
+
+INSERT INTO user (id, pw, email, name, nickname) 
+VALUES ('eee', '1234', 'eee@naver.com', '마마마', '마닉넴');
+
+
+
 INSERT INTO post (u_seq, title, content, date, file, category) 
 VALUES (1, '제목1', '내용내용내용111', '2024-03-03', 'a.png', '서울특별시');
 
@@ -99,16 +125,12 @@ VALUES (1, '제목2', '내용내용내용222', '2024-03-03', 'aa.png', '제주�
 INSERT INTO post (u_seq, title, content, date, file, category) 
 VALUES (2, '제목3', '내용내용내용333', '2024-03-03', 'b.png', '강원도');
 
-INSERT INTO post (u_seq, title, content, date, file, category) 
-VALUES (3, '제목4', '내용내용내용444', '2024-03-03', 'b.png', '서울특별시');
 
-INSERT INTO post (u_seq, title, content, date, file, category) 
-VALUES (3, '제목5', '내용내용내용555', '2024-03-03', 'b.png', '강원도');
-
-INSERT INTO post (u_seq, title, content, date, file, category) 
-VALUES (4, '제목6', '내용내용내용666', '2024-03-05', 'c.png', '서울특별시');
-
-INSERT INTO post (u_seq, title, content, date, file, category) 
-VALUES (4, '제목7', '내용내용내용777', '2024-03-09', 'd.png', '강원도');
+INSERT INTO chat (p_seq, u_seq, b_seq, c_title1, c_title2, createdAt, last_user) 
+VALUES (1,4,3,'test123','sfdssffd', now(), now(), 4);
+INSERT INTO chat (p_seq, u_seq, b_seq, c_title1, c_title2, createdAt, last_user) 
+VALUES (1,4,3,'test123','sfdssffd', now(), now(), 4);
+INSERT INTO chat (p_seq, u_seq, b_seq, c_title1, c_title2, createdAt, last_user) 
+VALUES (2,1,2,'testid1','fgdfgdfgd', now(), now(), 1);
 
 SELECT * FROM post;

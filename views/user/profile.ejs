@@ -1,12 +1,28 @@
-<!-- 마이페이지 ejs -->
 <!DOCTYPE html>
 <html lang="ko">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Mypage</title>
+        <title>css practice3</title>
+        <%-include('../include/head')%>
+        <link rel="stylesheet" href="/static/css/profile.css" />
     </head>
     <body>
-        하이 <%=id%>
+        <%-include('../include/header')%>
+        <div class="card">
+            <div class="banner">
+                <div class="profile"></div>
+            </div>
+            <h2 class="name"><%=data.name%></h2>
+            <h2 class="id"><h1><%=data.id%></h1></h2>
+            <div class="follow-btn">
+                <button>Follow</button>
+            </div>
+            <div class="desc">안 녕 하 세 요🙌</div>
+        </div>
+        <!-- <h1><%#=data.name%></h1>
+<h1><%#=data.id%></h1>
+<h1><%#=data.email%></h1>
+<h1><%#=data.nickname%></h1> -->
     </body>
 </html>
