@@ -51,19 +51,28 @@
             async function post() {
                 const form = document.forms["post-form"];
                 const accessToken = localStorage.getItem("accessToken");
-                const response = await axios({
-                    method: "POST",
-                    url: "/posts",
-                    data: {
-                        title: form.title.value,
-                        content: form.content.value,
-                        file: form.file.value,
-                        category: form.category.value,
-                    },
-                    headers: {
-                        Authorization: `Bearer ${accessToken}`, // 토큰을 Authorization 헤더에 포함
-                    },
-                });
+                try {
+                    const response = await axios({
+                        method: "POST",
+                        url: "/posts",
+                        data: {
+                            title: form.title.value,
+                            content: form.content.value,
+                            file: form.file.value,
+                            category: form.category.value,
+                        },
+                        headers: {
+                            Authorization: `Bearer ${accessToken}`,
+                        },
+                    });
+                    if (response.status === 200 || response.status === 201) {
+                        alert("글이 성공적으로 작성되었습니다.");
+                        window.location.href = "/posts/list";
+                    }
+                } catch (error) {
+                    console.error("글 작성 중 에러 발생:", error);
+                    alert("글 작성에 실패했습니다.");
+                }
             }
         </script>
     </body>

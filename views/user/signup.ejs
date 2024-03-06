@@ -61,59 +61,80 @@
             </form>
         </div>
         <script>
+            const duplicateCheckStatus = {
+                email: false,
+                id: false,
+                nickname: false,
+            };
+
             function signup() {
                 const form = document.forms["signupForm"];
                 const p1 = document.getElementById("userPw").value;
                 const p2 = document.getElementById("userPwConfirm").value;
-                const i3 = document.getElementById("id").value;
 
                 if (!form.checkValidity()) {
                     form.reportValidity();
                     return;
                 }
 
-                if (p1 === p2) {
-                    axios({
-                        method: "POST",
-                        url: "/users/signup",
-                        data: {
-                            email: form.email.value,
-                            userId: form.id.value,
-                            userPw: form.userPw.value,
-                            name: form.name.value,
-                            nickname: form.nickname.value,
-                        },
-                    })
-                        .then((res) => {
-                            if (res.data.errors) {
-                                for (i = 0; i < res.data.errors.length; i++) {
-                                    console.log(res.data.errors[i].msg);
-                                    alert(res.data.errors[i].msg);
-                                }
-                            } else {
-                                alert("회원가입 완료");
-                                document.location.href = "/";
-                            }
-                        })
-                        .catch((error) => {
-                            console.error("회원가입 에러", error);
-                            alert("회원가입 중 오류가 발생했습니다. 나중에 다시 시도해주세요.");
-                        });
-                } else {
-                    alert("비밀번호가 일치하지 않습니다");
-                    return false;
+                if (
+                    !duplicateCheckStatus.email ||
+                    !duplicateCheckStatus.id ||
+                    !duplicateCheckStatus.nickname
+                ) {
+                    alert("이메일, 아이디, 닉네임의 중복 확인을 완료해주세요.");
+                    return;
                 }
+
+                if (p1 !== p2) {
+                    alert("비밀번호가 일치하지 않습니다.");
+                    return;
+                }
+
+                axios({
+                    method: "POST",
+                    url: "/users/signup",
+                    data: {
+                        email: form.email.value,
+                        userId: form.id.value,
+                        userPw: form.userPw.value,
+                        name: form.name.value,
+                        nickname: form.nickname.value,
+                    },
+                })
+                    .then((res) => {
+                        if (res.data.errors) {
+                            for (i = 0; i < res.data.errors.length; i++) {
+                                console.log(res.data.errors[i].msg);
+                                alert(res.data.errors[i].msg);
+                            }
+                        } else {
+                            alert("회원가입 완료");
+                            document.location.href = "/";
+                        }
+                    })
+                    .catch((error) => {
+                        console.error("회원가입 에러", error);
+                        alert("회원가입 중 오류가 발생했습니다. 나중에 다시 시도해주세요.");
+                    });
             }
 
             function checkDuplicate(field) {
                 const value = document.getElementById(field).value;
+                if (!value) {
+                    alert("값을 입력해주세요.");
+                    return;
+                }
+
                 axios
                     .post("/users/check-duplicate", { field, value })
                     .then((response) => {
                         if (response.data) {
                             alert("사용 가능합니다.");
+                            duplicateCheckStatus[field] = true;
                         } else {
                             alert("이미 사용 중입니다.");
+                            duplicateCheckStatus[field] = false;
                         }
                     })
                     .catch((error) => {

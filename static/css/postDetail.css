@@ -23,8 +23,8 @@ html {
 .right {
     flex-basis: 50%;
     display: flex;
-    flex-direction: column; /* 자식 요소를 수직으로 정렬 */
-    justify-content: center; /* 자식 요소를 수직 가운데 정렬 */
+    flex-direction: column;
+    justify-content: center;
     min-height: 100%;
 }
 .img_main {
@@ -37,6 +37,24 @@ html {
 .author {
     font-size: 16px;
     color: #333;
+}
+
+.title,
+.category {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.content {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    resize: vertical;
 }
 
 .titleBox {
