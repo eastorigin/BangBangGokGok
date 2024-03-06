@@ -63,6 +63,8 @@
 
                     const userButton = document.getElementById("btn-user");
                     userButton.innerHTML = `${response.data.name}님`;
+                    userButton.href = `/users/mypage/${response.data.id}`;
+//고쳐야함
                 }
             }
             // info.innerHTML = data; // 로그인 버튼 나오도록 하기
@@ -71,8 +73,9 @@
         function signout() {
             // 로컬 스토리지에서 jwt 정보 삭제
             localStorage.clear();
-
+            
             // 새로고침으로 뷰 화면 변경
+            // document.location.href="../../../#";
             document.location.reload();
         }
     </script>

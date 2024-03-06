@@ -125,12 +125,12 @@ VALUES (1, '제목2', '내용내용내용222', '2024-03-03', 'aa.png', '제주�
 INSERT INTO post (u_seq, title, content, date, file, category) 
 VALUES (2, '제목3', '내용내용내용333', '2024-03-03', 'b.png', '강원도');
 
-
-INSERT INTO chat (p_seq, u_seq, b_seq, c_title1, c_title2, createdAt, last_user) 
+desc chat;
+INSERT INTO chat (p_seq, u_seq, b_seq, c_title1, c_title2, createdAt, updatedAt, last_user) 
 VALUES (1,4,3,'test123','sfdssffd', now(), now(), 4);
-INSERT INTO chat (p_seq, u_seq, b_seq, c_title1, c_title2, createdAt, last_user) 
+INSERT INTO chat (p_seq, u_seq, b_seq, c_title1, c_title2, createdAt, updatedAt, last_user) 
 VALUES (1,4,3,'test123','sfdssffd', now(), now(), 4);
-INSERT INTO chat (p_seq, u_seq, b_seq, c_title1, c_title2, createdAt, last_user) 
-VALUES (2,1,2,'testid1','fgdfgdfgd', now(), now(), 1);
+INSERT INTO chat (p_seq, u_seq, b_seq, c_title1, c_title2, createdAt, updatedAt, last_user) 
+VALUES (2,1,1,'testid1','fgdfgdfgd', now(), now(), 1);
 
 SELECT * FROM post;
