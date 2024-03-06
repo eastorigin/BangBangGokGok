@@ -10,12 +10,23 @@
     </head>
     <body>
         <%-include('../include/header')%>
+        <br />
+        <br />
+        <div id="post-header">
+            <form class="d-flex" role="search">
+                <input class="Search" type="search" placeholder="Search" aria-label="Search" />
+                <a href="#" id="btn-post-search" type="submit"><i class="bi bi-search"></i></a>
+            </form>
+            <a id="btn-post" type="submit" href="../posts"> 글쓰기 </a>
+        </div>
+        <br />
         <table border="1" cellspacing="0">
             <thead>
                 <tr>
                     <th>순번</th>
                     <th>제목</th>
                     <th>내용</th>
+                    <th>지역</th>
                     <th>작성자</th>
                 </tr>
             </thead>
@@ -25,10 +36,22 @@
                     <td><%=postList[i].p_seq %></td>
                     <td><%=postList[i].title %></td>
                     <td><%=postList[i].content %></td>
+                    <td><%=postList[i].category%></td>
                     <td><%=postList[i].u_seq%></td>
                 </tr>
                 <% } %>
             </tbody>
         </table>
+        <div class="board_page">
+            <a href="#" class="bt first"><<</a>
+            <a href="#" class="bt prev"><</a>
+            <a href="#" class="num on">1</a>
+            <a href="#" class="num">2</a>
+            <a href="#" class="num">3</a>
+            <a href="#" class="num">4</a>
+            <a href="#" class="num">5</a>
+            <a href="#" class="bt next">></a>
+            <a href="#" class="bt last">>></a>
+        </div>
     </body>
 </html>

@@ -13,8 +13,8 @@ body {
 }
 
 #btn-search {
-    width: 5%;
-    height: auto;
+    color: black;
+    font-size: 25px;
 }
 #btn-chat {
     background-color: #ffffff;
