@@ -21,6 +21,9 @@ router.post("/", controller.postPosts);
 // GET /posts/detail/:p_seq
 router.get("/detail/:p_seq", controller.getPostsDetail);
 
+// POST /posts/accesstoken
+router.post("/accesstoken", controller.postAccessToken);
+
 // PATCH /posts/detail/:p_seq
 router.patch("/detail/:p_seq", controller.patchPostsDetail);
 
