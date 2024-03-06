@@ -14,6 +14,7 @@ const db = require("./models");
 app.set("view engine", "ejs");
 app.set("views", "./views");
 app.use("/static", express.static(__dirname + "/static"));
+app.use("/uploads", express.static(__dirname + "/uploads"));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 

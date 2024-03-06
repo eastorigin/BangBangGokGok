@@ -11,7 +11,8 @@
     <body>
         <div class="container">
             <div class="left">
-                <img src="<%= postDetail.file %>" alt="img_main" class="img_main" />
+                <img src="" alt="img_main" class="img_main" />
+                <!--괄호 퍼센트 imgSrc  -->
                 <div class="author">작성자: <%= postDetail.User.nickname %></div>
             </div>
             <div class="right">                   
@@ -109,12 +110,12 @@
     }
 })();
 
-    async function deletePost(postId) { //postId가 맞는지?
+    async function deletePost(postId) {
         try {
             const accessToken = localStorage.getItem("accessToken");
             const response = await axios({
                 method: "DELETE",
-                url: `/posts/detail/${postId}`, // 삭제할 게시글의 ID를 URL에 포함
+                url: `/posts/detail/${postId}`,
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
                 },
@@ -149,7 +150,7 @@
 
         if (response.status === 200) {
             alert('게시글이 성공적으로 수정되었습니다.');
-            window.location.href = `/posts/detail/${postId}`;
+            window.location.href = `/posts/list`;
         }
     } catch (error) {
         console.error(error);

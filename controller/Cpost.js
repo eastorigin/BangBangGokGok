@@ -67,17 +67,17 @@ exports.postPosts = async (req, res) => {
         const decodedToken = jwt.verify(accessToken, process.env.ACCESS_SECRET);
         const u_seq = decodedToken.u_seq;
 
+        // const { title, content, category } = req.body;
+        // const file = req.file ? req.file.filename : ""; // 업로드된 파일명
         const { title, content, file, category } = req.body;
 
-        // 게시글을 작성할 때 토큰에서 추출한 u_seq 값을 사용하여 작성자 정보를 저장
         const newPost = await Post.create({
             title,
             content,
-            file,
+            file, // 파일명 저장
             category,
-            u_seq, // 작성자의 u_seq 값을 저장
+            u_seq,
         });
-
         res.json(newPost);
     } catch (error) {
         res.status(500).send("server error");
@@ -100,6 +100,10 @@ exports.getPostsDetail = async (req, res) => {
             ],
         });
         console.log(postDetail);
+        // res.render("post/postDetail", {
+        //     postDetail: postDetail,
+        //     imgSrc: postDetail.file ? `/uploads/${postDetail.file}` : null,
+        // });
         res.render("post/postDetail", { postDetail: postDetail });
     } catch (error) {
         console.log(error);

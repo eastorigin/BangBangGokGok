@@ -1,8 +1,14 @@
--- Active: 1707101286054@@127.0.0.1@3306@prac
+-- Active: 1707101283066@@127.0.0.1@3306@bbgg_db
 
 show DATABASES;
 use prac;
 show TABLES;
+
+-- dw
+drop database bbgg_db;
+create DATABASE bbgg_db DEFAULT CHARACTER set utf8 COLLATE utf8_general_ci;
+use bbgg_db;
+-- dw
 
 DROP TABLE visitor;
 DROP TABLE IF EXISTS user;
