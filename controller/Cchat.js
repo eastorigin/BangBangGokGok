@@ -59,6 +59,8 @@ exports.getChatRoom = async (req, res) => {
             where: { c_seq: req.params.c_seq },
         });
 
+        console.log("채팅방 목록 c_title", c_title);
+
         res.render("chat/chat", {
             chatLists: chatLists,
             c_seq: req.params.c_seq,
@@ -75,25 +77,26 @@ exports.getChatRoom = async (req, res) => {
 // 채팅방 생성하기(해당 포스트 작성자가 아닌 유저만 가능)
 exports.createChatRoom = async (req, res) => {
     try {
-        // 현재 접속자의 u_seq 필요(토큰 오류나면 url에 데이터값으로 담아서 전송할 것)
-        const u_seq = req.query.u_seq; // 현재 접속 유저
+        const { p_seq } = req.params; // 채팅방이 생성되는 글의 seq
+        const { b_seq, u_seq, b_nick, u_nick, id } = req.body;
 
-        // 글 작성자
-        const buyer = await Post.findOne({
-            attributes: ["u_seq", "nickname"],
-            where: { p_seq: req.params.p_seq },
+        const c_title = [u_nick, b_nick];
+
+        console.log("생성 c_title", c_title);
+
+        // 이미 존재하는 채팅방인지 확인 후, 존재한다면 그 채팅방을 열기
+        const check = await Chat.findOne({
+            where: {
+                [Op.or]: [
+                    { u_seq: u_seq, b_seq: b_seq },
+                    { u_seq: b_seq, b_seq: u_seq },
+                ],
+            },
         });
-        await Chat.create({
-            c_seq: null,
-            p_seq: req.body.p_seq,
-            u_seq: u_seq,
-            b_seq: buyer.u_seq,
-            c_title: buyer.nickname,
-        }).then(async (result) => {
-            console.log("채팅방 생성 완료");
-            console.log("생성된 채팅방의 c_seq 확인", result.c_seq);
+        console.log("========이미 존재하는 채팅방 확인", check);
+        if (check) {
+            // 이미 존재하는 채팅방이 있을 경우, 해당 채팅방 열기
 
-            // 채팅 생성과 동시에 채팅방 오픈하기
             // 채팅방 목록 불러오기
             const chatLists = await Chat.findAll({
                 where: {
@@ -101,16 +104,62 @@ exports.createChatRoom = async (req, res) => {
                 },
                 order: [["c_seq", "DESC"]],
             });
-            // 해당 채팅방 오픈
+
+            // 이전 대화 메세지 불러오기
+            const messages = await Message.findAll({
+                where: { c_seq: check.c_seq },
+            });
+
+            const c_title12 = [check.c_title1, check.c_title2];
+
             res.render("chat/chat", {
                 chatLists: chatLists,
-                c_seq: result.c_seq, // 현재 오픈하는 채팅방의 c_seq
+                c_seq: check.c_seq,
+                c_title: c_title12,
                 messages: messages,
-                c_title: buyer.nickname,
                 u_seq: u_seq,
-                id: id.id,
+                id: id,
             });
-        });
+        } else {
+            console.log("=========기존에 채팅방이 존재하지 않습니다.");
+            // 채팅방이 없을 경우, 새로 생성
+            await Chat.create({
+                c_seq: null,
+                p_seq: p_seq,
+                u_seq: u_seq,
+                b_seq: b_seq,
+                c_title1: u_nick,
+                c_title2: b_nick,
+                unreadcnt: 0,
+                last_user: u_seq,
+            }).then(async (result) => {
+                console.log("생성된 채팅방의 c_seq 확인", result.c_seq);
+
+                // 채팅 생성과 동시에 채팅방 오픈하기
+                // 채팅방 목록 불러오기
+                const chatLists = await Chat.findAll({
+                    where: {
+                        [Op.or]: [{ u_seq: u_seq }, { b_seq: u_seq }],
+                    },
+                    order: [["c_seq", "DESC"]],
+                });
+
+                // 이전 대화 메세지 불러오기
+                const messages = await Message.findAll({
+                    where: { c_seq: result.c_seq },
+                });
+
+                // 해당 채팅방 오픈
+                res.render("chat/chat", {
+                    chatLists: chatLists,
+                    c_seq: result.c_seq, // 현재 오픈하는 채팅방의 c_seq
+                    messages: messages,
+                    c_title: c_title,
+                    u_seq: u_seq,
+                    id: id,
+                });
+            });
+        }
     } catch (err) {
         res.status(500).send("server error");
     }
