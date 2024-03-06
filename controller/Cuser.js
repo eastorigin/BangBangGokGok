@@ -1,4 +1,5 @@
 const User = require("../models").User;
+const Likes = require("../models").Likes;
 const jwt = require("jsonwebtoken");
 exports.example = (req, res) => {
     res.render("user/profile");
@@ -216,6 +217,26 @@ exports.getMyPost = async (req, res) => {
         });
 
         res.render("user/myPost", { data: posts });
+    } catch (error) {
+        res.status(500).send("server error");
+    }
+};
+
+// 관심 목록 요청
+exports.getMyLike = async (req, res) => {
+    try {
+        const id = req.params.id;
+
+        const u_seq = await User.findOne({
+            where: { id: id },
+        });
+
+        const likes = await Likes.findAll({
+            where: { u_seq: u_seq.u_seq },
+            order: [["created_at", "DESC"]], // 최신순 정렬하여 반환
+        });
+
+        res.render("user/myLike", { data: likes });
     } catch (error) {
         res.status(500).send("server error");
     }

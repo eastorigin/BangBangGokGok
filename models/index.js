@@ -19,6 +19,7 @@ const UserModel = require("./User")(sequelize, Sequelize);
 const ChatModel = require("./Chat")(sequelize, Sequelize);
 const MessageModel = require("./Message")(sequelize, Sequelize);
 const PostModel = require("./Post")(sequelize, Sequelize);
+const LikesModel = require("./Likes")(sequelize, Sequelize);
 
 // User:Post = 1:N
 UserModel.hasMany(PostModel, {
@@ -60,6 +61,25 @@ MessageModel.belongsTo(ChatModel, {
     foreignKey: "c_seq",
 });
 
+// User:Likes = 1:N
+UserModel.hasMany(LikesModel, {
+    sourceKey: "u_seq",
+    foreignKey: "u_seq",
+});
+LikesModel.belongsTo(UserModel, {
+    target: "u_seq",
+    foreignKey: "u_seq",
+});
+
+// Post:Likes = 1:N
+PostModel.hasMany(LikesModel, {
+    sourceKey: "p_seq",
+    foreignKey: "p_seq",
+});
+LikesModel.belongsTo(PostModel, {
+    target: "p_seq",
+    foreignKey: "p_seq",
+});
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
@@ -68,6 +88,6 @@ db.User = UserModel;
 db.Chat = ChatModel;
 db.Message = MessageModel;
 db.Post = PostModel;
-
+db.Likes = LikesModel;
 
 module.exports = db;
