@@ -104,6 +104,7 @@ exports.postAccessToken = async (req, res) => {
 
 // 유효성 검증
 const { validationResult } = require("express-validator");
+const { Post } = require("../models");
 
 // 회원가입 요청시, 회원가입 페이지로 이동
 exports.getSignup = (req, res) => {
@@ -186,4 +187,31 @@ exports.patchProfile = async (req, res) => {
     }
 };
 
-// 회원정보 수정 PATCH
+// 마이페이지 요청
+exports.getMyPage = async (req, res) => {
+    try {
+        const id = req.params.id;
+        res.render("user/profile", { id: id }); // 마이페이지에서의 페이지 이동이 일어날 때 id 값을 전송하며 이동하기 위함
+    } catch (error) {
+        res.status(500).send("server error");
+    }
+};
+
+// 내가 쓴 글 페이지 요청
+exports.getMyPost = async (req, res) => {
+    try {
+        const id = req.params.id;
+
+        const u_seq = await User.findOne({
+            where: { id: id },
+        });
+
+        const posts = await Post.findAll({
+            where: { u_seq: u_seq.u_seq },
+        });
+
+        res.render("user/myPost", { data: posts });
+    } catch (error) {
+        res.status(500).send("server error");
+    }
+};
