@@ -82,4 +82,7 @@ router.get("/mypage/:id", controller.getMyPage);
 // GET /users/mypost/:id
 router.get("/mypost/:id", controller.getMyPost);
 
+// GET /users/mylike/:id
+router.get("/mylike/:id", controller.getMyLike);
+
 module.exports = router;

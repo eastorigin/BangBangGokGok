@@ -1,5 +1,5 @@
-
 -- Active: 1707101283066@@127.0.0.1@3306@bbgg_db
+
 
 show DATABASES;
 use prac;
@@ -86,6 +86,8 @@ SELECT * FROM post;
 
 DROP TABLE chat;
 
+DESC likes;
+
 DROP TABLE message;
 
 INSERT INTO chat (p_seq, u_seq, b_seq, c_title1, c_title2, createdAt, updatedAt, last_user) 
@@ -134,4 +136,22 @@ VALUES (1,4,3,'test123','sfdssffd', now(), now(), 4);
 INSERT INTO chat (p_seq, u_seq, b_seq, c_title1, c_title2, createdAt, last_user) 
 VALUES (2,1,2,'testid1','fgdfgdfgd', now(), now(), 1);
 
-SELECT * FROM post;
+SELECT * FROM likes;
+
+
+INSERT INTO likes (p_seq, u_seq, created_at) 
+VALUES (1, 4,now());
+
+INSERT INTO likes (p_seq, u_seq, created_at) 
+VALUES (2, 4,now());
+
+INSERT INTO likes (p_seq, u_seq, created_at) 
+VALUES (5, 4,now());
+
+INSERT INTO likes (p_seq, u_seq, created_at) 
+VALUES (3, 4,now());
+
+INSERT INTO likes (p_seq, u_seq, created_at) 
+VALUES (3, 2,now());
+
+SELECT * FROM likes where u_seq=4 ORDER BY created_at DESC;
