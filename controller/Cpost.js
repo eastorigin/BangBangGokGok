@@ -60,7 +60,8 @@ exports.getPosts = (req, res) => {
 exports.postPosts = async (req, res) => {
     try {
         // 클라이언트로부터 JWT 토큰을 받아옴
-        const accessToken = req.headers.authorization.split(" ")[1];
+        const accessToken = (req.headers.authorization || "").split(" ")[1];
+        console.log("accessToken: ", accessToken);
 
         // JWT 토큰을 검증하고 토큰에 포함된 사용자 정보를 추출
         const decodedToken = jwt.verify(accessToken, process.env.ACCESS_SECRET);
@@ -106,6 +107,47 @@ exports.getPostsDetail = async (req, res) => {
     }
 };
 
+exports.postAccessToken = async (req, res) => {
+    try {
+        console.log(req.headers.authorization);
+        if (req.headers.authorization) {
+            const accessToken = req.headers.authorization.split(" ")[1];
+
+            try {
+                console.log("accessToken : ", accessToken);
+
+                const auth = jwt.verify(accessToken, process.env.ACCESS_SECRET);
+                console.log("auth : ", auth);
+
+                const userInfoInstance = await User.findOne({
+                    where: { id: auth.id },
+                });
+
+                // userInfoInstance에서 dataValues 속성을 추출하여 순수한 JavaScript 객체로 변환
+                const userInfo = userInfoInstance ? userInfoInstance.dataValues : null;
+
+                if (userInfo.id === auth.id) {
+                    res.send({
+                        result: true,
+                        name: userInfo.name,
+                        id: userInfo.id,
+                        nickname: userInfo.nickname,
+                    });
+                }
+                res.end();
+            } catch (error) {
+                console.log("토큰 인증 에러 ::", error);
+                res.send({ result: false, message: "인증된 회원이 아닙니다." });
+            }
+        } else {
+            res.redirect("/users/signin");
+        }
+    } catch (error) {
+        console.log("POST /accesstoken", error);
+        res.status(500).send("server error");
+    }
+};
+
 // PATCH /posts/detail/:p_seq
 exports.patchPostsDetail = async (req, res) => {
     try {
@@ -119,7 +161,7 @@ exports.patchPostsDetail = async (req, res) => {
                 category,
             },
             {
-                where: p_seq,
+                where: { p_seq: p_seq },
             }
         );
         res.json(updatedPost);
