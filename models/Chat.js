@@ -23,8 +23,13 @@ const Chat = (Sequelize, DataTypes) => {
                 type: DataTypes.INTEGER,
                 allowNull: false,
             },
-            c_title: {
-                // 채팅방 제목(= 상대방의 닉네임)
+            c_title1: {
+                // 채팅방 제목1(= 채팅 생성자 닉네임)
+                type: DataTypes.STRING(36),
+                allowNull: false,
+            },
+            c_title2: {
+                // 채팅방 제목2(= 글 작성자 닉네임)
                 type: DataTypes.STRING(36),
                 allowNull: false,
             },
