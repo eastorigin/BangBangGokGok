@@ -92,7 +92,7 @@ VALUES (1,4,3,'test123','sfdssffd', now(), now(), 4);
 INSERT INTO chat (p_seq, u_seq, b_seq, c_title1, c_title2, createdAt, updatedAt, last_user) 
 VALUES (1,4,3,'test123','sfdssffd', now(), now(), 4);
 INSERT INTO chat (p_seq, u_seq, b_seq, c_title1, c_title2, createdAt, updatedAt, last_user) 
-VALUES (2,1,2,'testid1','fgdfgdfgd', now(), now(), 1);
+VALUES (2,1,1,'testid1','fgdfgdfgd', now(), now(), 1);
 
 -- sfdssffd
 SELECT * FROM chat;

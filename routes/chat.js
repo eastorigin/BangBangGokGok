@@ -12,6 +12,6 @@ router.get("/lists/:id", controller.getChats);
 router.get("/rooms/:c_seq", controller.getChatRoom);
 
 // POST /chats/rooms (채팅방 생성 구현중)
-// router.post("/rooms", controller.createChatRoom);
+router.post("/rooms/:p_seq", controller.createChatRoom);
 
 module.exports = router;
