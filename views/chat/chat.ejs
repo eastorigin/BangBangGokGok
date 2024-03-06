@@ -72,16 +72,14 @@
             <ul>
                 <% chatLists.forEach(chat => { %>
                 <li>
-                    <a href="/chats/rooms/<%= chat.c_seq %>?u_seq=<%= u_seq %>"
-                        ><%= chat.c_title %></a
-                    >
+                    <a href="/chats/rooms/<%= chat.c_seq %>?id=<%= id %>"><%= chat.c_title1 %></a>
                 </li>
                 <% }); %>
             </ul>
         </div>
 
         <div id="chatRoom">
-            <h1>Chat Room <%= c_title %></h1>
+            <h1>Chat Room <%= c_title.c_title1 %></h1>
             <div id="messages">
                 <% messages.forEach(message => { %>
                 <p class="message <%= message.u_seq ==u_seq ? 'my-message' : 'other-message' %>">

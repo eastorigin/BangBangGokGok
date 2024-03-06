@@ -18,7 +18,13 @@ exports.getChats = async (req, res) => {
             order: [["c_seq", "DESC"]],
         });
 
-        res.render("chat/chatList", { chatLists: chatLists, u_seq: u_seq.u_seq });
+        console.log("============채팅방 목록 확인", chatLists);
+
+        res.render("chat/chatList", {
+            chatLists: chatLists,
+            u_seq: u_seq.u_seq,
+            id: req.params.id,
+        });
     } catch (error) {
         res.status(500).send("server error");
     }
@@ -27,18 +33,17 @@ exports.getChats = async (req, res) => {
 // 채팅방 상세 페이지
 exports.getChatRoom = async (req, res) => {
     try {
-        const u_seq = req.query.u_seq; // 현재 접속 유저
+        const id = req.query.id; // 현재 접속 유저 아이디
 
-        // 채팅방 리스트 이동을 위해 파라미터로 유저 아이디를 전달을 위한 id 추출
-        const id = await User.findOne({
-            attributes: ["id"],
-            where: { u_seq: u_seq },
+        const u_seq = await User.findOne({
+            attributes: ["u_seq"],
+            where: { id: id },
         });
 
         // 채팅방 목록 불러오기
         const chatLists = await Chat.findAll({
             where: {
-                [Op.or]: [{ u_seq: u_seq }, { b_seq: u_seq }],
+                [Op.or]: [{ u_seq: u_seq.u_seq }, { b_seq: u_seq.u_seq }],
             },
             order: [["c_seq", "DESC"]],
         });
@@ -50,17 +55,17 @@ exports.getChatRoom = async (req, res) => {
 
         // 해당 채팅방 제목 불러오기
         const c_title = await Chat.findOne({
-            attributes: ["c_title"],
+            attributes: ["c_title1", "c_title2"],
             where: { c_seq: req.params.c_seq },
         });
 
         res.render("chat/chat", {
             chatLists: chatLists,
             c_seq: req.params.c_seq,
-            c_title: c_title.c_title,
+            c_title: c_title,
             messages: messages,
-            u_seq: u_seq,
-            id: id.id,
+            u_seq: u_seq.u_seq,
+            id: id,
         });
     } catch (err) {
         res.status(500).send("server error");
