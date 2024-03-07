@@ -12,7 +12,7 @@ exports.getPostsList = async (req, res) => {
             include: [
                 {
                     model: User,
-                    attributes: ["u_seq", "nickname"],
+                    attributes: ["u_seq", "nickname", "id"],
                 },
             ],
         });
