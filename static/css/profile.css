@@ -1,11 +1,48 @@
-.card {
+.container-out {
+    /* background-color: green; */
+    margin-top: 60px;
+    width: 1500px;
+    height: 600px;
+}
+.container {
+    margin-top: 5px;
+    display: flex;
+    background-color: white;
+    /* background-color: yellow; */
+    width: 1500px; /* 원하는 너비로 지정 */
+    height: 550px; /* 원하는 높이로 지정 */
+    padding: 20px;
+    /* border: 2px solid black; */
+    border-radius: 2rem;
+}
+.container-name {
+    margin-left: 12rem;
+}
+.pf_1 {
+    display: flex;
+}
+.card1 {
+    flex: 1;
+    margin-right: 20px;
     background-color: white;
     max-width: 300px;
+    max-height: 450px;
     overflow: hidden;
     border-radius: 2rem;
     box-shadow: 0px 1rem 0.5rem rgba(0, 0, 0, 0.5);
-    left: 10rem;
-    top: 5rem;
+    left: 5rem;
+    /* top: 2.5rem; */
+}
+.card2 {
+    flex: 1;
+    background-color: white;
+    max-width: 800px;
+    max-height: 450px;
+    overflow: hidden;
+    border-radius: 2rem;
+    box-shadow: 0px 1rem 0.5rem rgba(0, 0, 0, 0.5);
+    left: 5rem;
+    /* top: 2.5rem; */
 }
 
 .banner {
@@ -17,7 +54,7 @@
 .profile {
     width: 8rem;
     height: 8rem;
-    background-image: url("https://previews.123rf.com/images/viktorijareut/viktorijareut1905/viktorijareut190500748/123236862-%EA%B8%B0%EB%B3%B8-%EC%95%84%EB%B0%94%ED%83%80-%ED%94%84%EB%A1%9C%ED%95%84-%EC%95%84%EC%9D%B4%EC%BD%98-%ED%9A%8C%EC%83%89-%EC%82%AC%EC%A7%84-%EC%9E%90%EB%A6%AC-%ED%91%9C%EC%8B%9C%EC%9E%90.jpg");
+    background-image: url("https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTEwMTRfMjIw%2FMDAxNjM0MTM5NDUyMTMw.LQliGvqqaeaScoAJQOYq3WhxapwGyjZjsfPSBMAuiYEg.WRu1NpNPXpJyMesthhuzSfogPnMFihMCGj9917c_PXog.JPEG.empl%2FIMG_7576.jpg&type=a340");
     background-size: 130px;
     background-color: white;
     border-radius: 50%;
@@ -66,4 +103,9 @@
 
 .desc {
     padding: 4.5rem;
+}
+
+.card2-title {
+    font-size: 15px;
+    color: #ff6f0f;
 }
