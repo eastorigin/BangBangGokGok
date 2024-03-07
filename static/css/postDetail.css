@@ -7,6 +7,7 @@ html {
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: #fff;
 }
 
 .container {
@@ -18,7 +19,11 @@ html {
     padding: 20px;
     box-sizing: border-box;
     margin: auto;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    position: relative;
 }
+
 .left,
 .right {
     flex-basis: 50%;
@@ -27,6 +32,7 @@ html {
     justify-content: center;
     min-height: 100%;
 }
+
 .img_main {
     width: 100%;
     max-width: 400px;
@@ -39,8 +45,40 @@ html {
     color: #333;
 }
 
-.title,
-.category {
+.post-header {
+    position: relative;
+}
+
+#patchForm {
+    position: relative;
+    width: 100%;
+    padding-top: 40px;
+}
+
+.like-count {
+    position: absolute;
+    top: 10px;
+    right: 0px;
+    background-color: #fff;
+    padding: 0.5vw;
+    width: 3vw;
+    height: 3vw;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    font-size: 1.2vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+    min-width: 20px;
+    min-height: 20px;
+    max-width: 50px;
+    max-height: 50px;
+}
+
+#title,
+#category,
+#content {
     width: 100%;
     padding: 8px;
     margin-bottom: 10px;
@@ -48,32 +86,13 @@ html {
     border-radius: 4px;
 }
 
-.content {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+#title {
+    margin-top: 20px;
+}
+
+#content {
     margin-bottom: 20px;
     resize: vertical;
-}
-
-.titleBox {
-    margin-bottom: 20px;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
-
-.contentBox {
-    flex-grow: 1;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    margin-bottom: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    overflow: auto;
 }
 
 .icons {
@@ -86,6 +105,19 @@ html {
 .bi-heart,
 .bi-heart-fill {
     font-size: 1.5rem;
+    cursor: pointer;
+    color: #ff6f0f;
+}
+
+.btn_chat,
+.btn_edit,
+.btn_delete {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #ff6f0f;
+    color: white;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
 }
 
