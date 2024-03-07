@@ -42,7 +42,7 @@
                 <% for(let i = 0; i < postList.length ;i++){ %>
                 <tr id="tr_<%=postList[i].id %>">
                     <td><%=postList[i].p_seq %></td>
-                    <td><%=postList[i].title %></td>
+                    <td><a id="btn-title"><%=postList[i].title %></a></td>
                     <td><%=postList[i].content %></td>
                     <td><%=postList[i].category%></td>
                     <td><%=postList[i].u_seq%></td>
@@ -75,6 +75,9 @@
                     document.location.href = url;
                 }
             }
+            document.getElementById("btn-title").addEventListener("click", function () {
+                // /posts/detail/
+            });
         </script>
     </body>
 </html>
