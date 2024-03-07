@@ -57,3 +57,115 @@ body {
     text-align: center;
     text-decoration: none;
 }
+.submenu {
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    right: 0;
+    top: calc(100% + 30px);
+    width: 400px;
+    height: 400px;
+    background: #fff;
+    box-shadow: 0 50px 50px rgba(0, 0, 0, 0.1);
+    transition: 0.5s;
+    z-index: 9999;
+}
+.submenu::before {
+    content: "";
+    position: absolute;
+    right: 35px;
+    top: -8px;
+    width: 20px;
+    height: 20px;
+    background: #fff;
+    transform: rotate(45deg);
+}
+.submenu.active {
+    opacity: 1;
+    visibility: visible;
+}
+.submenu ul {
+    position: relative;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    z-index: 10;
+}
+.submenu li {
+    padding: 15px 20px;
+    transition: 0.5s;
+}
+.submenu li:hover {
+    background: #f5f5f5;
+    transition: 0s;
+}
+.submenu li a {
+    font-size: 1.25em;
+    color: #666;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.submenu li a ion-icon {
+    font-size: 1.25em;
+    color: #999;
+}
+
+.profile-card {
+    flex: 1;
+    margin-right: 20px;
+    background-color: yellow;
+    width: 300px;
+    height: 450px;
+    overflow: hidden;
+    border-radius: 2rem;
+    box-shadow: 0px 1rem 0.5rem rgba(0, 0, 0, 0.5);
+    left: 5rem;
+    /* top: 2.5rem; */
+}
+.profile-banner {
+    background-image: url("/css/myprofile/다운로드\ \(2\).jpeg");
+    display: flex;
+    justify-content: center;
+}
+.profile-profile {
+    width: 8rem;
+    height: 8rem;
+    background-image: url("https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTEwMTRfMjIw%2FMDAxNjM0MTM5NDUyMTMw.LQliGvqqaeaScoAJQOYq3WhxapwGyjZjsfPSBMAuiYEg.WRu1NpNPXpJyMesthhuzSfogPnMFihMCGj9917c_PXog.JPEG.empl%2FIMG_7576.jpg&type=a340");
+    background-size: 130px;
+    background-color: white;
+    border-radius: 50%;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.3);
+
+    transform: translateY(30%);
+    transition: transform 200ms cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+
+.profile-profile:hover {
+    transform: translateY(30%) scale(1.1);
+}
+
+#profile-name {
+    text-align: center;
+    padding-top: 60px;
+}
+#profile-id {
+    text-align: center;
+}
+#profile-email {
+    text-align: center;
+}
+
+#btn-profile {
+    background-color: rgb(255, 248, 156);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    width: 120px;
+    padding: 10px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: block; /* 버튼을 블록 레벨 요소로 설정합니다. */
+    margin: 0 auto; /* 좌우 여백을 자동으로 설정하여 가운데 정렬합니다. */
+}

@@ -234,7 +234,9 @@ exports.getMyPost = async (req, res) => {
             where: { u_seq: u_seq.u_seq },
         });
 
-        res.render("user/myPost", { data: posts });
+        console.log("=======내가쓴 글", posts);
+
+        res.render("user/myPost", { data: posts, userInfo: u_seq });
     } catch (error) {
         res.status(500).send("server error");
     }

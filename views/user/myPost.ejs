@@ -1,11 +1,67 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
+        <title>css practice3</title>
+        <%-include('../include/head')%>
+        <link rel="stylesheet" href="/static/css/myPost.css" />
     </head>
     <body>
-        <h1>MY Post List</h1>
+        <%-include('../include/header')%>
+        <div class="container-out">
+            <div><h3 class="container-name"><%=userInfo.name%>님이 쓴 게시글</h3></div>
+            <div class="container">
+                <div class="card1 card">
+                    <div class="banner">
+                        <div class="profile"></div>
+                    </div>
+                    <div><h2 class="name"><%=userInfo.name%></h2></div>
+                    <div><h2 class="id"><%=userInfo.id%></h2></div>
+                    <div><h2 class="email"><%=userInfo.email%></h2></div>
+                    <br />
+                    <br />
+                    <a id="btn-back">뒤로가기</a>
+                </div>
+                <div class="card2 card">
+                    <br />
+                    <% for(let i = 0; i < data.length ;i++){ %>
+                    <p class="card2-title">&nbsp;&nbsp;<%=data[i].title%></p>
+                    <p class="card2-content">&nbsp;&nbsp;&nbsp;&nbsp;<%=data[i].content%></p>
+                    <p class="card2-date">&nbsp;&nbsp;&nbsp;&nbsp;<%=data[i].date%></p>
+                    <hr />
+                    <% } %>
+                </div>
+            </div>
+        </div>
+        <script>
+            (async () => {
+                const accessToken = localStorage.getItem("accessToken");
+
+                let data = "";
+                if (!accessToken) {
+                    data = '<a href="/users/signin">로그인</a>';
+                } else {
+                    const response = await axios({
+                        method: "POST",
+                        url: "/users/accesstoken",
+                        headers: {
+                            Authorization: `Bearer ${accessToken}`,
+                        },
+                    });
+                    if (response.userInfo.result) {
+                        // 사용자 이름을 포함한 데이터 생성
+                        data = `
+    <p>${response.data.name}님 환영합니다.</p>
+    <button type="button" onclick="signout()">로그아웃</button>
+`;
+                    }
+                }
+                // info.innerHTML = data; // 로그인 버튼 나오도록 하기
+            })();
+            document.getElementById("btn-back").addEventListener("click", function () {
+                window.history.back(); // 뒤로가기 기능을 수행합니다.
+            });
+        </script>
     </body>
 </html>

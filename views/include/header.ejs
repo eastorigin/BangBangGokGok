@@ -30,6 +30,18 @@
 
                 <a id="btn-login" type="submit" href="../../users/signin"> Login </a>
             </div>
+            <div class="submenu">
+                <div class="profile-card">
+                    <div class="profile-banner">
+                        <div class="profile-profile"></div>
+                    </div>
+                    <div><h2 id="profile-name"></h2></div>
+                    <div><h2 id="profile-id"></h2></div>
+                    <div><h2 id="profile-email"></h2></div>
+                    <br />
+                    <a id="btn-profile">Mypage</a>
+                </div>
+            </div>
         </div>
     </nav>
     <!-- Header End -->
@@ -63,8 +75,13 @@
 
                     const userButton = document.getElementById("btn-user");
                     userButton.innerHTML = `${response.data.name}님`;
-                    userButton.href = `/users/mypage/${response.data.id}`;
-//고쳐야함
+
+                    const profile_name = document.getElementById("profile-name");
+                    profile_name.innerHTML = `${response.data.name}님`;
+
+                    const profileButton = document.getElementById("btn-profile");
+                        profileButton.href = `/users/mypage/${response.data.id}`;
+                    // userButton.href = `/users/mypage/${response.data.id}`;
                 }
             }
             // info.innerHTML = data; // 로그인 버튼 나오도록 하기
@@ -77,6 +94,11 @@
             // 새로고침으로 뷰 화면 변경
             // document.location.href="../../../#";
             document.location.reload();
+        }
+        let profile = document.getElementById("btn-user");
+        let menu = document.querySelector(".submenu");
+        profile.onclick = function(){
+            menu.classList.toggle("active");
         }
     </script>
 </body>
