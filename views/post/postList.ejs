@@ -14,8 +14,16 @@
         <br />
         <div id="post-header">
             <form class="d-flex" role="search">
-                <input class="Search" type="search" placeholder="Search" aria-label="Search" />
-                <a href="#" id="btn-post-search" type="submit"><i class="bi bi-search"></i></a>
+                <input
+                    class="Search"
+                    type="search"
+                    placeholder="Search"
+                    aria-label="Search"
+                    id="search-input"
+                />
+                <button id="btn-post-search" onclick="search()" type="button">
+                    <i class="bi bi-search"></i>
+                </button>
             </form>
             <a id="btn-post" type="submit" href="../posts"> 글쓰기 </a>
         </div>
@@ -53,5 +61,20 @@
             <a href="#" class="bt next">></a>
             <a href="#" class="bt last">>></a>
         </div>
+        <script>
+            function search() {
+                const input = document.getElementById("search-input").value;
+                const currentPath = window.location.pathname; // 현재 경로 가져오기
+
+                if (currentPath.includes("/list")) {
+                    const url = "/posts/list/search?keyword=" + encodeURIComponent(input);
+                    document.location.href = url;
+                } else if (currentPath.includes("/posts/")) {
+                    const category = currentPath.split("/")[2]; // 카테고리명 추출
+                    const url = `/posts/search/${category}?keyword=` + encodeURIComponent(input);
+                    document.location.href = url;
+                }
+            }
+        </script>
     </body>
 </html>
