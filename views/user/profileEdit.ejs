@@ -9,84 +9,91 @@
         <%-include('../include/head')%>
     </head>
     <body>
-        <div class="img_profileEdit">
-            <img
-                src="/static/css/image/profileEdit_img.png"
-                alt="profileEdit_img"
-                id="img_profileEdit"
-            />
-        </div>
-        <div class="profileEditWallPaper">
-            <form name="profileEditForm" id="profileEditForm">
-                <h1>회원정보 수정</h1>
-                <p>비밀번호, 닉네임만 수정 가능</p>
-                <div class="container">
-                    <label for="email"><span> 이메일</span></label>
-                    <br />
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        class="input"
-                        value="<%= data.email %>"
-                        readonly
-                    />
-                    <br />
-                    <label for="userId"><span> 아이디</span></label>
-                    <br />
-                    <input
-                        type="text"
-                        id="id"
-                        name="id"
-                        class="input"
-                        value="<%= data.id %>"
-                        readonly
-                    />
-                    <br />
-                    <label for="userPw"><span> 비밀번호 변경</span></label>
-                    <br />
-                    <input type="password" id="userPw" name="userPw" class="input" required />
-                    <br />
-                    <label for="userPwConfirm"><span>비밀번호 변경 확인</span></label>
-                    <br />
-                    <input
-                        type="password"
-                        id="userPwConfirm"
-                        name="userPwConfirm"
-                        class="input"
-                        required
-                    />
-                    <br />
-                    <label for="name"><span> 이름</span></label>
-                    <br />
-                    <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        class="input"
-                        value="<%= data.name %>"
-                        readonly
-                    />
-                    <br />
-                    <label for="nickname"><span> 닉네임</span></label>
-                    <br />
-                    <input
-                        type="text"
-                        id="nickname"
-                        name="nickname"
-                        class="input"
-                        value="<%= data.nickname %>"
-                        required
-                    />
-                    <button type="button" class="btn_check" onclick="checkDuplicate('nickname')">
-                        중복 확인
-                    </button>
-                    <br /><br />
-                    <button type="button" onclick="profileEdit()" id="btn_profileEdit">
-                        수정하기
-                    </button>
-                </div>
-            </form>
+        <%-include('../include/header')%>
+        <div class="container-edit">
+            <div class="img_profileEdit">
+                <img
+                    src="/static/css/image/profileEdit_img.png"
+                    alt="profileEdit_img"
+                    id="img_profileEdit"
+                />
+            </div>
+            <div class="profileEditWallPaper">
+                <form name="profileEditForm" id="profileEditForm">
+                    <h1>회원정보 수정</h1>
+                    <p>비밀번호, 닉네임만 수정 가능</p>
+                    <div class="container">
+                        <label for="email"><span> 이메일</span></label>
+                        <br />
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            class="input"
+                            value="<%= data.email %>"
+                            readonly
+                        />
+                        <br />
+                        <label for="userId"><span> 아이디</span></label>
+                        <br />
+                        <input
+                            type="text"
+                            id="id"
+                            name="id"
+                            class="input"
+                            value="<%= data.id %>"
+                            readonly
+                        />
+                        <br />
+                        <label for="userPw"><span> 비밀번호 변경</span></label>
+                        <br />
+                        <input type="password" id="userPw" name="userPw" class="input" required />
+                        <br />
+                        <label for="userPwConfirm"><span>비밀번호 변경 확인</span></label>
+                        <br />
+                        <input
+                            type="password"
+                            id="userPwConfirm"
+                            name="userPwConfirm"
+                            class="input"
+                            required
+                        />
+                        <br />
+                        <label for="name"><span> 이름</span></label>
+                        <br />
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            class="input"
+                            value="<%= data.name %>"
+                            readonly
+                        />
+                        <br />
+                        <label for="nickname"><span> 닉네임</span></label>
+                        <br />
+                        <input
+                            type="text"
+                            id="nickname"
+                            name="nickname"
+                            class="input"
+                            value="<%= data.nickname %>"
+                            required
+                        />
+                        <button
+                            type="button"
+                            class="btn_check"
+                            onclick="checkDuplicate('nickname')"
+                        >
+                            중복 확인
+                        </button>
+                        <br /><br />
+                        <button type="button" onclick="profileEdit()" id="btn_profileEdit">
+                            수정하기
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     </body>
     <script>

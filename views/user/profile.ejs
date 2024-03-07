@@ -19,8 +19,11 @@
                     <div><h2 class="name"><%=data.name%></h2></div>
                     <div><h2 class="id"><%=data.id%></h2></div>
                     <div><h2 class="email"><%=data.email%></h2></div>
-                    <div class="follow-btn">
-                        <button>Edit</button>
+                    <br />
+                    <br />
+                    <div class="button-group">
+                        <a id="btn-edit">Edit</a>
+                        <a id="btn-myBoard">내가 쓴 글</a>
                     </div>
                 </div>
                 <div class="card2 card">
@@ -39,5 +42,37 @@
 <h1><%#=data.id%></h1>
 <h1><%#=data.email%></h1>
 <h1><%#=data.nickname%></h1> -->
+        <script>
+            (async () => {
+                const accessToken = localStorage.getItem("accessToken");
+
+                let data = "";
+                if (!accessToken) {
+                    data = '<a href="/users/signin">로그인</a>';
+                } else {
+                    const response = await axios({
+                        method: "POST",
+                        url: "/users/accesstoken",
+                        headers: {
+                            Authorization: `Bearer ${accessToken}`,
+                        },
+                    });
+                    if (response.data.result) {
+                        // 사용자 이름을 포함한 데이터 생성
+                        data = `
+    <p>${response.data.name}님 환영합니다.</p>
+    <button type="button" onclick="signout()">로그아웃</button>
+`;
+                        // 로그인 버튼을 로그아웃 버튼으로 변경
+                        const editButton = document.getElementById("btn-edit");
+                        editButton.href = `/users/profile/${response.data.id}`;
+
+                        const boardButton = document.getElementById("btn-myBoard");
+                        boardButton.href = `/users/mypost/${response.data.id}`;
+                    }
+                }
+                // info.innerHTML = data; // 로그인 버튼 나오도록 하기
+            })();
+        </script>
     </body>
 </html>
