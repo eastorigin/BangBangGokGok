@@ -9,8 +9,14 @@ exports.getPostsList = async (req, res) => {
     try {
         const postList = await Post.findAll({
             order: [["p_seq", "DESC"]],
+            include: [
+                {
+                    model: User,
+                    attributes: ["u_seq", "nickname"],
+                },
+            ],
         });
-        console.log(postList);
+        console.log("----유저닉네임-----", postList[0].User.nickname); // 닉네임 가지고 오는 법 <- 확인 후 지워주세요.
         res.render("post/postList", { postList: postList });
     } catch (error) {
         res.status(500).send("server error");
@@ -25,8 +31,15 @@ exports.getPostsByCategory = async (req, res) => {
             where: {
                 category: category,
             },
+            include: [
+                {
+                    model: User,
+                    attributes: ["u_seq", "nickname"],
+                },
+            ],
             order: [["p_seq", "DESC"]],
         });
+        console.log("----유저닉네임-----", postListByCategory[1].User.nickname); // 닉네임 가지고 오는 법 <- 확인 후 지워주세요.
         res.render("post/postList", { postList: postListByCategory });
     } catch (error) {
         res.status(500).send("server error");
