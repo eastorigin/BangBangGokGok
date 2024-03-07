@@ -42,137 +42,207 @@
                 </div>
             </div>
         <script>
-(async () => {
-    const accessToken = localStorage.getItem("accessToken");
-    const iconsDiv = document.querySelector(".icons");
+            let currentUserInfo = {};
 
-    // 하트 아이콘과 채팅 버튼 추가 함수
-    function addInteractiveIcons() {
-        const heartIcon = document.createElement("i");
-        heartIcon.className = "bi bi-heart";
-        heartIcon.id = "heart-icon";
+            (async () => {
+                const accessToken = localStorage.getItem("accessToken");
+                const iconsDiv = document.querySelector(".icons");
 
-        const chatButton = document.createElement("button");
-        chatButton.textContent = "채팅하기";
-        chatButton.className = "btn_chat";
-
-        iconsDiv.appendChild(heartIcon);
-        iconsDiv.appendChild(chatButton);
-
-        heartIcon.addEventListener("click", function () {
-            let likeCount = parseInt(document.getElementById("like-count").textContent) || 0;
-
-            this.classList.toggle("bi-heart");
-            this.classList.toggle("bi-heart-fill");
-
-            // bi-heart-fill 클래스가 적용되어 있으면 like-count 증가, 그렇지 않으면 감소
-            if (this.classList.contains("bi-heart-fill")) {
-                likeCount++;
-            } else {
-                if (likeCount > 0) { // like-count가 0보다 클 때만 감소시킴
-                    likeCount--;
-                }
-            }
-            document.getElementById("like-count").textContent = likeCount;
-        });
-    }
-
-    // 게시글 작성자가 아니거나 로그인하지 않은 사용자에 대한 편집 기능 비활성화
-    function disableEdit() {
-        document.getElementById("btn_edit").style.display = "none";
-        document.getElementById("btn_delete").style.display = "none";
-        document.getElementById("title").disabled = true;
-        document.getElementById("category").disabled = true;
-        document.getElementById("content").disabled = true;
-
-        // 하트 아이콘과 채팅 버튼 추가
-        addInteractiveIcons();
-    }
-
-    // accessToken이 존재하는 경우에만 사용자를 확인
-    if (accessToken) {
-        try {
-            const response = await axios({
-                method: "POST",
-                url: "/posts/accesstoken",
-                headers: {
+                try {
+                    const response = await axios({
+                    method: "GET",
+                    url: "/posts/accesstoken", // 어느 주소에서 받아와야 하는지
+                    headers: {
                     Authorization: `Bearer ${accessToken}`,
-                },
-            });
+                    },
+                });
 
-            if (response.data.result) {
-                const currentUserNickname = response.data.nickname;
-                const authorNickname = '<%= postDetail.User.nickname %>';
+                    currentUserInfo = response.data;
+                } catch (error) {
+                    console.error("사용자 정보 가져오기 에러:", error);
+                }
 
-                if (currentUserNickname !== authorNickname) {
-                    disableEdit();
+                // 하트 아이콘과 채팅 버튼 추가 함수
+                function addInteractiveIcons() {
+                    const heartIcon = document.createElement("i");
+                    heartIcon.className = "bi bi-heart";
+                    heartIcon.id = "heart-icon";
+
+                    const chatButton = document.createElement("button");
+                    chatButton.textContent = "채팅하기";
+                    chatButton.className = "btn_chat";
+                    chatButton.addEventListener("click", chatButtonClicked);
+
+                    iconsDiv.appendChild(heartIcon);
+                    iconsDiv.appendChild(chatButton);
+
+                    heartIcon.addEventListener("click", async function () {
+                        let likeCount = parseInt(document.getElementById("like-count").textContent) || 0;
+
+                        // 클래스를 토글하기 전에 현재 '좋아요' 상태를 확인합니다.
+                        let isLiked = this.classList.contains("bi-heart-fill");
+
+                        // 클래스를 토글합니다.
+                        this.classList.toggle("bi-heart");
+                        this.classList.toggle("bi-heart-fill");
+
+                        // 'isLiked' 변수 업데이트: 만약 'bi-heart-fill' 클래스가 존재한다면, 이제 '좋아요' 상태입니다.
+                        isLiked = !isLiked;
+
+                        try {
+                            const response = await axios({
+                                method: isLiked ? "POST" : "DELETE", // 'isLiked' 상태에 따라 요청 메소드를 결정합니다.
+                                url: `/likes/${'<%= postDetail.p_seq %>'}`, // 어디로 보내야 하는지?
+                                headers: {
+                                    Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+                                },
+                            });
+
+                            if (response.status === 200) {
+                                // 요청 성공 시 'like-count'를 업데이트합니다.
+                                document.getElementById("like-count").textContent = isLiked ? ++likeCount : --likeCount;
+                            } else {
+                                // 서버에서 요청을 처리하지 못했다면 UI 상태를 이전으로 되돌립니다.
+                                this.classList.toggle("bi-heart");
+                                this.classList.toggle("bi-heart-fill");
+                            }
+                        } catch (error) {
+                            console.error("좋아요 상태 변경 에러:", error);
+                            // 에러 발생 시 UI 상태를 이전으로 되돌립니다.
+                            this.classList.toggle("bi-heart");
+                            this.classList.toggle("bi-heart-fill");
+                        }
+                    });
+                }
+
+                // 게시글 작성자가 아니거나 로그인하지 않은 사용자에 대한 편집 기능 비활성화
+                function disableEdit() {
+                    document.getElementById("btn_edit").style.display = "none";
+                    document.getElementById("btn_delete").style.display = "none";
+                    document.getElementById("title").disabled = true;
+                    document.getElementById("category").disabled = true;
+                    document.getElementById("content").disabled = true;
+
+                    // 하트 아이콘과 채팅 버튼 추가
+                    addInteractiveIcons();
+                }
+
+                // accessToken이 존재하는 경우에만 사용자를 확인
+                if (accessToken) {
+                    try {
+                        const response = await axios({
+                        method: "POST",
+                        url: "/posts/accesstoken",
+                        headers: {
+                            Authorization: `Bearer ${accessToken}`,
+                        },
+                    });
+
+                    if (response.data.result) {
+                        const currentUserNickname = response.data.nickname;
+                        const authorNickname = '<%= postDetail.User.nickname %>';
+
+                        if (currentUserNickname !== authorNickname) {
+                            disableEdit();
+                        } else {
+                            // 작성자와 로그인한 사용자가 일치하는 경우
+                            document.getElementById("btn_edit").style.display = "block";
+                            document.getElementById("btn_delete").style.display = "block";
+                        }
+                    } else {
+                        console.log("사용자 정보 가져오기 실패");
+                        disableEdit();
+                    }
+                    } catch (error) {
+                        console.error("사용자 정보 가져오기 에러:", error);
+                        disableEdit();
+                        }
                 } else {
-                    // 작성자와 로그인한 사용자가 일치하는 경우
-                    document.getElementById("btn_edit").style.display = "block";
-                    document.getElementById("btn_delete").style.display = "block";
+                    // accessToken이 없으면 로그인하지 않은 것으로 처리
+                    disableEdit();
                 }
-            } else {
-                console.log("사용자 정보 가져오기 실패");
-                disableEdit();
+            })();
+
+            async function deletePost(postId) {
+                try {
+                    const accessToken = localStorage.getItem("accessToken");
+                    const response = await axios({
+                        method: "DELETE",
+                        url: `/posts/detail/${postId}`,
+                        headers: {
+                            Authorization: `Bearer ${accessToken}`,
+                        },
+                    });
+
+                    if (response.status === 200) {
+                        alert('게시글이 성공적으로 삭제되었습니다.');
+                        window.location.href = '/posts/list';
+                    }
+                } catch (error) {
+                    console.error(error);
+                    alert('게시글 삭제에 실패했습니다.');
+                    }
+                }
+
+            async function updatePost(postId) {
+                try {
+                    const title = document.getElementById("title").value;
+                    const category = document.getElementById("category").value;
+                    const content = document.getElementById("content").value;
+                    const accessToken = localStorage.getItem("accessToken");
+
+                    const response = await axios({
+                        method: "PATCH",
+                        url: `/posts/detail/${postId}`,
+                        data: JSON.stringify({ title, category, content }),
+                        headers: {
+                            'Authorization': `Bearer ${accessToken}`,
+                            'Content-Type': 'application/json',
+                        },
+                    });
+
+                    if (response.status === 200) {
+                        alert('게시글이 성공적으로 수정되었습니다.');
+                        window.location.href = `/posts/list`;
+                    }
+                } catch (error) {
+                    console.error(error);
+                    alert('게시글 수정에 실패했습니다.');
+                }
             }
-        } catch (error) {
-            console.error("사용자 정보 가져오기 에러:", error);
-            disableEdit();
-        }
-    } else {
-        // accessToken이 없으면 로그인하지 않은 것으로 처리
-        disableEdit();
-    }
-})();
 
-    async function deletePost(postId) {
-        try {
-            const accessToken = localStorage.getItem("accessToken");
-            const response = await axios({
-                method: "DELETE",
-                url: `/posts/detail/${postId}`,
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                },
-            });
+            function chatButtonClicked() {
+                console.log("채팅하기 버튼 클릭됨"); // 클릭 이벤트 리스너 확인
 
-        if (response.status === 200) {
-            alert('게시글이 성공적으로 삭제되었습니다.');
-                window.location.href = '/posts/list';
-        }
-        } catch (error) {
-            console.error(error);
-            alert('게시글 삭제에 실패했습니다.');
+                console.log("axios 요청 전송 준비", {
+                    b_nick: '<%= postDetail.User.nickname %>',
+                    b_seq: '<%= postDetail.User.p_seq %>',
+                    u_seq: currentUserInfo.u_seq,
+                    u_nick: currentUserInfo.nickname,
+                    id: currentUserInfo.id
+                });
+
+                axios.post("/chats/rooms", { // 어디로 보내야 하는지
+                    b_nick: '<%= postDetail.User.nickname %>',
+                    b_seq: '<%= postDetail.User.p_seq %>',
+                    u_seq: currentUserInfo.u_seq,
+                    u_nick: currentUserInfo.nickname,
+                    id: currentUserInfo.id
+                }, {
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${localStorage.getItem("accessToken")}`,
+                    }
+                })
+                .then(function(response) {
+                    console.log("axios 요청 성공", response); // 요청 성공 시 로그
+                    window.open('`/chats/rooms/${response.data.c_seq}`');
+                })
+                .catch(function(error) {
+                    console.error("Error:", error);
+                    alert('채팅방 생성에 실패했습니다.');
+                });
             }
-    }
-
-    async function updatePost(postId) {
-    try {
-        const title = document.getElementById("title").value;
-        const category = document.getElementById("category").value;
-        const content = document.getElementById("content").value;
-        const accessToken = localStorage.getItem("accessToken");
-
-        const response = await axios({
-            method: "PATCH",
-            url: `/posts/detail/${postId}`,
-            data: JSON.stringify({ title, category, content }),
-            headers: {
-                'Authorization': `Bearer ${accessToken}`,
-                'Content-Type': 'application/json',
-            },
-        });
-
-        if (response.status === 200) {
-            alert('게시글이 성공적으로 수정되었습니다.');
-            window.location.href = `/posts/list`;
-        }
-    } catch (error) {
-        console.error(error);
-        alert('게시글 수정에 실패했습니다.');
-    }
-    }
-
         </script>
     </body>
 </html>
