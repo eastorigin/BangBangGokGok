@@ -15,23 +15,26 @@
                 <!--괄호 퍼센트 imgSrc  -->
                 <div class="author">작성자: <%= postDetail.User.nickname %></div>
             </div>
-            <div class="right">                   
-                    <form id="patchForm">
-                        <input type="text" id="title" name="title" value="<%= postDetail.title %>">
-                        <select id="category" name="category">
-                            <option value="서울" <%= postDetail.category === '서울' ? 'selected' : '' %>>서울</option>
-                            <option value="경기도" <%= postDetail.category === '경기도' ? 'selected' : '' %>>경기도</option>
-                            <option value="강원도" <%= postDetail.category === '강원도' ? 'selected' : '' %>>강원도</option>
-                            <option value="충청북도" <%= postDetail.category === '충청북도' ? 'selected' : '' %>>충청북도</option>
-                            <option value="충청남도" <%= postDetail.category === '충청남도' ? 'selected' : '' %>>충청남도</option>
-                            <option value="전라북도" <%= postDetail.category === '전라북도' ? 'selected' : '' %>>전라북도</option>
-                            <option value="전라남도" <%= postDetail.category === '전라남도' ? 'selected' : '' %>>전라남도</option>
-                            <option value="경상북도" <%= postDetail.category === '경상북도' ? 'selected' : '' %>>경상북도</option>
-                            <option value="경상남도" <%= postDetail.category === '경상남도' ? 'selected' : '' %>>경상남도</option>
-                            <option value="제주도" <%= postDetail.category === '제주도' ? 'selected' : '' %>>제주도</option>
-                        </select>
-                        <textarea name="content" id="content" cols="30" rows="10"><%= postDetail.content %></textarea>
-                    </form>
+            <div class="right">
+                <div class="post-header">
+                </div>                   
+                <form id="patchForm">
+                    <span id="like-count" class="like-count">0</span>
+                    <input type="text" id="title" name="title" value="<%= postDetail.title %>">
+                    <select id="category" name="category">
+                        <option value="서울" <%= postDetail.category === '서울' ? 'selected' : '' %>>서울</option>
+                        <option value="경기도" <%= postDetail.category === '경기도' ? 'selected' : '' %>>경기도</option>
+                        <option value="강원도" <%= postDetail.category === '강원도' ? 'selected' : '' %>>강원도</option>
+                        <option value="충청북도" <%= postDetail.category === '충청북도' ? 'selected' : '' %>>충청북도</option>
+                        <option value="충청남도" <%= postDetail.category === '충청남도' ? 'selected' : '' %>>충청남도</option>
+                        <option value="전라북도" <%= postDetail.category === '전라북도' ? 'selected' : '' %>>전라북도</option>
+                        <option value="전라남도" <%= postDetail.category === '전라남도' ? 'selected' : '' %>>전라남도</option>
+                        <option value="경상북도" <%= postDetail.category === '경상북도' ? 'selected' : '' %>>경상북도</option>
+                        <option value="경상남도" <%= postDetail.category === '경상남도' ? 'selected' : '' %>>경상남도</option>
+                        <option value="제주도" <%= postDetail.category === '제주도' ? 'selected' : '' %>>제주도</option>
+                    </select>
+                    <textarea name="content" id="content" cols="30" rows="10"><%= postDetail.content %></textarea>
+                </form>
 
                 <div class="icons">
                         <button class="btn_edit" id="btn_edit" onclick="updatePost('<%= postDetail.p_seq %>')">수정하기</button>
@@ -57,8 +60,20 @@
         iconsDiv.appendChild(chatButton);
 
         heartIcon.addEventListener("click", function () {
+            let likeCount = parseInt(document.getElementById("like-count").textContent) || 0;
+
             this.classList.toggle("bi-heart");
             this.classList.toggle("bi-heart-fill");
+
+            // bi-heart-fill 클래스가 적용되어 있으면 like-count 증가, 그렇지 않으면 감소
+            if (this.classList.contains("bi-heart-fill")) {
+                likeCount++;
+            } else {
+                if (likeCount > 0) { // like-count가 0보다 클 때만 감소시킴
+                    likeCount--;
+                }
+            }
+            document.getElementById("like-count").textContent = likeCount;
         });
     }
 
@@ -156,7 +171,8 @@
         console.error(error);
         alert('게시글 수정에 실패했습니다.');
     }
-    }        
+    }
+
         </script>
     </body>
 </html>
