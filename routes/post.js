@@ -10,8 +10,11 @@ router.get("/list", controller.getPostsList);
 // GET /posts/:category
 router.get("/:category", controller.getPostsByCategory);
 
-// GET /posts/:keyword (검색엔진을 통해 개선 예정)
-router.get("/search/:keyword", controller.getPostsByKeyword);
+// GET /posts/list/search?keyword=검색어
+router.get("/list/search", controller.getPostsByKeyword);
+
+// GET /posts/search/:category?keyword=검색어
+router.get("/search/:category", controller.getPostsByKeywordByCategory);
 
 // GET /posts
 router.get("/", controller.getPosts);

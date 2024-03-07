@@ -33,19 +33,46 @@ exports.getPostsByCategory = async (req, res) => {
     }
 };
 
-// GET /posts/:keyword 게시글 목록 (검색 결과)
+// GET /posts/list/search?keyword=검색어
 exports.getPostsByKeyword = async (req, res) => {
     try {
-        const { keyword } = req.params;
+        console.log(req.query);
+        const { keyword } = req.query;
         const postsByKeyword = await Post.findAll({
             where: {
                 [Op.or]: [
                     { title: { [Op.like]: `%${keyword}%` } },
+                    { content: { [Op.like]: `%${keyword}%` } },
                     { category: { [Op.like]: `%${keyword}%` } },
                 ],
             },
+            order: [["p_seq", "DESC"]],
         });
         res.render("post/postList", { postList: postsByKeyword });
+    } catch (error) {
+        res.status(500).send("server error");
+    }
+};
+
+// GET /posts/search/category?keyword=검색어
+exports.getPostsByKeywordByCategory = async (req, res) => {
+    try {
+        console.log(req.query);
+        const { keyword } = req.query;
+        const { category } = req.params;
+        const postsByKeyword = await Post.findAll({
+            where: {
+                category: category,
+                [Op.or]: [
+                    { title: { [Op.like]: `%${keyword}%` } },
+                    { content: { [Op.like]: `%${keyword}%` } },
+                    { category: { [Op.like]: `%${keyword}%` } },
+                ],
+            },
+            order: [["p_seq", "DESC"]],
+        });
+        res.render("post/postList", { postList: postsByKeyword });
+        res.render("post/postList");
     } catch (error) {
         res.status(500).send("server error");
     }
