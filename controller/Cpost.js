@@ -120,7 +120,6 @@ exports.postPosts = async (req, res) => {
         // const { title, content, category } = req.body;
         // const file = req.file ? req.file.filename : ""; // 업로드된 파일명
         const { title, content, file, category } = req.body;
-
         const newPost = await Post.create({
             title,
             content,
@@ -150,10 +149,6 @@ exports.getPostsDetail = async (req, res) => {
             ],
         });
         console.log(postDetail);
-        // res.render("post/postDetail", {
-        //     postDetail: postDetail,
-        //     imgSrc: postDetail.file ? `/uploads/${postDetail.file}` : null,
-        // });
         res.render("post/postDetail", { postDetail: postDetail });
     } catch (error) {
         console.log(error);

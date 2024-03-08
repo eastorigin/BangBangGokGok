@@ -101,6 +101,7 @@ exports.createChatRoom = async (req, res) => {
         const { p_seq } = req.params; // 채팅방이 생성되는 글의 seq
         const { b_seq, u_seq, b_nick, u_nick, id } = req.body;
 
+        console.log(p_seq);
         const c_title = [u_nick, b_nick];
 
         console.log("생성 c_title", c_title);
@@ -114,6 +115,8 @@ exports.createChatRoom = async (req, res) => {
                 ],
             },
         });
+
+        console.log("check", check);
         console.log("========이미 존재하는 채팅방 확인", check);
         if (check) {
             // 이미 존재하는 채팅방이 있을 경우, 해당 채팅방 열기

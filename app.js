@@ -3,6 +3,9 @@ const http = require("http");
 const socketIO = require("socket.io");
 const { Op } = require("sequelize");
 
+const multer = require("multer");
+const path = require("path");
+
 const app = express();
 const server = http.createServer(app); // 서버 객체 생성
 const io = socketIO(server);
@@ -10,6 +13,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 const PORT = process.env.PORT;
 const db = require("./models");
+const jwt = require("jsonwebtoken");
 
 app.set("view engine", "ejs");
 app.set("views", "./views");
@@ -93,6 +97,49 @@ app.get("*", (req, res) => {
 
 db.sequelize.sync({ force: false }).then((result) => {
     console.log("DB연결 성공");
+});
+
+const uploadDetail = multer({
+    storage: multer.diskStorage({
+        destination: function (req, file, cb) {
+            cb(null, "uploads/");
+        },
+
+        filename: function (req, file, done) {
+            const extension = path.extname(file.originalname);
+            done(null, path.basename(file.originalname, extension) + Date.now() + extension);
+        },
+    }),
+});
+
+// 파일 업로드를 처리하는 라우터 추가
+app.post("/upload", uploadDetail.single("file"), async (req, res) => {
+    try {
+        // 업로드된 파일 정보를 DB에 저장하는 코드 추가
+        const accessToken = req.headers.authorization.split(" ")[1];
+        console.log("accessToken: ", accessToken);
+
+        // JWT 토큰을 검증하고 토큰에 포함된 사용자 정보를 추출
+        const decodedToken = jwt.verify(accessToken, process.env.ACCESS_SECRET);
+        const u_seq = decodedToken.u_seq;
+
+        const { filename, path } = req.file;
+        console.log(filename, path);
+        console.log(req.body);
+        const post = await db.Post.create({
+            title: req.body.title,
+            content: req.body.content,
+            file: filename,
+            category: req.body.category,
+            u_seq,
+        });
+
+        console.log("postttttt", post);
+        res.status(201).send(post);
+    } catch (error) {
+        console.error("파일 업로드 중 에러 발생:", error);
+        res.status(500).send("파일 업로드에 실패했습니다.");
+    }
 });
 
 server.listen(PORT, () => {

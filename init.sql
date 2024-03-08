@@ -1,4 +1,4 @@
--- Active: 1707101296801@@127.0.0.1@3306@sesac
+-- Active: 1707101283066@@127.0.0.1@3306@bbgg_db
 
 show DATABASES;
 use prac;
