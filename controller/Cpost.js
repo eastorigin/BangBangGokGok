@@ -110,7 +110,7 @@ exports.getPosts = (req, res) => {
 exports.postPosts = async (req, res) => {
     try {
         // 클라이언트로부터 JWT 토큰을 받아옴
-        const accessToken = (req.headers.authorization || "").split(" ")[1];
+        const accessToken = req.headers.authorization.split(" ")[1];
         console.log("accessToken: ", accessToken);
 
         // JWT 토큰을 검증하고 토큰에 포함된 사용자 정보를 추출
