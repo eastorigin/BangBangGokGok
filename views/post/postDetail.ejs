@@ -42,15 +42,13 @@
                 </div>
             </div>
         <script>
-            let currentUserInfo = {};
-
             (async () => {
                 const accessToken = localStorage.getItem("accessToken");
                 const iconsDiv = document.querySelector(".icons");
-
+                let currentUserInfo = {};
                 try {
                     const response = await axios({
-                    method: "GET",
+                    method: "POST",
                     url: "/posts/accesstoken", // 어느 주소에서 받아와야 하는지
                     headers: {
                     Authorization: `Bearer ${accessToken}`,
@@ -58,6 +56,7 @@
                 });
 
                     currentUserInfo = response.data;
+                    console.log(currentUserInfo)
                 } catch (error) {
                     console.error("사용자 정보 가져오기 에러:", error);
                 }
@@ -161,6 +160,39 @@
                     // accessToken이 없으면 로그인하지 않은 것으로 처리
                     disableEdit();
                 }
+
+                function chatButtonClicked() {
+                console.log("채팅하기 버튼 클릭됨"); // 클릭 이벤트 리스너 확인
+
+                console.log("axios 요청 전송 준비", {
+                    b_nick: '<%= postDetail.User.nickname %>',
+                    b_seq: '<%= postDetail.User.u_seq %>',
+                    u_seq: currentUserInfo.u_seq,
+                    u_nick: currentUserInfo.nickname,
+                    id: currentUserInfo.id
+                });
+
+                axios.post("/chats/rooms", { // 어디로 보내야 하는지
+                    b_nick: '<%= postDetail.User.nickname %>',
+                    b_seq: '<%= postDetail.User.u_seq %>',
+                    u_seq: currentUserInfo.u_seq,
+                    u_nick: currentUserInfo.nickname,
+                    id: currentUserInfo.id
+                }, {
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${localStorage.getItem("accessToken")}`,
+                    }
+                })
+                .then(function(response) {
+                    console.log("axios 요청 성공", response); // 요청 성공 시 로그
+                    window.open('/chats/rooms'); // 채팅창 주소가 먼지?
+                })
+                .catch(function(error) {
+                    console.error("Error:", error);
+                    alert('채팅방 생성에 실패했습니다.');
+                });
+            }
             })();
 
             async function deletePost(postId) {
@@ -211,38 +243,7 @@
                 }
             }
 
-            function chatButtonClicked() {
-                console.log("채팅하기 버튼 클릭됨"); // 클릭 이벤트 리스너 확인
-
-                console.log("axios 요청 전송 준비", {
-                    b_nick: '<%= postDetail.User.nickname %>',
-                    b_seq: '<%= postDetail.User.p_seq %>',
-                    u_seq: currentUserInfo.u_seq,
-                    u_nick: currentUserInfo.nickname,
-                    id: currentUserInfo.id
-                });
-
-                axios.post("/chats/rooms", { // 어디로 보내야 하는지
-                    b_nick: '<%= postDetail.User.nickname %>',
-                    b_seq: '<%= postDetail.User.p_seq %>',
-                    u_seq: currentUserInfo.u_seq,
-                    u_nick: currentUserInfo.nickname,
-                    id: currentUserInfo.id
-                }, {
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": `Bearer ${localStorage.getItem("accessToken")}`,
-                    }
-                })
-                .then(function(response) {
-                    console.log("axios 요청 성공", response); // 요청 성공 시 로그
-                    window.open('`/chats/rooms/${response.data.c_seq}`');
-                })
-                .catch(function(error) {
-                    console.error("Error:", error);
-                    alert('채팅방 생성에 실패했습니다.');
-                });
-            }
+            
         </script>
     </body>
 </html>
