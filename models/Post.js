@@ -30,6 +30,11 @@ const Post = (Sequelize, DataTypes) => {
                 type: DataTypes.STRING(20),
                 allowNull: false,
             },
+            is_success: {
+                type: DataTypes.BOOLEAN, // 1: true(거래완료), 0: false(거래안완료)
+                allowNull: false,
+                defaultValue: 0,
+            },
         },
         {
             tableName: "post",
