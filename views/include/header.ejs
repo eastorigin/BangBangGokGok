@@ -11,20 +11,11 @@
     <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
             <a id="logo" href="/">BBGG</a>
-            <form class="d-flex" role="search">
-                <input
-                    class="form-control me-2"
-                    type="search"
-                    placeholder="Search"
-                    aria-label="Search"
-                />
-                <a href="#" id="btn-search" type="submit"
-                    ><i class="bi bi-search"></i></a></a>
-            </form>
-            <div id="menu">
-                <a id="btn-chat" href="#">Chat</a>
 
-                <a id="btn-mypage" href="../../posts/list">Board</a>
+            <div id="menu">
+                <a id="btn-chat" href="#">채팅방</a>
+
+                <a id="btn-mypage" href="../../posts/list">둘러보기</a>
 
                 <a id="btn-user" href="#"></a>
 
@@ -63,7 +54,7 @@
                 });
                 if (response.data.result) {
                     // 사용자 이름을 포함한 데이터 생성
-                    
+
                     // 로그인 버튼을 로그아웃 버튼으로 변경
                     const loginButton = document.getElementById("btn-login");
                     loginButton.innerHTML = "logout";
@@ -71,13 +62,16 @@
                     loginButton.onclick = signout; // onclick 이벤트에 signout 함수 할당
 
                     const userButton = document.getElementById("btn-user");
-                    userButton.innerHTML = `${response.data.name}님`;
+                    userButton.innerHTML = `${response.data.nickname}님`;
 
                     const profile_name = document.getElementById("profile-name");
-                    profile_name.innerHTML = `${response.data.name}님`;
+                    profile_name.innerHTML = `${response.data.nickname}님`;
 
                     const profileButton = document.getElementById("btn-profile");
-                        profileButton.href = `/users/mypage/${response.data.id}`;
+                    profileButton.href = `/users/mypage/${response.data.id}`;
+
+                    const chatButton = document.getElementById("btn-chat");
+                    chatButton.href = `/chats/lists/${response.data.id}`;
                     // userButton.href = `/users/mypage/${response.data.id}`;
                 }
             }
@@ -87,15 +81,15 @@
         function signout() {
             // 로컬 스토리지에서 jwt 정보 삭제
             localStorage.clear();
-            
+
             // 새로고침으로 뷰 화면 변경
             // document.location.href="../../../#";
             document.location.reload();
         }
         let profile = document.getElementById("btn-user");
         let menu = document.querySelector(".submenu");
-        profile.onclick = function(){
+        profile.onclick = function () {
             menu.classList.toggle("active");
-        }
+        };
     </script>
 </body>
