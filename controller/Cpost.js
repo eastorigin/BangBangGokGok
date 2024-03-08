@@ -117,8 +117,6 @@ exports.postPosts = async (req, res) => {
         const decodedToken = jwt.verify(accessToken, process.env.ACCESS_SECRET);
         const u_seq = decodedToken.u_seq;
 
-        // const { title, content, category } = req.body;
-        // const file = req.file ? req.file.filename : ""; // 업로드된 파일명
         const { title, content, file, category } = req.body;
         const newPost = await Post.create({
             title,
