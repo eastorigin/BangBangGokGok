@@ -49,7 +49,7 @@
                 try {
                     const response = await axios({
                     method: "POST",
-                    url: "/posts/accesstoken", // 어느 주소에서 받아와야 하는지
+                    url: "/posts/accesstoken",
                     headers: {
                     Authorization: `Bearer ${accessToken}`,
                     },
@@ -161,7 +161,22 @@
                     disableEdit();
                 }
 
-                function chatButtonClicked() {
+            function chatButtonClicked() { //여기에다 p_seq 넣기? 그러면 p_seq 정의는?
+                // console.log("채팅하기 버튼 클릭됨"); // 클릭 이벤트 리스너 확인
+                const accessToken = localStorage.getItem("accessToken");
+                // console.log("accessToken:", accessToken);
+
+                    if (!accessToken) {
+                        // 로그인되어 있지 않은 경우, 로그인 확인 메시지 표시
+                        const confirmLogin = confirm("채팅을 하려면 로그인이 필요합니다. 로그인하시겠습니까?");
+                        if (confirmLogin) {
+                            // 사용자가 확인을 선택한 경우, 로그인 페이지로 이동
+                             window.location.href = "/users/signin";
+                        }
+                        // 사용자가 취소를 선택한 경우, 함수 종료
+                        return;
+                    }
+                    
                 console.log("채팅하기 버튼 클릭됨"); // 클릭 이벤트 리스너 확인
 
                 console.log("axios 요청 전송 준비", {
@@ -172,7 +187,10 @@
                     id: currentUserInfo.id
                 });
 
-                axios.post("/chats/rooms", { // 어디로 보내야 하는지
+                // /rooms/:p_seq
+
+                console.log('<%= postDetail.p_seq %>');
+                axios.post(`/chats/rooms/${'<%= postDetail.p_seq %>'}`, { // 어디로 보내야 하는지, 파라미터 p_seq를 여기에 쓴다?
                     b_nick: '<%= postDetail.User.nickname %>',
                     b_seq: '<%= postDetail.User.u_seq %>',
                     u_seq: currentUserInfo.u_seq,
@@ -184,15 +202,16 @@
                         "Authorization": `Bearer ${localStorage.getItem("accessToken")}`,
                     }
                 })
-                .then(function(response) {
-                    console.log("axios 요청 성공", response); // 요청 성공 시 로그
-                    window.open('/chats/rooms'); // 채팅창 주소가 먼지?
+                .then((response)=> {
+                    console.log("axios 요청 성공", response.data); // 요청 성공 시 로그
                 })
                 .catch(function(error) {
                     console.error("Error:", error);
                     alert('채팅방 생성에 실패했습니다.');
                 });
             }
+
+            
             })();
 
             async function deletePost(postId) {
