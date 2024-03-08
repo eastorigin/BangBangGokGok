@@ -59,10 +59,7 @@
                     });
                     if (response.data.result) {
                         // 사용자 이름을 포함한 데이터 생성
-                        data = `
-    <p>${response.data.name}님 환영합니다.</p>
-    <button type="button" onclick="signout()">로그아웃</button>
-`;
+
                         // 로그인 버튼을 로그아웃 버튼으로 변경
                         const editButton = document.getElementById("btn-edit");
                         editButton.href = `/users/profile/${response.data.id}`;
