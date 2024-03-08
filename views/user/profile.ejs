@@ -3,38 +3,37 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>css practice3</title>
+        <title>방방곡곡</title>
         <%-include('../include/head')%>
         <link rel="stylesheet" href="/static/css/profile.css" />
     </head>
     <body>
         <%-include('../include/header')%>
         <div class="container-out">
-            <div><h3 class="container-name"><%=data.name%>님의 마이페이지</h3></div>
-            <div class="container">
-                <div class="card1 card">
-                    <div class="banner">
-                        <div class="profile"></div>
-                    </div>
-                    <div><h2 class="name"><%=data.name%></h2></div>
-                    <div><h2 class="id"><%=data.id%></h2></div>
-                    <div><h2 class="email"><%=data.email%></h2></div>
-                    <br />
-                    <br />
-                    <div class="button-group">
-                        <a id="btn-edit">Edit</a>
-                        <a id="btn-myBoard">내가 쓴 글</a>
-                    </div>
+            <div><h3 class="container-name"><%=data.nickname%>님의 마이페이지</h3></div>
+        </div>
+        <div class="container-in">
+            <div class="card1 card">
+                <div class="banner">
+                    <div class="profile"></div>
                 </div>
-                <div class="card2 card">
-                    <br />
-                    <% for(let i = 0; i < myPosts.length ;i++){ %>
-                    <p class="card2-title">&nbsp;&nbsp;<%=myPosts[i].title%></p>
-                    <p class="card2-content">&nbsp;&nbsp;&nbsp;&nbsp;<%=myPosts[i].content%></p>
-                    <p class="card2-date">&nbsp;&nbsp;&nbsp;&nbsp;<%=myPosts[i].date%></p>
-                    <hr />
-                    <% } %>
+                <div><h2 class="name"><%=data.name%></h2></div>
+                <div><h2 class="id"><%=data.nickname%></h2></div>
+                <br />
+                <br />
+                <div class="button-group">
+                    <a id="btn-edit">Edit</a>
+                    <a id="btn-myBoard">내가 쓴 글</a>
                 </div>
+            </div>
+            <div class="card2 card">
+                <br />
+                <% for(let i = 0; i < myPosts.length ;i++){ %>
+                <p class="card2-title">&nbsp;&nbsp;<%=myPosts[i].title%></p>
+                <p class="card2-content">&nbsp;&nbsp;&nbsp;&nbsp;<%=myPosts[i].content%></p>
+                <p class="card2-date">&nbsp;&nbsp;&nbsp;&nbsp;<%=myPosts[i].date%></p>
+                <hr />
+                <% } %>
             </div>
         </div>
 
