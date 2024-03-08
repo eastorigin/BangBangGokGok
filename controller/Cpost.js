@@ -16,7 +16,6 @@ exports.getPostsList = async (req, res) => {
                 },
             ],
         });
-        console.log("----유저닉네임-----", postList[0].User.nickname); // 닉네임 가지고 오는 법 <- 확인 후 지워주세요.
         res.render("post/postList", { postList: postList });
     } catch (error) {
         res.status(500).send("server error");
@@ -39,7 +38,6 @@ exports.getPostsByCategory = async (req, res) => {
             ],
             order: [["p_seq", "DESC"]],
         });
-        console.log("----유저닉네임-----", postListByCategory[1].User.nickname); // 닉네임 가지고 오는 법 <- 확인 후 지워주세요.
         res.render("post/postList", { postList: postListByCategory });
     } catch (error) {
         res.status(500).send("server error");
@@ -59,6 +57,12 @@ exports.getPostsByKeyword = async (req, res) => {
                     { category: { [Op.like]: `%${keyword}%` } },
                 ],
             },
+            include: [
+                {
+                    model: User,
+                    attributes: ["u_seq", "nickname"],
+                },
+            ],
             order: [["p_seq", "DESC"]],
         });
         res.render("post/postList", { postList: postsByKeyword });
@@ -82,6 +86,12 @@ exports.getPostsByKeywordByCategory = async (req, res) => {
                     { category: { [Op.like]: `%${keyword}%` } },
                 ],
             },
+            include: [
+                {
+                    model: User,
+                    attributes: ["u_seq", "nickname"],
+                },
+            ],
             order: [["p_seq", "DESC"]],
         });
         res.render("post/postList", { postList: postsByKeyword });
