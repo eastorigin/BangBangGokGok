@@ -4,6 +4,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <%-include('../include/head')%>
         <title>Chat</title>
         <style>
             body {
@@ -72,14 +73,16 @@
             <ul>
                 <% chatLists.forEach(chat => { %>
                 <li>
-                    <a href="/chats/rooms/<%= chat.c_seq %>?id=<%= id %>"><%= chat.c_title1 %></a>
+                    <a id="chat-list" href="/chats/rooms/<%= chat.c_seq %>?id=<%= id %>"
+                        ><%= chat.c_title1 %></a
+                    >
                 </li>
                 <% }); %>
             </ul>
         </div>
 
         <div id="chatRoom">
-            <h1>Chat Room <%= c_title.c_title1 %></h1>
+            <h1 id="chat-title"></h1>
             <div id="messages">
                 <% messages.forEach(message => { %>
                 <p class="message <%= message.u_seq ==u_seq ? 'my-message' : 'other-message' %>">
@@ -153,6 +156,41 @@
                 socket.emit("leave", "<%= c_seq %>");
                 window.location.href = "/chats/lists/<%=id%>"; // 채팅방 목록 페이지로 이동
             });
+
+            (async () => {
+                const accessToken = localStorage.getItem("accessToken");
+
+                let data = "";
+                if (!accessToken) {
+                    data = '<a href="/users/signin">로그인</a>';
+                } else {
+                    const response = await axios({
+                        method: "POST",
+                        url: "/users/accesstoken",
+                        headers: {
+                            Authorization: `Bearer ${accessToken}`,
+                        },
+                    });
+
+                    if (response.data.result) {
+                        u_seq = "<%= u_seq %>";
+                        c_title1 = "<%= c_title.c_title1 %>";
+                        c_title2 = "<%= c_title.c_title2 %>";
+                        // console.log("=====", response);
+                        if (response.data.u_seq == u_seq) {
+                            const chatTitle = document.getElementById("chat-title");
+                            chatTitle.textContent = c_title2;
+                            const chatList = document.getElementById("chat-list");
+                            chatList.textContent = c_title2;
+                        } else {
+                            const chatTitle = document.getElementById("chat-title");
+                            chatTitle.textContent = c_title1;
+                            const chatList = document.getElementById("chat-list");
+                            chatList.textContent = c_title1;
+                        }
+                    }
+                }
+            })();
         </script>
     </body>
 </html>

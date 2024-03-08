@@ -7,19 +7,15 @@
 .container {
     margin-top: 5px;
     display: flex;
-    background-color: white;
     /* background-color: yellow; */
-    width: 1500px; /* 원하는 너비로 지정 */
-    height: 550px; /* 원하는 높이로 지정 */
+    /* background-color: yellow; */
+    /* width: 1500px;
+    height: 550px; */
     padding: 20px;
     /* border: 2px solid black; */
-    border-radius: 2rem;
 }
 .container-name {
     margin-left: 12rem;
-}
-.pf_1 {
-    display: flex;
 }
 .card1 {
     flex: 1;
