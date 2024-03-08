@@ -35,4 +35,7 @@ router.patch("/detail/:p_seq", controller.patchPostsDetail);
 // DELETE /posts/detail/:p_seq
 router.delete("/detail/:p_seq", controller.deletePostsDetail);
 
+// PATCH /posts/status
+router.patch("/status", controller.patchStatus);
+
 module.exports = router;
