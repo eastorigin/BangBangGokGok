@@ -11,8 +11,7 @@
     <body>
         <div class="container">
             <div class="left">
-                <img src="/static/css/image/img_default.jpg" alt="img_main" class="img_main" />
-                <!--괄호 퍼센트 imgSrc  -->
+                <img src="<%= postDetail.file || '/static/css/image/img_default.jpg' %>" alt="img_main" class="img_main" />
                 <div class="author">작성자: <%= postDetail.User.nickname %></div>
             </div>
             <div class="right">
