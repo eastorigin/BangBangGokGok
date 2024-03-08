@@ -89,12 +89,20 @@
                         isLiked = !isLiked;
 
                         try {
+                            const currentUrl = window.location.href;
+                            const parsedUrl = new URL(currentUrl);
+                            const segments = parsedUrl.pathname.split('/');
+                            const currentPseq = segments.pop(); // 현재 url의 가장 끝 값인 p_seq 가져오는 과정
+                            
                             const response = await axios({
                                 method: isLiked ? "POST" : "DELETE", // 'isLiked' 상태에 따라 요청 메소드를 결정합니다.
-                                url: `/likes/${'<%= postDetail.p_seq %>'}`, // 어디로 보내야 하는지?
+                                url: "/likes",
                                 headers: {
-                                    Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+                                    Authorization: `Bearer ${accessToken}`,
                                 },
+                                data: {
+                                    currentPseq: currentPseq
+                                }
                             });
 
                             if (response.status === 200) {
