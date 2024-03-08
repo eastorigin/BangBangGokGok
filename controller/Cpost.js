@@ -244,3 +244,11 @@ exports.deletePostsDetail = async (req, res) => {
         res.status(500).send("server error");
     }
 };
+
+// PATCH /posts/status
+exports.patchStatus = async (req, res) => {
+    try {
+    } catch (error) {
+        res.status(500).send("server error");
+    }
+};
