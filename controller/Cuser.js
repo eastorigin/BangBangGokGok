@@ -210,7 +210,7 @@ exports.getMyPage = async (req, res) => {
         const myLikes = await Likes.findAll({
             where: { u_seq: userInfo.u_seq },
             limit: 3,
-            order: [["created_at", "DESC"]],
+            order: [["l_seq", "DESC"]],
         });
 
         console.log("=======최신순 글", myPosts);
@@ -218,6 +218,7 @@ exports.getMyPage = async (req, res) => {
 
         res.render("user/profile", { data: userInfo, myPosts: myPosts, myLikes: myLikes }); // 마이페이지에서의 페이지 이동이 일어날 때 id 값을 전송하며 이동하기 위함
     } catch (error) {
+        console.log("----------------------error", error);
         res.status(500).send("server error");
     }
 };
@@ -254,7 +255,7 @@ exports.getMyLike = async (req, res) => {
 
         const likes = await Likes.findAll({
             where: { u_seq: u_seq.u_seq },
-            order: [["created_at", "DESC"]], // 최신순 정렬하여 반환
+            order: [["l_seq", "DESC"]], // 최신순 정렬하여 반환
         });
 
         res.render("user/myLike", { data: likes });
