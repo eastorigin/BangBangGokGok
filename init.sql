@@ -135,9 +135,13 @@ VALUES (1,4,3,'test123','sfdssffd', now(), now(), 4);
 INSERT INTO chat (p_seq, u_seq, b_seq, c_title1, c_title2, createdAt, updatedAt, last_user) 
 VALUES (2,1,1,'testid1','fgdfgdfgd', now(), now(), 1);
 
+INSERT INTO chat (p_seq, u_seq, b_seq, c_title1, c_title2, createdAt, updatedAt, last_user) 
+VALUES (3,1,1,'testid1','fgdfgdfgd', now(), now(), 1);
 
-INSERT INTO likes (p_seq, u_seq, created_at) 
-VALUES (8, 1,now());
+INSERT INTO chat (p_seq, u_seq, b_seq, c_title1, c_title2, createdAt, updatedAt, last_user) 
+VALUES (4,1,1,'testid1','fgdfgdfgd', now(), now(), 1);
+
+
 
 INSERT INTO likes (p_seq, u_seq, created_at) 
 VALUES (2, 4,now());
