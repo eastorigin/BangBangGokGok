@@ -1,7 +1,50 @@
-table {
+.container-in {
     width: 100%;
-    border-top: 1px solid #444444;
-    border-collapse: collapse;
+    padding-left: 15%;
+    padding-right: 15%;
+    justify-content: center;
+}
+
+.image-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+.image-container .post {
+    width: 23%;
+    margin-bottom: 20px;
+}
+.image-container .post a {
+    display: block;
+    text-decoration: none;
+    color: #333;
+}
+.image-container .post img {
+    width: 100%;
+    height: auto;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: transform 0.3s ease;
+}
+.image-container .post img:hover {
+    transform: scale(1.05);
+}
+.image-container .post .title {
+    margin-top: 5px;
+    font-weight: bold;
+}
+.image-container .post .content {
+    margin-top: 5px;
+    color: #777;
+}
+.image-container .post .category {
+    margin-top: 5px;
+    font-style: italic;
+}
+.image-container .post .author {
+    margin-top: 5px;
+    color: #555;
 }
 
 th,
@@ -73,4 +116,18 @@ td {
 
 .board_page a:first-child {
     border-left: 1px solid #ddd;
+}
+.iconSection {
+    display: flex;
+    justify-content: space-evenly;
+    /* 요소가 넘칠 경우 다음 줄에 배치합니다. */
+}
+
+.iconSection a {
+    margin: 10px; /* 이미지 간격을 조정합니다. */
+}
+
+.iconSection img {
+    width: 50px; /* 원하는 너비로 설정 */
+    height: auto; /* 높이는 자동으로 조절됩니다. */
 }
