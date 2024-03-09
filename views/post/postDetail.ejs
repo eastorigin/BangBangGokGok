@@ -11,6 +11,7 @@
     <script>
         // 유저 정보
         let currentUserInfo = {};
+        let resultUrl;
         // 채팅
         function createChat(){
             const accessToken = localStorage.getItem("accessToken");
@@ -39,12 +40,30 @@
                 })
                 .then((response)=> {
                     console.log("axios 요청 성공", response); // 요청 성공 시 로그
-                    if(response.data.c_seq){
-                        const apiUrl = `/chats/rooms/${response.data.c_seq}?id=${response.data.id}`;
-                        console.log('6==========', apiUrl);
-                        console.log('API 응답', response.data.c_seq);
-                        window.location.href = apiUrl;
-                    }
+                    resultUrl = `/chats/rooms/${response.data.c_seq}?id=${response.data.id}`;
+                    console.log('==========', resultUrl);
+                    window.location.href = resultUrl;
+                    ///////////////////////////////////////////
+                    //const requestData = {
+                    //    id:currentUserInfo.id,
+                      //};
+                    //const roomId = response.data.c_seq;
+                    //const apiUrl = `/chats/rooms/${roomId}`;
+                    //const headers = {
+                     //   Authorization: `Bearer ${accessToken}`,
+                     // };
+                      //const queryString = Object.keys(requestData).map(key => `${key}=${requestData[key]}`).join('&');
+                      //const finalUrl = `${apiUrl}?${queryString}`;
+
+                    //fetch(finalUrl, {
+                    //    method: 'POST',
+                     //   headers: headers,
+                     // })
+                      //.then(data => {
+                        // 성공적인 응답 처리
+                     //   console.log('API 응답:', data);
+                      //  window.location.href = data.url;
+                      //});
                 })
                 .catch(function(error) {
                     console.error("Error:", error);
@@ -217,6 +236,7 @@
                         <i class="bi bi-heart" id="heart-icon" onclick="clickheart()"></i>
                         <div id="like-count">0</div>
                         <button class="btn_chat" id="btn_chat" onclick="createChat()">채팅하기</button>
+
                 </div>
             </div>
     </body>

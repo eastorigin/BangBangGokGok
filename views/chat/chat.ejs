@@ -12,18 +12,35 @@
         <div id="chatList">
             <h2>Chat Rooms</h2>
             <ul>
-                <% chatLists.forEach(chat => { %>
-                <li>
-                    <a id="chat-list" href="/chats/rooms/<%= chat.c_seq %>?id=<%= id %>"
-                        ><%= chat.c_title1 %></a
-                    >
-                </li>
-                <% }); %>
+                <% for (let i = 0; i < chatLists.length; i++) { %>
+                    <li>
+                        <% if (chatLists[i].c_title1 != nickname) { %>
+                        <button onclick="goToChatRoom('<%= chatLists[i].c_seq %>', '<%= id %>')">
+                            <%= chatLists[i].c_title1 %>
+                            <% } else { %>
+                            <button onclick="goToChatRoom('<%= chatLists[i].c_seq %>', '<%= id %>')">
+                                <%= chatLists[i].c_title2 %>
+                                <% } %>
+                                <!-- 읽지 않은 메세지의 값이 0이 아니고 last_user 값이 현재 사용자와 다를 때  -->
+                                <% if (chatLists[i].unreadcnt !== 0 && chatLists[i].last_user !== u_seq) { %>
+                                <span class="notification" id="unreadCount_<%= chatLists[i].c_seq %>">
+                                    <%= chatLists[i].unreadcnt %>
+                                </span>
+                                <% } %>
+                            </button>
+                    </li>
+                    <% } %>
             </ul>
         </div>
 
         <div id="chatRoom">
-            <h1 id="chat-title"></h1>
+            <h1 id="chat-title">
+                <% if (c_title.c_title1 != nickname) { %>
+                    <p><%= c_title.c_title1  %></p>
+                        <% } else { %>
+                            <p><%= c_title.c_title2  %></p>
+                            <% } %>
+            </h1>
             <div id="messages">
                 <% messages.forEach(message => { %>
                 <p class="message <%= message.u_seq ==u_seq ? 'my-message' : 'other-message' %>">
@@ -39,11 +56,56 @@
         </div>
 
         <div id="unreadMessages"></div>
+        <script>
+            (async () => {
+                const accessToken = localStorage.getItem("accessToken");
+    
+                let data = "";
+                if (!accessToken) {
+                    window.location.href = "/users/signin";
+                } else {
+                    const response = await axios({
+                        method: "POST",
+                        url: "/users/accesstoken",
+                        headers: {
+                            Authorization: `Bearer ${accessToken}`,
+                        },
+                    });
+                    if(response.data.id != '<%= id %>'){
+                        // 로그인된 사용자가 url로 타인의 채팅방 리스트에 접근할 경우
+                        window.location.href = '/';
+                    }
+                    
+                    // 오진님 코드
+                    //if (response.data.result) {
+                    //    u_seq = "<%= u_seq %>";
+                    //    c_title1 = "<%= c_title.c_title1 %>";
+                    //    c_title2 = "<%= c_title.c_title2 %>";
+                    //    if (response.data.u_seq == u_seq) {
+                    //        const chatTitle = document.getElementById("chat-title");
+                    //        chatTitle.textContent = c_title2;
+                    //        const chatList = document.getElementById("chat-list");
+                    //        chatList.textContent = c_title2;
+                    //    } else {
+                    //        const chatTitle = document.getElementById("chat-title");
+                    //       chatTitle.textContent = c_title1;
+                    //        const chatList = document.getElementById("chat-list");
+                    //        chatList.textContent = c_title1;
+                    //    }
+                    //}
+                }
+            })();
+        </script>
+        <script>
+            function goToChatRoom(c_seq, id) {
+                const url = `/chats/rooms/${c_seq}?id=${id}`;
+                window.location.href = url;
+            }
+        </script>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.js"></script>
         <script>
             const socket = io();
-            console.log("============접속자 u_seq", "<%= u_seq%>");
 
             joinUser("<%= c_seq %>", "<%= u_seq %>"); // 클라이언트가 접속하면 채팅방/유저 번호를 서버에게 송신
 
@@ -97,41 +159,6 @@
                 socket.emit("leave", "<%= c_seq %>");
                 window.location.href = "/chats/lists/<%=id%>"; // 채팅방 목록 페이지로 이동
             });
-
-            (async () => {
-                const accessToken = localStorage.getItem("accessToken");
-
-                let data = "";
-                if (!accessToken) {
-                    data = '<a href="/users/signin">로그인</a>';
-                } else {
-                    const response = await axios({
-                        method: "POST",
-                        url: "/users/accesstoken",
-                        headers: {
-                            Authorization: `Bearer ${accessToken}`,
-                        },
-                    });
-
-                    if (response.data.result) {
-                        u_seq = "<%= u_seq %>";
-                        c_title1 = "<%= c_title.c_title1 %>";
-                        c_title2 = "<%= c_title.c_title2 %>";
-                        // console.log("=====", response);
-                        if (response.data.u_seq == u_seq) {
-                            const chatTitle = document.getElementById("chat-title");
-                            chatTitle.textContent = c_title2;
-                            const chatList = document.getElementById("chat-list");
-                            chatList.textContent = c_title2;
-                        } else {
-                            const chatTitle = document.getElementById("chat-title");
-                            chatTitle.textContent = c_title1;
-                            const chatList = document.getElementById("chat-list");
-                            chatList.textContent = c_title1;
-                        }
-                    }
-                }
-            })();
         </script>
     </body>
 </html>
