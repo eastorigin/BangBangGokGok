@@ -37,6 +37,7 @@
     </nav>
     <!-- Header End -->
     <script>
+        // 유저 정보
         (async () => {
             const info = document.getElementById("info");
             const accessToken = localStorage.getItem("accessToken");
@@ -77,6 +78,40 @@
             }
             // info.innerHTML = data; // 로그인 버튼 나오도록 하기
         })();
+
+        //async function chatList() {
+        //    const accessToken = localStorage.getItem("accessToken");
+        //    const chatButton = document.getElementById("btn-chat");
+        //    console.log("===========클릭");
+        //    if (!accessToken) {
+        //        chatButton.href = "#";
+        //    } else {
+        //        const response = await axios({
+        //            method: "POST",
+        //           url: "/users/accesstoken",
+        //           headers: {
+        //               Authorization: `Bearer ${accessToken}`,
+        //            },
+        //        });
+        //        const requestData = {
+        //            id: response.data.id,
+        //        };
+        //        const id = response.data.id;
+        //       const apiUrl = `/chats/lists/${id}`;
+        //        const headers = {
+        //            Authorization: `Bearer ${accessToken}`,
+        //        };
+
+        //        console.log("apiUrl", apiUrl);
+        //      fetch(apiUrl, {
+        //            method: "GET",
+        //            headers: headers,
+        //        }).then((data) => {
+        //            console.log("API 응답:", data.url);
+        // window.location.href = data.url;
+        //        });
+        //    }
+        //}
 
         function signout() {
             // 로컬 스토리지에서 jwt 정보 삭제

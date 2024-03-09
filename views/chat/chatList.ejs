@@ -5,6 +5,8 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Chat Room List</title>
+        <%-include('../include/head')%>
+        <%-include('../include/header')%>
         <style>
             .notification {
                 background-color: #f8d7da;
@@ -17,21 +19,71 @@
     </head>
     <body>
         <h1>Chat Room List</h1>
-        <ul>
-            <% for (let i = 0; i < chatLists.length; i++) { %>
-            <li>
-                <% if (chatLists[i].c_title1 != id) { %>
-                <a href="/chats/rooms/<%= chatLists[i].c_seq %>?id=<%= id %>"
-                    ><%= chatLists[i].c_title1 %><%}else{%><%= chatLists[i].c_title2 %><%}%>
-                    <!-- 읽지 않은 메세지의 값이 0이 아니고 last_user 값이 현재 사용자와 다를 때  -->
-                    <% if (chatLists[i].unreadcnt !== 0 && chatLists[i].last_user !== u_seq) { %>
-                    <span class="notification" id="unreadCount_<%= chatLists[i].c_seq %>">
-                        <%= chatLists[i].unreadcnt %>
-                    </span>
-                    <% } %>
-                </a>
-            </li>
-            <% } %>
-        </ul>
-    </body>
+<ul>
+    <% for (let i = 0; i < chatLists.length; i++) { %>
+    <li>
+        <% if (chatLists[i].c_title1 != nickname) { %>
+        <button onclick="goToChatRoom('<%= chatLists[i].c_seq %>', '<%= id %>')">
+            <%= chatLists[i].c_title1 %>
+            <% } else { %>
+            <button onclick="goToChatRoom('<%= chatLists[i].c_seq %>', '<%= id %>')">
+                <%= chatLists[i].c_title2 %>
+                <% } %>
+                <!-- 읽지 않은 메세지의 값이 0이 아니고 last_user 값이 현재 사용자와 다를 때  -->
+                <% if (chatLists[i].unreadcnt !== 0 && chatLists[i].last_user !== u_seq) { %>
+                <span class="notification" id="unreadCount_<%= chatLists[i].c_seq %>">
+                    <%= chatLists[i].unreadcnt %>
+                </span>
+                <% } %>
+            </button>
+    </li>
+    <% } %>
+</ul>
+</body>
+<script>
+    function goToChatRoom(c_seq, id) {
+        const url = `/chats/rooms/${c_seq}?id=${id}`;
+        window.location.href = url;
+    }
+</script>
+    <script>
+        (async () => {
+            const accessToken = localStorage.getItem("accessToken");
+            if (!accessToken) {
+                window.location.href = "/users/signin";
+            } else {
+                const response = await axios({
+                    method: "POST",
+                    url: "/users/accesstoken",
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                });
+
+                if(response.data.id != '<%= id %>'){
+                    // 로그인된 사용자가 url로 타인의 채팅방 리스트에 접근할 경우
+                    window.location.href = '/';
+                }
+
+                // 오진님 코드
+                //if (response.data) {
+                //    u_seq = "<%= u_seq %>";
+                //    c_title1 = "<%= chatLists.c_title1 %>";
+                //    c_title2 = "<%= chatLists.c_title2 %>";
+                //    console.log("=====", response.data.nickname);
+                //    if (response.data.u_seq == u_seq) {
+                //        const chatTitle = document.getElementById("chat-title");
+                //        chatTitle.textContent = c_title2;
+                //       const chatList = document.getElementById("chat-list");
+                //        chatList.textContent = c_title2;
+                //    } else {
+                //        const chatTitle = document.getElementById("chat-title");
+                //        chatTitle.textContent = c_title1;
+                //        const chatList = document.getElementById("chat-list");
+                //        chatList.textContent = c_title1;
+                //    }
+                //}
+            }
+        })();
+    </script>
 </html>
