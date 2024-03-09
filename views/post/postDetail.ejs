@@ -52,6 +52,7 @@
                 });
             }
         }
+        
         // 찜 기능
         async function clickheart(){
             const accessToken = localStorage.getItem("accessToken");
@@ -214,7 +215,7 @@
                         <button class="btn_edit" id="btn_edit" onclick="updatePost('<%= postDetail.p_seq %>')">수정하기</button>
                         <button class="btn_delete" id="btn_delete" onclick="deletePost('<%= postDetail.p_seq %>')">삭제하기</button>
                         <i class="bi bi-heart" id="heart-icon" onclick="clickheart()"></i>
-                        
+                        <div id="like-count">0</div>
                         <button class="btn_chat" id="btn_chat" onclick="createChat()">채팅하기</button>
                 </div>
             </div>
