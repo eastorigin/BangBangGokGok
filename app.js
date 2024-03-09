@@ -115,26 +115,31 @@ const uploadDetail = multer({
 // 파일 업로드를 처리하는 라우터 추가
 app.post("/upload", uploadDetail.single("file"), async (req, res) => {
     try {
-        // 업로드된 파일 정보를 DB에 저장하는 코드 추가
+        // 토큰과 파일 처리 관련 수정
+        if (!req.headers.authorization)
+            return res.status(401).send("No authorization token provided.");
+
         const accessToken = req.headers.authorization.split(" ")[1];
-        console.log("accessToken: ", accessToken);
-
-        // JWT 토큰을 검증하고 토큰에 포함된 사용자 정보를 추출
         const decodedToken = jwt.verify(accessToken, process.env.ACCESS_SECRET);
-        const u_seq = decodedToken.u_seq;
 
-        const { filename, path } = req.file;
-        console.log(filename, path);
-        console.log(req.body);
+        // 파일 업로드 처리가 필수가 아닌 경우, 파일 정보가 없어도 처리를 계속 진행
+        const filename = req.file ? req.file.filename : "";
+        const filepath = req.file ? req.file.path : "";
+
+        const { title, content, category } = req.body;
+        if (!title || !content || !category) {
+            return res.status(400).send("Missing required fields.");
+        }
+
+        const u_seq = decodedToken.u_seq;
         const post = await db.Post.create({
-            title: req.body.title,
-            content: req.body.content,
-            file: filename,
-            category: req.body.category,
+            title,
+            content,
+            file: filename, // 파일명 저장 (파일이 없으면 빈 문자열 저장)
+            category,
             u_seq,
         });
 
-        console.log("postttttt", post);
         res.status(201).send(post);
     } catch (error) {
         console.error("파일 업로드 중 에러 발생:", error);
