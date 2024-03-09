@@ -81,3 +81,47 @@ span {
     border: none;
     border-radius: 5px;
 }
+
+/* 화면 크기가 1024px 이하일 때 적용할 스타일 */
+@media screen and (max-width: 1024px) {
+    .img_signup,
+    .signUpWallPaper {
+        width: 100%;
+        margin-left: 0;
+        float: none;
+        display: block;
+    }
+
+    .img_signup {
+        height: auto;
+        justify-content: center;
+    }
+
+    #img_signup {
+        width: 50%; /* 이미지 크기 조절 */
+        height: auto;
+    }
+
+    .signUpWallPaper {
+        justify-content: center;
+        height: auto;
+    }
+
+    .container,
+    #signupForm {
+        width: 90%; /* 폼 너비 조절 */
+    }
+}
+
+/* 화면 크기가 768px 이하일 때 적용할 스타일 */
+@media screen and (max-width: 768px) {
+    #img_signup {
+        display: none; /* 작은 화면에서는 이미지를 숨김 */
+    }
+
+    .input,
+    .btn_check,
+    #btn_signupNow {
+        width: 100%; /* 입력 필드와 버튼의 너비를 100%로 조정 */
+    }
+}
