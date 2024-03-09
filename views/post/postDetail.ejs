@@ -188,15 +188,13 @@
     <body>
         <div class="container">
             <div class="left">
-                <img src="" alt="img_main" class="img_main" />
-                <!--괄호 퍼센트 imgSrc  -->
+                <img src="/uploads/<%= postDetail.file %>" alt="img_main" class="img_main" onerror="this.onerror=null; this.src='/static/css/image/img_default.jpg';"/>
                 <div class="author">작성자: <%= postDetail.User.nickname %></div>
             </div>
             <div class="right">
                 <div class="post-header">
                 </div>                   
                 <form id="patchForm">
-                    <span id="like-count" class="like-count">0</span>
                     <input type="text" id="title" name="title" value="<%= postDetail.title %>">
                     <select id="category" name="category">
                         <option value="서울" <%= postDetail.category === '서울' ? 'selected' : '' %>>서울</option>
@@ -212,7 +210,6 @@
                     </select>
                     <textarea name="content" id="content" cols="30" rows="10"><%= postDetail.content %></textarea>
                 </form>
-
                 <div class="icons">
                         <button class="btn_edit" id="btn_edit" onclick="updatePost('<%= postDetail.p_seq %>')">수정하기</button>
                         <button class="btn_delete" id="btn_delete" onclick="deletePost('<%= postDetail.p_seq %>')">삭제하기</button>

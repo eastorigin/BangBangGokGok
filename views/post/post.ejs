@@ -51,18 +51,22 @@
             async function post() {
                 const form = document.forms["post-form"];
                 const accessToken = localStorage.getItem("accessToken");
+
+                // FormData 객체 생성
+                const formData = new FormData();
+                formData.append("title", form.title.value);
+                formData.append("content", form.content.value);
+                formData.append("category", form.category.value);
+                formData.append("file", form.file.files[0]);
+
                 try {
                     const response = await axios({
                         method: "POST",
-                        url: "/posts",
-                        data: {
-                            title: form.title.value,
-                            content: form.content.value,
-                            file: form.file.value,
-                            category: form.category.value,
-                        },
+                        url: "/upload",
+                        data: formData, // FormData 객체 전달
                         headers: {
                             Authorization: `Bearer ${accessToken}`,
+                            "Content-Type": "multipart/form-data", // 파일 업로드 시 필요한 헤더
                         },
                     });
                     if (response.status === 200 || response.status === 201) {

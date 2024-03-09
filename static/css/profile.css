@@ -1,35 +1,35 @@
+body {
+    min-width: 100%;
+}
 .container-out {
     /* background-color: green; */
     margin-top: 60px;
-    width: 1500px;
-    height: 600px;
+    width: 100%;
+    height: 50px;
 }
-.container {
-    margin-top: 5px;
+.container-in {
     display: flex;
-    /* background-color: yellow; */
-    /* background-color: yellow; */
-    /* width: 1500px;
-    height: 550px; */
+    width: 100%;
     padding: 20px;
-    /* border: 2px solid black; */
+    justify-content: center;
 }
 .container-name {
-    margin-left: 12rem;
+    text-align: center;
 }
 .card1 {
+    position: relative;
     flex: 1;
-    margin-right: 20px;
     background-color: white;
     max-width: 300px;
     max-height: 450px;
     overflow: hidden;
     border-radius: 2rem;
     box-shadow: 0px 1rem 0.5rem rgba(0, 0, 0, 0.5);
-    left: 5rem;
+
     /* top: 2.5rem; */
 }
 .card2 {
+    margin-left: 1%;
     flex: 1;
     background-color: white;
     max-width: 800px;
@@ -37,7 +37,7 @@
     overflow: hidden;
     border-radius: 2rem;
     box-shadow: 0px 1rem 0.5rem rgba(0, 0, 0, 0.5);
-    left: 5rem;
+
     /* top: 2.5rem; */
 }
 
@@ -76,7 +76,7 @@
 }
 
 #btn-edit {
-    background-color: rgb(255, 248, 156);
+    background-color: #ff6f0f;
     color: white;
     border: none;
     border-radius: 5px;
@@ -86,10 +86,11 @@
     text-decoration: none;
     display: block; /* 버튼을 블록 레벨 요소로 설정합니다. */
     margin: 0 auto; /* 좌우 여백을 자동으로 설정하여 가운데 정렬합니다. */
+    margin-bottom: 10%;
 }
 
 #btn-myBoard {
-    background-color: rgb(255, 248, 156);
+    background-color: #ff6f0f;
     color: white;
     border: none;
     border-radius: 5px;
@@ -99,6 +100,7 @@
     text-decoration: none;
     display: block; /* 버튼을 블록 레벨 요소로 설정합니다. */
     margin: 0 auto; /* 좌우 여백을 자동으로 설정하여 가운데 정렬합니다. */
+    margin-bottom: 10%;
 }
 
 .desc {

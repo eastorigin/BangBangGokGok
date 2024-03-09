@@ -56,9 +56,6 @@ html {
 }
 
 .like-count {
-    position: absolute;
-    top: 10px;
-    right: 0px;
     background-color: #fff;
     padding: 0.5vw;
     width: 3vw;
@@ -74,6 +71,7 @@ html {
     min-height: 20px;
     max-width: 50px;
     max-height: 50px;
+    margin-right: 10px; /* 하트 아이콘과 like-count 사이의 간격 설정 */
 }
 
 #title,
@@ -107,6 +105,7 @@ html {
     font-size: 1.5rem;
     cursor: pointer;
     color: #ff6f0f;
+    margin-right: 10px; /* 하트 아이콘과 like-count 사이의 간격 설정 */
 }
 
 .btn_chat,
