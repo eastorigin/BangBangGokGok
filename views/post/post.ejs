@@ -41,13 +41,25 @@
             <textarea name="content" id="content" cols="110" rows="18"></textarea>
             <br />
             <div class="file" onclick="document.getElementById('file').click();">
-                <i class="bi bi-file-earmark-plus"></i>여기에 첨부파일을 첨부해주세요
-                <input type="file" id="file" name="file" />
+                <span id="file-upload-msg">
+                    <i class="bi bi-file-earmark-plus"></i>여기에 첨부파일을 첨부해주세요
+                </span>
+                <input type="file" id="file" name="file" onchange="updateFileUploadMsg()" />
             </div>
             <br />
             <button type="button" onclick="post()" id="btn_post">완료</button>
         </form>
         <script>
+            function updateFileUploadMsg() {
+                var fileInput = document.getElementById("file");
+                var messageSpan = document.getElementById("file-upload-msg");
+                if (fileInput.files.length > 0) {
+                    messageSpan.innerText = "파일이 첨부되었습니다";
+                } else {
+                    messageSpan.innerText = "여기에 첨부파일을 첨부해주세요";
+                }
+            }
+
             async function post() {
                 const form = document.forms["post-form"];
                 const accessToken = localStorage.getItem("accessToken");
