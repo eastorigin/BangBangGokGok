@@ -101,17 +101,21 @@
             nickname: false,
         };
 
+        let initialNickname = "<%= data.nickname %>"; // 현재 사용 중인 닉네임의 초기값을 저장
+
         function profileEdit() {
             const form = document.forms["profileEditForm"];
             const p1 = document.getElementById("userPw").value;
             const p2 = document.getElementById("userPwConfirm").value;
+            const currentNickname = form.nickname.value; // 현재 입력된 닉네임 값을 정의
 
             if (!form.checkValidity()) {
                 form.reportValidity();
                 return;
             }
 
-            if (!duplicateCheckStatus.nickname) {
+            // 닉네임이 변경되었는지 확인하고, 변경되지 않았다면 중복 확인 절차를 건너뜁니다.
+            if (currentNickname !== initialNickname && !duplicateCheckStatus.nickname) {
                 alert("닉네임의 중복 확인을 완료해주세요.");
                 return;
             }
