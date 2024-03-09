@@ -67,6 +67,9 @@
 
                     // 'isLiked' 변수 업데이트: 만약 'bi-heart-fill' 클래스가 존재한다면, 이제 '좋아요' 상태입니다.
                     isLiked = !isLiked;
+
+                    // 게시글의 고유 ID를 키로 사용합니다.
+                    const postKey = '<%= postDetail.p_seq %>';
                     try {
                         const currentPseq = '<%= postDetail.p_seq %>' // p_seq
                         
@@ -82,8 +85,10 @@
                         });
 
                         if (response.status === 200) {
-                            // 요청 성공 시 'like-count'를 업데이트합니다.
-                            document.getElementById("like-count").textContent = isLiked ? ++likeCount : --likeCount;
+                            // localStorage에 좋아요 수 업데이트
+                            likeCount = isLiked ? ++likeCount : --likeCount;
+                            localStorage.setItem(`likeCount_${postKey}`, likeCount.toString());
+                            document.getElementById("like-count").textContent = likeCount;
                         } else {
                             // 서버에서 요청을 처리하지 못했다면 UI 상태를 이전으로 되돌립니다.
                             heart.classList.toggle("bi-heart");
@@ -103,10 +108,21 @@
                 method: "POST",
                 url: "/posts/accesstoken",
                 headers: {
-                Authorization: `Bearer ${accessToken}`,
+                    Authorization: `Bearer ${accessToken}`,
                 },
             });
                 currentUserInfo = response.data;
+
+                // 여기에 로컬 스토리지에서 좋아요 수를 불러와 설정하는 코드를 추가
+                const postKey = '<%= postDetail.p_seq %>';
+                const storedLikeCount = localStorage.getItem(`likeCount_${postKey}`);
+                if (storedLikeCount) {
+                    document.getElementById("like-count").textContent = storedLikeCount;
+                    // 좋아요 상태에 따라 하트 아이콘 상태 업데이트
+                    const heartIcon = document.getElementById("heart-icon");
+                    heartIcon.classList.add("bi-heart-fill");
+                    heartIcon.classList.remove("bi-heart");
+                }
 
                 function disableEdit() {
                     document.getElementById("btn_edit").style.display = "none";
