@@ -97,6 +97,25 @@
         </div>
     </body>
     <script>
+        (async () => {
+            const accessToken = localStorage.getItem("accessToken");
+            if (!accessToken) {
+                window.location.href = "/users/signin";
+            } else {
+                const response = await axios({
+                    method: "POST",
+                    url: "/users/accesstoken",
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                });
+                if (response.data.id != "<%= data.id %>") {
+                    // 로그인된 사용자가 url로 타인의 프로필 페이지에 접근한 경우
+                    window.location.href = "/";
+                }
+            }
+        })();
+
         const duplicateCheckStatus = {
             nickname: false,
         };
