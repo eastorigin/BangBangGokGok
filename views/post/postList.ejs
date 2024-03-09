@@ -12,110 +12,101 @@
         <%-include('../include/header')%>
         <br />
         <br />
-        <div class="iconSection">
-            <a href="/posts/서울특별시" class=""
-                ><img
-                    src="/static/css/image/region/region_1.png"
-                    alt="서울지역이미지" /><span></span
-            ></a>
-            <a href="/posts/경기도" class=""
-                ><img
-                    src="/static/css/image/region/region_2.png"
-                    alt="경기도지역이미지" /><span></span
-            ></a>
-            <a href="/posts/강원도" class=""
-                ><img
-                    src="/static/css/image/region/region_3.png"
-                    alt="강원도지역이미지" /><span></span
-            ></a>
-            <a href="/posts/충청남도" class=""
-                ><img
-                    src="/static/css/image/region/region_4.png"
-                    alt="충청남도지역이미지" /><span></span
-            ></a>
-            <a href="/posts/충청북도" class=""
-                ><img
-                    src="/static/css/image/region/region_5.png"
-                    alt="충청북도지역이미지" /><span></span
-            ></a>
-            <a href="/posts/전라북도" class=""
-                ><img
-                    src="/static/css/image/region/region_6.png"
-                    alt="전라북도지역이미지" /><span></span
-            ></a>
-            <a href="/posts/전라남도" class=""
-                ><img
-                    src="/static/css/image/region/region_7.png"
-                    alt="전라남도지역이미지" /><span></span
-            ></a>
-            <a href="/posts/경상남도" class=""
-                ><img
-                    src="/static/css/image/region/region_8.png"
-                    alt="경상남도지역이미지" /><span></span
-            ></a>
-            <a href="/posts/경상북도" class=""
-                ><img
-                    src="/static/css/image/region/region_9.png"
-                    alt="경상북도지역이미지" /><span></span
-            ></a>
-            <a href="/posts/제주도" class=""
-                ><img
-                    src="/static/css/image/region/region_10.png"
-                    alt="제주도지역이미지" /><span></span
-            ></a>
-        </div>
-        <div id="post-header">
-            <form class="d-flex" role="search">
-                <input
-                    class="Search"
-                    type="search"
-                    placeholder="Search"
-                    aria-label="Search"
-                    id="search-input"
-                />
-                <button id="btn-post-search" onclick="search()" type="button">
-                    <i class="bi bi-search"></i>
-                </button>
-            </form>
-            <a id="btn-post" type="submit" href="../../posts"> 글쓰기 </a>
-        </div>
-        <br />
-        <table border="1" cellspacing="0">
-            <thead>
-                <tr>
-                    <th>순번</th>
-                    <th>제목</th>
-                    <th>내용</th>
-                    <th>지역</th>
-                    <th>작성자</th>
-                </tr>
-            </thead>
-            <tbody>
+        <div class="container-in">
+            <div class="iconSection">
+                <a href="/posts/서울특별시" class=""
+                    ><img
+                        src="/static/css/image/region/region_1.png"
+                        alt="서울지역이미지" /><span></span
+                ></a>
+                <a href="/posts/경기도" class=""
+                    ><img
+                        src="/static/css/image/region/region_2.png"
+                        alt="경기도지역이미지" /><span></span
+                ></a>
+                <a href="/posts/강원도" class=""
+                    ><img
+                        src="/static/css/image/region/region_3.png"
+                        alt="강원도지역이미지" /><span></span
+                ></a>
+                <a href="/posts/충청남도" class=""
+                    ><img
+                        src="/static/css/image/region/region_4.png"
+                        alt="충청남도지역이미지" /><span></span
+                ></a>
+                <a href="/posts/충청북도" class=""
+                    ><img
+                        src="/static/css/image/region/region_5.png"
+                        alt="충청북도지역이미지" /><span></span
+                ></a>
+                <a href="/posts/전라북도" class=""
+                    ><img
+                        src="/static/css/image/region/region_6.png"
+                        alt="전라북도지역이미지" /><span></span
+                ></a>
+                <a href="/posts/전라남도" class=""
+                    ><img
+                        src="/static/css/image/region/region_7.png"
+                        alt="전라남도지역이미지" /><span></span
+                ></a>
+                <a href="/posts/경상남도" class=""
+                    ><img
+                        src="/static/css/image/region/region_8.png"
+                        alt="경상남도지역이미지" /><span></span
+                ></a>
+                <a href="/posts/경상북도" class=""
+                    ><img
+                        src="/static/css/image/region/region_9.png"
+                        alt="경상북도지역이미지" /><span></span
+                ></a>
+                <a href="/posts/제주도" class=""
+                    ><img
+                        src="/static/css/image/region/region_10.png"
+                        alt="제주도지역이미지" /><span></span
+                ></a>
+            </div>
+            <br />
+            <br />
+            <div id="post-header">
+                <form class="d-flex" role="search">
+                    <input
+                        class="Search"
+                        type="search"
+                        placeholder="Search"
+                        aria-label="Search"
+                        id="search-input"
+                    />
+                    <button id="btn-post-search" onclick="search()" type="button">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </form>
+                <a id="btn-post" type="submit" href="../../posts"> 글쓰기 </a>
+            </div>
+            <br />
+            <div class="image-container">
                 <% for(let i = 0; i < postList.length ;i++){ %>
-                <tr id="tr_<%=postList[i].id %>">
-                    <td><%=postList[i].p_seq %></td>
-                    <td>
-                        <a id="btn-title" href="/posts/detail/<%=postList[i].p_seq %>">
-                            <%=postList[i].title %>
-                        </a>
-                    </td>
-                    <td><%=postList[i].content %></td>
-                    <td><%=postList[i].category%></td>
-                    <td><%=postList[i].User.nickname%></td>
-                </tr>
+                <div class="post">
+                    <a href="/posts/detail/<%=postList[i].p_seq %>">
+                        <img src="/static/css/image/placeholder.png" alt="Placeholder Image" />
+                        <div class="title"><%=postList[i].title %></div>
+                        <div class="content"><%=postList[i].content %></div>
+                        <div class="category"><%=postList[i].category%></div>
+                        <div class="author"><%=postList[i].User.nickname%></div>
+                    </a>
+                </div>
                 <% } %>
-            </tbody>
-        </table>
-        <div class="board_page">
-            <a href="#" class="bt first"><<</a>
-            <a href="#" class="bt prev"><</a>
-            <a href="#" class="num on">1</a>
-            <a href="#" class="num">2</a>
-            <a href="#" class="num">3</a>
-            <a href="#" class="num">4</a>
-            <a href="#" class="num">5</a>
-            <a href="#" class="bt next">></a>
-            <a href="#" class="bt last">>></a>
+            </div>
+            <div class="board_page">
+                <a href="#" class="bt first"><<</a>
+                <a href="#" class="bt prev"><</a>
+                <a href="#" class="num on">1</a>
+                <a href="#" class="num">2</a>
+                <a href="#" class="num">3</a>
+                <a href="#" class="num">4</a>
+                <a href="#" class="num">5</a>
+                <a href="#" class="bt next">></a>
+                <a href="#" class="bt last">>></a>
+            </div>
         </div>
         <script>
             function search() {
