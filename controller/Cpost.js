@@ -117,7 +117,10 @@ exports.postPosts = async (req, res) => {
         const decodedToken = jwt.verify(accessToken, process.env.ACCESS_SECRET);
         const u_seq = decodedToken.u_seq;
 
+        // const { title, content, category } = req.body;
+        // const file = req.file ? req.file.filename : ""; // 업로드된 파일명
         const { title, content, file, category } = req.body;
+
         const newPost = await Post.create({
             title,
             content,
@@ -147,6 +150,10 @@ exports.getPostsDetail = async (req, res) => {
             ],
         });
         console.log(postDetail);
+        // res.render("post/postDetail", {
+        //     postDetail: postDetail,
+        //     imgSrc: postDetail.file ? `/uploads/${postDetail.file}` : null,
+        // });
         res.render("post/postDetail", { postDetail: postDetail });
     } catch (error) {
         console.log(error);
@@ -233,14 +240,6 @@ exports.deletePostsDetail = async (req, res) => {
         } else {
             res.send("삭제 실패");
         }
-    } catch (error) {
-        res.status(500).send("server error");
-    }
-};
-
-// PATCH /posts/status
-exports.patchStatus = async (req, res) => {
-    try {
     } catch (error) {
         res.status(500).send("server error");
     }

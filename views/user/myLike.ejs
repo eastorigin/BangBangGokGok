@@ -4,8 +4,29 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Document</title>
+        <%-include('../include/head')%>
     </head>
     <body>
         <h1>관심 목록 렌더링</h1>
     </body>
+    <script>
+        (async () => {
+            const accessToken = localStorage.getItem("accessToken");
+            if (!accessToken) {
+                window.location.href = "/users/signin";
+            } else {
+                const response = await axios({
+                    method: "POST",
+                    url: "/users/accesstoken",
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                });
+                if (response.data.id != "<%= id %>") {
+                    // 로그인된 사용자가 url로 접근한 경우
+                    window.location.href = "/";
+                }
+            }
+        })();
+    </script>
 </html>

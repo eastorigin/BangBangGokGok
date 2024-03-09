@@ -213,12 +213,8 @@ exports.getMyPage = async (req, res) => {
             order: [["l_seq", "DESC"]],
         });
 
-        console.log("=======최신순 글", myPosts);
-        console.log("=======관심 목록", myLikes);
-
         res.render("user/profile", { data: userInfo, myPosts: myPosts, myLikes: myLikes }); // 마이페이지에서의 페이지 이동이 일어날 때 id 값을 전송하며 이동하기 위함
     } catch (error) {
-        console.log("----------------------error", error);
         res.status(500).send("server error");
     }
 };
@@ -228,17 +224,15 @@ exports.getMyPost = async (req, res) => {
     try {
         const id = req.params.id;
 
-        const u_seq = await User.findOne({
+        const user = await User.findOne({
             where: { id: id },
         });
 
         const posts = await Post.findAll({
-            where: { u_seq: u_seq.u_seq },
+            where: { u_seq: user.u_seq },
         });
 
-        console.log("=======내가쓴 글", posts);
-
-        res.render("user/myPost", { data: posts, userInfo: u_seq });
+        res.render("user/myPost", { data: posts, userInfo: user });
     } catch (error) {
         res.status(500).send("server error");
     }
@@ -258,7 +252,7 @@ exports.getMyLike = async (req, res) => {
             order: [["l_seq", "DESC"]], // 최신순 정렬하여 반환
         });
 
-        res.render("user/myLike", { data: likes });
+        res.render("user/myLike", { data: likes, id: id });
     } catch (error) {
         res.status(500).send("server error");
     }

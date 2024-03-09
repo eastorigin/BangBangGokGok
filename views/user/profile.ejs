@@ -47,6 +47,7 @@
 
                 let data = "";
                 if (!accessToken) {
+                    window.location.href = "/users/signin";
                     data = '<a href="/users/signin">로그인</a>';
                 } else {
                     const response = await axios({
@@ -56,6 +57,10 @@
                             Authorization: `Bearer ${accessToken}`,
                         },
                     });
+                    if (response.data.id != "<%=data.id%>") {
+                        // 로그인된 사용자가 url로 타인의 마이페이지에 접근할 경우
+                        window.location.href = "/";
+                    }
                     if (response.data.result) {
                         // 사용자 이름을 포함한 데이터 생성
 
