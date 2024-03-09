@@ -11,7 +11,6 @@
     <script>
         // 유저 정보
         let currentUserInfo = {};
-        let resultUrl;
         // 채팅
         function createChat(){
             const accessToken = localStorage.getItem("accessToken");
@@ -40,30 +39,12 @@
                 })
                 .then((response)=> {
                     console.log("axios 요청 성공", response); // 요청 성공 시 로그
-                    resultUrl = `/chats/rooms/${response.data.c_seq}?id=${response.data.id}`;
-                    console.log('==========', resultUrl);
-                    window.location.href = resultUrl;
-                    ///////////////////////////////////////////
-                    //const requestData = {
-                    //    id:currentUserInfo.id,
-                      //};
-                    //const roomId = response.data.c_seq;
-                    //const apiUrl = `/chats/rooms/${roomId}`;
-                    //const headers = {
-                     //   Authorization: `Bearer ${accessToken}`,
-                     // };
-                      //const queryString = Object.keys(requestData).map(key => `${key}=${requestData[key]}`).join('&');
-                      //const finalUrl = `${apiUrl}?${queryString}`;
-
-                    //fetch(finalUrl, {
-                    //    method: 'POST',
-                     //   headers: headers,
-                     // })
-                      //.then(data => {
-                        // 성공적인 응답 처리
-                     //   console.log('API 응답:', data);
-                      //  window.location.href = data.url;
-                      //});
+                    if(response.data.c_seq){
+                        const apiUrl = `/chats/rooms/${response.data.c_seq}?id=${response.data.id}`;
+                        console.log('6==========', apiUrl);
+                        console.log('API 응답', response.data.c_seq);
+                        window.location.href = apiUrl;
+                    }
                 })
                 .catch(function(error) {
                     console.error("Error:", error);
@@ -71,7 +52,6 @@
                 });
             }
         }
-        
         // 찜 기능
         async function clickheart(){
             const accessToken = localStorage.getItem("accessToken");
@@ -118,7 +98,6 @@
         }
         (async () => {
             const accessToken = localStorage.getItem("accessToken");
-            const iconsDiv = document.querySelector(".icons");
             try {
                 const response = await axios({
                 method: "POST",
@@ -137,16 +116,28 @@
                     document.getElementById("content").disabled = true;
                 }
 
+                function disableHeart() {
+                    document.getElementById("like-count").style.display = "none";
+                    document.getElementById("heart-icon").style.display = "none";
+                    document.getElementById("btn_edit").style.display = "none";
+                    document.getElementById("btn_delete").style.display = "none";
+                    document.getElementById("title").disabled = true;
+                    document.getElementById("category").disabled = true;
+                    document.getElementById("content").disabled = true;
+                }
 
                 // 게시글 작성자가 아니거나 로그인하지 않은 사용자에 대한 편집 기능 비활성화
-                if('<%= postDetail.User.nickname %>' != currentUserInfo.nickname){
-                    disableEdit();
+                if(!accessToken){
+                    disableHeart();
+                }else if ('<%= postDetail.User.nickname %>' != currentUserInfo.nickname) {
+                    disableEdit();   
                 }else{
                     // 작성자와 로그인한 사용자가 일치하는 경우
                     document.getElementById("btn_edit").style.display = "block";
                     document.getElementById("btn_delete").style.display = "block";
                     document.getElementById("heart-icon").style.display = "none";
                     document.getElementById("btn_chat").style.display = "none";
+                    document.getElementById("like-count").style.display = "none";
                 }
             } catch (error) {
                 console.error("사용자 정보 가져오기 에러:", error);
@@ -234,9 +225,8 @@
                         <button class="btn_edit" id="btn_edit" onclick="updatePost('<%= postDetail.p_seq %>')">수정하기</button>
                         <button class="btn_delete" id="btn_delete" onclick="deletePost('<%= postDetail.p_seq %>')">삭제하기</button>
                         <i class="bi bi-heart" id="heart-icon" onclick="clickheart()"></i>
-                        <div id="like-count">0</div>
+                        <span id="like-count">0</span>
                         <button class="btn_chat" id="btn_chat" onclick="createChat()">채팅하기</button>
-
                 </div>
             </div>
     </body>

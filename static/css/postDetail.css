@@ -129,3 +129,8 @@ html {
     border-radius: 5px;
     cursor: pointer;
 }
+
+.bi-heart.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
