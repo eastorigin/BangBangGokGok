@@ -8,6 +8,183 @@
         <%-include('../include/head')%>
         <link rel="stylesheet" href="/static/css/postDetail.css" />
     </head>
+    <script>
+        // 유저 정보
+        let currentUserInfo = {};
+        // 채팅
+        function createChat(){
+            const accessToken = localStorage.getItem("accessToken");
+            if (!accessToken) {
+                // 로그인되어 있지 않은 경우, 로그인 확인 메시지 표시
+                const confirmLogin = confirm("채팅을 하려면 로그인이 필요합니다. 로그인하시겠습니까?");
+                if (confirmLogin) {
+                    // 사용자가 확인을 선택한 경우, 로그인 페이지로 이동
+                    window.location.href = "/users/signin";
+                }
+                // 사용자가 취소를 선택한 경우, 함수 종료
+                return;
+            }else{
+                console.log('================ 채팅', currentUserInfo);
+                axios.post('/chats/rooms/', { 
+                    b_nick: '<%= postDetail.User.nickname %>',
+                    b_seq: '<%= postDetail.User.u_seq %>',
+                    u_seq: currentUserInfo.u_seq,
+                    u_nick: currentUserInfo.nickname,
+                    id: currentUserInfo.id,
+                    p_seq:'<%= postDetail.p_seq %>'
+                }, {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                })
+                .then((response)=> {
+                    console.log("axios 요청 성공", response); // 요청 성공 시 로그
+                    if(response.data.c_seq){
+                        const apiUrl = `/chats/rooms/${response.data.c_seq}?id=${response.data.id}`;
+                        console.log('6==========', apiUrl);
+                        console.log('API 응답', response.data.c_seq);
+                        window.location.href = apiUrl;
+                    }
+                })
+                .catch(function(error) {
+                    console.error("Error:", error);
+                    alert('채팅방 생성에 실패했습니다.');
+                });
+            }
+        }
+        // 찜 기능
+        async function clickheart(){
+            const accessToken = localStorage.getItem("accessToken");
+            let likeCount = parseInt(document.getElementById("like-count").textContent) || 0;
+
+                    // 클래스를 토글하기 전에 현재 '좋아요' 상태를 확인합니다.
+                    let heart = document.getElementById("heart-icon");
+                    let isLiked = heart.classList.contains("bi-heart-fill");
+
+                    // 클래스를 토글합니다.
+                    heart.classList.toggle("bi-heart");
+                    heart.classList.toggle("bi-heart-fill");
+
+                    // 'isLiked' 변수 업데이트: 만약 'bi-heart-fill' 클래스가 존재한다면, 이제 '좋아요' 상태입니다.
+                    isLiked = !isLiked;
+                    try {
+                        const currentPseq = '<%= postDetail.p_seq %>' // p_seq
+                        
+                        const response = await axios({
+                            method: isLiked ? "POST" : "DELETE", // 'isLiked' 상태에 따라 요청 메소드를 결정합니다.
+                            url: "/likes",
+                            headers: {
+                                Authorization: `Bearer ${accessToken}`,
+                            },
+                            data: {
+                                currentPseq: currentPseq
+                            }
+                        });
+
+                        if (response.status === 200) {
+                            // 요청 성공 시 'like-count'를 업데이트합니다.
+                            document.getElementById("like-count").textContent = isLiked ? ++likeCount : --likeCount;
+                        } else {
+                            // 서버에서 요청을 처리하지 못했다면 UI 상태를 이전으로 되돌립니다.
+                            heart.classList.toggle("bi-heart");
+                            heart.classList.toggle("bi-heart-fill");
+                        }
+                    } catch (error) {
+                        console.error("좋아요 상태 변경 에러:", error);
+                        // 에러 발생 시 UI 상태를 이전으로 되돌립니다.
+                        heart.classList.toggle("bi-heart");
+                        heart.classList.toggle("bi-heart-fill");
+                    }
+        }
+        (async () => {
+            const accessToken = localStorage.getItem("accessToken");
+            const iconsDiv = document.querySelector(".icons");
+            try {
+                const response = await axios({
+                method: "POST",
+                url: "/posts/accesstoken",
+                headers: {
+                Authorization: `Bearer ${accessToken}`,
+                },
+            });
+                currentUserInfo = response.data;
+
+                function disableEdit() {
+                    document.getElementById("btn_edit").style.display = "none";
+                    document.getElementById("btn_delete").style.display = "none";
+                    document.getElementById("title").disabled = true;
+                    document.getElementById("category").disabled = true;
+                    document.getElementById("content").disabled = true;
+                }
+
+
+                // 게시글 작성자가 아니거나 로그인하지 않은 사용자에 대한 편집 기능 비활성화
+                if('<%= postDetail.User.nickname %>' != currentUserInfo.nickname){
+                    disableEdit();
+                }else{
+                    // 작성자와 로그인한 사용자가 일치하는 경우
+                    document.getElementById("btn_edit").style.display = "block";
+                    document.getElementById("btn_delete").style.display = "block";
+                    document.getElementById("heart-icon").style.display = "none";
+                    document.getElementById("btn_chat").style.display = "none";
+                }
+            } catch (error) {
+                console.error("사용자 정보 가져오기 에러:", error);
+            }
+            
+        })();
+    
+
+    async function deletePost(postId) {
+        try {
+            const accessToken = localStorage.getItem("accessToken");
+            const response = await axios({
+                method: "DELETE",
+                url: `/posts/detail/${postId}`,
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            });
+
+            if (response.status === 200) {
+                alert('게시글이 성공적으로 삭제되었습니다.');
+                window.location.href = '/posts/list';
+            }
+        } catch (error) {
+            console.error(error);
+            alert('게시글 삭제에 실패했습니다.');
+            }
+        }
+
+    async function updatePost(postId) {
+        try {
+            const title = document.getElementById("title").value;
+            const category = document.getElementById("category").value;
+            const content = document.getElementById("content").value;
+            const accessToken = localStorage.getItem("accessToken");
+
+            const response = await axios({
+                method: "PATCH",
+                url: `/posts/detail/${postId}`,
+                data: JSON.stringify({ title, category, content }),
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`,
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (response.status === 200) {
+                alert('게시글이 성공적으로 수정되었습니다.');
+                window.location.href = `/posts/list`;
+            }
+        } catch (error) {
+            console.error(error);
+            alert('게시글 수정에 실패했습니다.');
+        }
+    }
+
+    
+</script>
     <body>
         <div class="container">
             <div class="left">
@@ -36,244 +213,10 @@
                 <div class="icons">
                         <button class="btn_edit" id="btn_edit" onclick="updatePost('<%= postDetail.p_seq %>')">수정하기</button>
                         <button class="btn_delete" id="btn_delete" onclick="deletePost('<%= postDetail.p_seq %>')">삭제하기</button>
+                        <i class="bi bi-heart" id="heart-icon" onclick="clickheart()"></i>
+                        
+                        <button class="btn_chat" id="btn_chat" onclick="createChat()">채팅하기</button>
                 </div>
             </div>
-        <script>
-            (async () => {
-                const accessToken = localStorage.getItem("accessToken");
-                const iconsDiv = document.querySelector(".icons");
-                let currentUserInfo = {};
-                try {
-                    const response = await axios({
-                    method: "POST",
-                    url: "/posts/accesstoken",
-                    headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                    },
-                });
-
-                    currentUserInfo = response.data;
-                    console.log(currentUserInfo)
-                } catch (error) {
-                    console.error("사용자 정보 가져오기 에러:", error);
-                }
-
-                // 하트 아이콘과 채팅 버튼 추가 함수
-                function addInteractiveIcons() {
-                    const heartIcon = document.createElement("i");
-                    heartIcon.className = "bi bi-heart";
-                    heartIcon.id = "heart-icon";
-
-                    const chatButton = document.createElement("button");
-                    chatButton.textContent = "채팅하기";
-                    chatButton.className = "btn_chat";
-                    chatButton.addEventListener("click", chatButtonClicked);
-
-                    const likeCount = document.createElement("span")
-                    likeCount.textContent = 0
-                    likeCount.className = "like-count"
-                    likeCount.id = "like-count";
-
-                    iconsDiv.appendChild(heartIcon);
-                    iconsDiv.appendChild(likeCount);
-                    iconsDiv.appendChild(chatButton);
-
-                    heartIcon.addEventListener("click", async function () {
-                        let likeCount = parseInt(document.getElementById("like-count").textContent) || 0;
-
-                        // 클래스를 토글하기 전에 현재 '좋아요' 상태를 확인합니다.
-                        let isLiked = this.classList.contains("bi-heart-fill");
-
-                        // 클래스를 토글합니다.
-                        this.classList.toggle("bi-heart");
-                        this.classList.toggle("bi-heart-fill");
-
-                        // 'isLiked' 변수 업데이트: 만약 'bi-heart-fill' 클래스가 존재한다면, 이제 '좋아요' 상태입니다.
-                        isLiked = !isLiked;
-
-                        try {
-                            const currentUrl = window.location.href;
-                            const parsedUrl = new URL(currentUrl);
-                            const segments = parsedUrl.pathname.split('/');
-                            const currentPseq = segments.pop(); // 현재 url의 가장 끝 값인 p_seq 가져오는 과정
-                            
-                            const response = await axios({
-                                method: isLiked ? "POST" : "DELETE", // 'isLiked' 상태에 따라 요청 메소드를 결정합니다.
-                                url: "/likes",
-                                headers: {
-                                    Authorization: `Bearer ${accessToken}`,
-                                },
-                                data: {
-                                    currentPseq: currentPseq
-                                }
-                            });
-
-                            if (response.status === 200) {
-                                // 요청 성공 시 'like-count'를 업데이트합니다.
-                                document.getElementById("like-count").textContent = isLiked ? ++likeCount : --likeCount;
-                            } else {
-                                // 서버에서 요청을 처리하지 못했다면 UI 상태를 이전으로 되돌립니다.
-                                this.classList.toggle("bi-heart");
-                                this.classList.toggle("bi-heart-fill");
-                            }
-                        } catch (error) {
-                            console.error("좋아요 상태 변경 에러:", error);
-                            // 에러 발생 시 UI 상태를 이전으로 되돌립니다.
-                            this.classList.toggle("bi-heart");
-                            this.classList.toggle("bi-heart-fill");
-                        }
-                    });
-                }
-
-                // 게시글 작성자가 아니거나 로그인하지 않은 사용자에 대한 편집 기능 비활성화
-                function disableEdit() {
-                    document.getElementById("btn_edit").style.display = "none";
-                    document.getElementById("btn_delete").style.display = "none";
-                    document.getElementById("title").disabled = true;
-                    document.getElementById("category").disabled = true;
-                    document.getElementById("content").disabled = true;
-
-                    // 하트 아이콘과 채팅 버튼 추가
-                    addInteractiveIcons();
-                }
-
-                // accessToken이 존재하는 경우에만 사용자를 확인
-                if (accessToken) {
-                    try {
-                        const response = await axios({
-                        method: "POST",
-                        url: "/posts/accesstoken",
-                        headers: {
-                            Authorization: `Bearer ${accessToken}`,
-                        },
-                    });
-
-                    if (response.data.result) {
-                        const currentUserNickname = response.data.nickname;
-                        const authorNickname = '<%= postDetail.User.nickname %>';
-
-                        if (currentUserNickname !== authorNickname) {
-                            disableEdit();
-                        } else {
-                            // 작성자와 로그인한 사용자가 일치하는 경우
-                            document.getElementById("btn_edit").style.display = "block";
-                            document.getElementById("btn_delete").style.display = "block";
-                        }
-                    } else {
-                        console.log("사용자 정보 가져오기 실패");
-                        disableEdit();
-                    }
-                    } catch (error) {
-                        console.error("사용자 정보 가져오기 에러:", error);
-                        disableEdit();
-                        }
-                } else {
-                    // accessToken이 없으면 로그인하지 않은 것으로 처리
-                    disableEdit();
-                }
-
-            function chatButtonClicked() { //여기에다 p_seq 넣기? 그러면 p_seq 정의는?
-                // console.log("채팅하기 버튼 클릭됨"); // 클릭 이벤트 리스너 확인
-                const accessToken = localStorage.getItem("accessToken");
-                // console.log("accessToken:", accessToken);
-
-                    if (!accessToken) {
-                        // 로그인되어 있지 않은 경우, 로그인 확인 메시지 표시
-                        const confirmLogin = confirm("채팅을 하려면 로그인이 필요합니다. 로그인하시겠습니까?");
-                        if (confirmLogin) {
-                            // 사용자가 확인을 선택한 경우, 로그인 페이지로 이동
-                             window.location.href = "/users/signin";
-                        }
-                        // 사용자가 취소를 선택한 경우, 함수 종료
-                        return;
-                    }
-                    
-                console.log("채팅하기 버튼 클릭됨"); // 클릭 이벤트 리스너 확인
-
-                console.log("axios 요청 전송 준비", {
-                    b_nick: '<%= postDetail.User.nickname %>',
-                    b_seq: '<%= postDetail.User.u_seq %>',
-                    u_seq: currentUserInfo.u_seq,
-                    u_nick: currentUserInfo.nickname,
-                    id: currentUserInfo.id
-                });
-
-                // /rooms/:p_seq
-
-                console.log('<%= postDetail.p_seq %>');
-                axios.post(`/chats/rooms/${'<%= postDetail.p_seq %>'}`, { // 어디로 보내야 하는지, 파라미터 p_seq를 여기에 쓴다?
-                    b_nick: '<%= postDetail.User.nickname %>',
-                    b_seq: '<%= postDetail.User.u_seq %>',
-                    u_seq: currentUserInfo.u_seq,
-                    u_nick: currentUserInfo.nickname,
-                    id: currentUserInfo.id
-                }, {
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": `Bearer ${localStorage.getItem("accessToken")}`,
-                    }
-                })
-                .then((response)=> {
-                    console.log("axios 요청 성공", response.data); // 요청 성공 시 로그
-                })
-                .catch(function(error) {
-                    console.error("Error:", error);
-                    alert('채팅방 생성에 실패했습니다.');
-                });
-            }
-
-            
-            })();
-
-            async function deletePost(postId) {
-                try {
-                    const accessToken = localStorage.getItem("accessToken");
-                    const response = await axios({
-                        method: "DELETE",
-                        url: `/posts/detail/${postId}`,
-                        headers: {
-                            Authorization: `Bearer ${accessToken}`,
-                        },
-                    });
-
-                    if (response.status === 200) {
-                        alert('게시글이 성공적으로 삭제되었습니다.');
-                        window.location.href = '/posts/list';
-                    }
-                } catch (error) {
-                    console.error(error);
-                    alert('게시글 삭제에 실패했습니다.');
-                    }
-                }
-
-            async function updatePost(postId) {
-                try {
-                    const title = document.getElementById("title").value;
-                    const category = document.getElementById("category").value;
-                    const content = document.getElementById("content").value;
-                    const accessToken = localStorage.getItem("accessToken");
-
-                    const response = await axios({
-                        method: "PATCH",
-                        url: `/posts/detail/${postId}`,
-                        data: JSON.stringify({ title, category, content }),
-                        headers: {
-                            'Authorization': `Bearer ${accessToken}`,
-                            'Content-Type': 'application/json',
-                        },
-                    });
-
-                    if (response.status === 200) {
-                        alert('게시글이 성공적으로 수정되었습니다.');
-                        window.location.href = `/posts/list`;
-                    }
-                } catch (error) {
-                    console.error(error);
-                    alert('게시글 수정에 실패했습니다.');
-                }
-            }
-
-            
-        </script>
     </body>
 </html>

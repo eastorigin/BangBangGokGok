@@ -53,35 +53,48 @@ exports.getChatRoom = async (req, res) => {
 
             try {
                 const auth = jwt.verify(accessToken, process.env.ACCESS_SECRET);
-
+                console.log("채팅방 상세========", auth);
+                console.log("==========채팅방 들어오는지 확인", req.params.c_seq);
                 if (auth) {
-                    // 채팅방 목록 불러오기
-                    const chatLists = await Chat.findAll({
-                        where: {
-                            [Op.or]: [{ u_seq: auth.u_seq }, { b_seq: auth.u_seq }],
-                        },
-                        order: [["c_seq", "DESC"]],
-                    });
+                    try {
+                        // 채팅방 목록 불러오기
+                        const chatLists = await Chat.findAll({
+                            where: {
+                                [Op.or]: [{ u_seq: auth.u_seq }, { b_seq: auth.u_seq }],
+                            },
+                            order: [["c_seq", "DESC"]],
+                        });
 
-                    // 이전 대화 메세지 불러오기
-                    const messages = await Message.findAll({
-                        where: { c_seq: req.params.c_seq },
-                    });
+                        // 이전 대화 메세지 불러오기
+                        const messages = await Message.findAll({
+                            where: { c_seq: req.params.c_seq },
+                        });
 
-                    // 해당 채팅방 제목 불러오기
-                    const c_title = await Chat.findOne({
-                        attributes: ["c_title1", "c_title2"],
-                        where: { c_seq: req.params.c_seq },
-                    });
+                        // 해당 채팅방 제목 불러오기
+                        const c_title = await Chat.findOne({
+                            attributes: ["c_title1", "c_title2"],
+                            where: { c_seq: req.params.c_seq },
+                        });
 
-                    res.render("chat/chat", {
-                        chatLists: chatLists,
-                        c_seq: req.params.c_seq,
-                        c_title: c_title,
-                        messages: messages,
-                        u_seq: auth.u_seq,
-                        id: auth.id,
-                    });
+                        console.log("==========데이터 확인용1", chatLists);
+                        console.log("==========데이터 확인용2", req.params.c_seq);
+                        console.log("==========데이터 확인용3", c_title);
+                        console.log("==========데이터 확인용4", messages);
+                        console.log("==========데이터 확인용5", auth.u_seq);
+                        console.log("==========데이터 확인용6", auth.id);
+
+                        res.render("chat/chat", {
+                            chatLists: chatLists,
+                            c_seq: req.params.c_seq,
+                            c_title: c_title,
+                            messages: messages,
+                            u_seq: auth.u_seq,
+                            id: auth.id,
+                        });
+                    } catch (error) {
+                        console.log("====================error", error);
+                        console.log("채팅방 들어가기 에러");
+                    }
                 } else {
                     res.redirect("/users/signin");
                 }
@@ -194,14 +207,10 @@ exports.createChatRoom2 = async (req, res) => {
     try {
         if (req.headers.authorization) {
             const accessToken = req.headers.authorization.split(" ")[1];
-
             try {
                 const auth = jwt.verify(accessToken, process.env.ACCESS_SECRET);
-
                 if (auth) {
-                    const { p_seq } = req.params; // 채팅방이 생성되는 글의 seq
-                    const { b_seq, u_seq, b_nick, u_nick, id } = req.body;
-
+                    const { b_seq, u_seq, b_nick, u_nick, id, p_seq } = req.body;
                     const c_title = [u_nick, b_nick];
 
                     // 이미 존재하는 채팅방인지 확인 후, 존재한다면 그 채팅방을 열기
@@ -215,30 +224,8 @@ exports.createChatRoom2 = async (req, res) => {
                     });
                     if (check) {
                         // 이미 존재하는 채팅방이 있을 경우, 해당 채팅방 열기
-
-                        // 채팅방 목록 불러오기
-                        const chatLists = await Chat.findAll({
-                            where: {
-                                [Op.or]: [{ u_seq: u_seq }, { b_seq: u_seq }],
-                            },
-                            order: [["c_seq", "DESC"]],
-                        });
-
-                        // 이전 대화 메세지 불러오기
-                        const messages = await Message.findAll({
-                            where: { c_seq: check.c_seq },
-                        });
-
-                        const c_title = [check.c_title1, check.c_title2];
-
-                        res.render("chat/chat", {
-                            chatLists: chatLists,
-                            c_seq: check.c_seq,
-                            c_title: c_title,
-                            messages: messages,
-                            u_seq: u_seq,
-                            id: id,
-                        });
+                        // console.log("==========이미 존재하는 채팅방", check.c_seq, check.u_seq);
+                        return res.send({ c_seq: check.c_seq, u_seq: check.u_seq, id: auth.id });
                     } else {
                         console.log("=========기존에 채팅방이 존재하지 않습니다.");
                         // 채팅방이 없을 경우, 새로 생성
@@ -287,6 +274,57 @@ exports.createChatRoom2 = async (req, res) => {
         } else {
             res.redirect("/users/signin");
         }
+    } catch (err) {
+        res.status(500).send("server error");
+    }
+};
+
+exports.getChatRoom2 = async (req, res) => {
+    try {
+        // const id = req.query.id; // 현재 접속 유저
+        console.log("================id", req.query.id);
+
+        const u_seq = await User.findOne({
+            attributes: ["u_seq"],
+            where: { id: req.query.id },
+        });
+
+        console.log("================u_seq", u_seq.u_seq);
+
+        // 채팅방 목록 불러오기
+        const chatLists = await Chat.findAll({
+            where: {
+                [Op.or]: [{ u_seq: u_seq.u_seq }, { b_seq: u_seq.u_seq }],
+            },
+            order: [["c_seq", "DESC"]],
+        });
+
+        // 이전 대화 메세지 불러오기
+        const messages = await Message.findAll({
+            where: { c_seq: req.params.c_seq },
+        });
+
+        // 해당 채팅방 제목 불러오기
+        const c_title = await Chat.findOne({
+            attributes: ["c_title1"],
+            where: { c_seq: req.params.c_seq },
+        });
+
+        console.log("1111111111", chatLists);
+        console.log("req.params.c_seq", req.params.c_seq);
+        console.log("22222", c_title.c_title1);
+        console.log("1111113333331111", messages);
+        console.log("4444444444", u_seq.u_seq);
+        console.log("5555555555", req.query.id);
+
+        res.render("chat/chat", {
+            chatLists: chatLists,
+            c_seq: req.params.c_seq,
+            c_title: c_title.c_title1,
+            messages: messages,
+            u_seq: u_seq.u_seq,
+            id: req.query.id,
+        });
     } catch (err) {
         res.status(500).send("server error");
     }
