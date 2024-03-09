@@ -55,25 +55,19 @@ html {
     padding-top: 40px;
 }
 
-.like-count {
-    background-color: #fff;
-    padding: 0.5vw;
-    width: 3vw;
-    height: 3vw;
-    border: 1px solid #ccc;
-    border-radius: 50%;
-    font-size: 1.2vw;
+#like-count {
+    font-size: 1.2rem; /* 하트 아이콘과 비슷한 크기로 조정합니다. */
+    width: 2.5rem; /* 하트 아이콘의 크기에 맞게 조정 */
+    height: 2.5rem; /* 하트 아이콘의 크기에 맞게 조정 */
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 2;
-    min-width: 20px;
-    min-height: 20px;
-    max-width: 50px;
-    max-height: 50px;
-    margin-right: 10px; /* 하트 아이콘과 like-count 사이의 간격 설정 */
+    border-radius: 50%;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    /* 추가적인 간격 조정을 위해 margin-right 설정을 제거하거나 조정합니다. */
+    margin-left: 5px;
 }
-
 #title,
 #category,
 #content {
@@ -105,7 +99,6 @@ html {
     font-size: 1.5rem;
     cursor: pointer;
     color: #ff6f0f;
-    margin-right: 10px; /* 하트 아이콘과 like-count 사이의 간격 설정 */
 }
 
 .btn_chat,
@@ -130,7 +123,12 @@ html {
     cursor: pointer;
 }
 
-.bi-heart.disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
+.btn-right {
+    margin-left: auto; /* 다른 버튼 요소들과 분리하여 오른쪽에 위치하도록 합니다. */
+}
+
+.btn_left {
+    margin-right: auto;
+    display: flex;
+    align-items: center; /* 하트 아이콘과 like-count를 수직 중앙 정렬 */
 }
