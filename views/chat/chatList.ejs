@@ -7,26 +7,26 @@
         <title>Chat Room List</title>
         <%-include('../include/head')%>
         <%-include('../include/header')%>
-        <style>
-            .notification {
-                background-color: #f8d7da;
-                color: #721c24;
-                padding: 5px;
-                border-radius: 5px;
-                margin-left: 10px;
-            }
-        </style>
+        <link rel="stylesheet" href="/static/css/chatList.css" />
     </head>
     <body>
-        <h1>Chat Room List</h1>
-<ul>
-    <% for (let i = 0; i < chatLists.length; i++) { %>
-    <li>
-        <% if (chatLists[i].c_title1 != nickname) { %>
-        <button onclick="goToChatRoom('<%= chatLists[i].c_seq %>', '<%= id %>')">
+        <div class="container-out">
+            <div><h3 class="container-name"><%=nickname%> Chat Room List</h3></div>
+
+        <div class="container-in">
+            <div class="card1 card">
+                <div class="banner">
+                        <img src="/static/css/image/chatImage.png" alt="Image 1" class="resize-image">
+                </div>
+            
+            </div>
+         <div class="card2 card">
+          <% for (let i = 0; i < chatLists.length; i++) { %>
+           <% if (chatLists[i].c_title1 != nickname) { %>
+          <button id="one_button" onclick="goToChatRoom('<%= chatLists[i].c_seq %>', '<%= id %>')">
             <%= chatLists[i].c_title1 %>
             <% } else { %>
-            <button onclick="goToChatRoom('<%= chatLists[i].c_seq %>', '<%= id %>')">
+            <button id="two_button" onclick="goToChatRoom('<%= chatLists[i].c_seq %>', '<%= id %>')">
                 <%= chatLists[i].c_title2 %>
                 <% } %>
                 <!-- 읽지 않은 메세지의 값이 0이 아니고 last_user 값이 현재 사용자와 다를 때  -->
@@ -36,9 +36,11 @@
                 </span>
                 <% } %>
             </button>
-    </li>
-    <% } %>
-</ul>
+
+           <% } %>
+            </div>
+         </div>
+        </div>
 </body>
 <script>
     function goToChatRoom(c_seq, id) {
