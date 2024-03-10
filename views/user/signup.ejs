@@ -77,15 +77,15 @@
                     return;
                 }
 
-                if (
-                    !duplicateCheckStatus.email ||
-                    !duplicateCheckStatus.id ||
-                    !duplicateCheckStatus.nickname
-                ) {
-                    alert("이메일, 아이디, 닉네임의 중복 확인을 완료해주세요.");
+                const unCheckedFields = [];
+                if (!duplicateCheckStatus.email) unCheckedFields.push("이메일");
+                if (!duplicateCheckStatus.id) unCheckedFields.push("아이디");
+                if (!duplicateCheckStatus.nickname) unCheckedFields.push("닉네임");
+
+                if (unCheckedFields.length > 0) {
+                    alert(`${unCheckedFields.join(", ")}의 중복 확인을 완료해주세요.`);
                     return;
                 }
-
                 if (p1 !== p2) {
                     alert("비밀번호가 일치하지 않습니다.");
                     return;
@@ -110,7 +110,7 @@
                             }
                         } else {
                             alert("회원가입 완료");
-                            document.location.href = "/";
+                            document.location.href = "/users/signin";
                         }
                     })
                     .catch((error) => {
