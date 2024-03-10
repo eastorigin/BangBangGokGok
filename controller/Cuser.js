@@ -11,6 +11,7 @@ exports.getSignin = (req, res) => {
 
 exports.postSignin = async (req, res) => {
     try {
+        // 로그인 창에서 입력받은 id, pw
         const { id, pw } = req.body;
 
         const userInfoInstance = await User.findOne({
@@ -18,9 +19,8 @@ exports.postSignin = async (req, res) => {
         });
 
         // userInfoInstance에서 dataValues 속성을 추출하여 순수한 JavaScript 객체로 변환
+        // userInfo란 로그인 창에서 입력받은 id와 같은 id인, DB에 있는 회원정보
         const userInfo = userInfoInstance ? userInfoInstance.dataValues : null;
-
-        console.log("로그인 창에서 입력한 id와 일치하는 DB 정보: ", userInfo);
 
         if (id === userInfo.id && pw === userInfo.pw) {
             // access token 발급
@@ -34,7 +34,7 @@ exports.postSignin = async (req, res) => {
                 },
                 process.env.ACCESS_SECRET,
                 {
-                    expiresIn: "15m",
+                    expiresIn: "24h",
                     issuer: "BBGG",
                 }
             );
@@ -64,21 +64,20 @@ exports.postSignin = async (req, res) => {
 
 exports.postAccessToken = async (req, res) => {
     try {
-        console.log(req.headers.authorization);
+        console.log("===================postAccessToken", req.headers.authorization);
         if (req.headers.authorization) {
             const accessToken = req.headers.authorization.split(" ")[1];
 
             try {
-                console.log("accessToken : ", accessToken);
-
+                // accessToken을 통해 검증된 회원 auth
                 const auth = jwt.verify(accessToken, process.env.ACCESS_SECRET);
-                console.log("auth : ", auth);
 
                 const userInfoInstance = await User.findOne({
                     where: { id: auth.id },
                 });
 
                 // userInfoInstance에서 dataValues 속성을 추출하여 순수한 JavaScript 객체로 변환
+                // userInfo란 accessToken을 통해 검증된 id와 같은 id인, DB에 있는 회원정보
                 const userInfo = userInfoInstance ? userInfoInstance.dataValues : null;
 
                 if (userInfo.id === auth.id) {
@@ -92,14 +91,12 @@ exports.postAccessToken = async (req, res) => {
                 }
                 res.end();
             } catch (error) {
-                console.log("토큰 인증 에러 ::", error);
                 res.send({ result: false, message: "인증된 회원이 아닙니다." });
             }
         } else {
             res.redirect("/users/signin");
         }
     } catch (error) {
-        console.log("POST /accesstoken", error);
         res.status(500).send("server error");
     }
 };
