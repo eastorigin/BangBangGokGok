@@ -4,16 +4,23 @@
     padding-right: 15%;
     justify-content: center;
 }
-
+.pagination-container {
+    display: flex;
+    justify-content: center;
+}
 .image-container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     align-items: flex-start;
+    padding: 10%;
+    /* justify-content: center; */
 }
 .image-container .post {
     width: 23%;
     margin-bottom: 20px;
+    padding: 15px;
+    /* float: left; */
 }
 .image-container .post a {
     display: block;
