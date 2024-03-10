@@ -18,9 +18,18 @@ exports.postSignin = async (req, res) => {
             where: { id: id },
         });
 
+        if (!userInfoInstance) {
+            // 아이디가 존재하지 않는 경우
+            return res.send({ result: false, message: "존재하지 않는 아이디입니다." });
+        }
+
         // userInfoInstance에서 dataValues 속성을 추출하여 순수한 JavaScript 객체로 변환
         // userInfo란 로그인 창에서 입력받은 id와 같은 id인, DB에 있는 회원정보
         const userInfo = userInfoInstance ? userInfoInstance.dataValues : null;
+
+        if (id === userInfo.id && pw !== userInfo.pw) {
+            return res.send({ result: false, message: "비밀번호가 일치하지 않습니다." });
+        }
 
         if (id === userInfo.id && pw === userInfo.pw) {
             // access token 발급
