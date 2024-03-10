@@ -238,13 +238,13 @@
                     <textarea name="content" id="content" cols="30" rows="10"><%= postDetail.content %></textarea>
                 </form>
                 <div class="icons">
-                        <button class="btn_edit" id="btn_edit" onclick="updatePost('<%= postDetail.p_seq %>')">수정하기</button>
-                        <button class="btn_delete" id="btn_delete" onclick="deletePost('<%= postDetail.p_seq %>')">삭제하기</button>
                         <div class="btn_left">
+                            <button class="btn_edit" id="btn_edit" onclick="updatePost('<%= postDetail.p_seq %>')">수정하기</button>
                             <i class="bi bi-heart" id="heart-icon" onclick="clickheart()"></i>
                             <span id="like-count">0</span>    
                         </div>
                         <div class="btn_right">
+                            <button class="btn_delete" id="btn_delete" onclick="deletePost('<%= postDetail.p_seq %>')">삭제하기</button>
                             <button class="btn_chat" id="btn_chat" onclick="createChat()">채팅하기</button>
                         </div>
                 </div>
