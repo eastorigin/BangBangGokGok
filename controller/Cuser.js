@@ -27,6 +27,10 @@ exports.postSignin = async (req, res) => {
 
         console.log("로그인 창에서 입력한 id와 일치하는 DB 정보: ", userInfo);
 
+        if (id === userInfo.id && pw !== userInfo.pw) {
+            return res.send({ result: false, message: "비밀번호가 일치하지 않습니다." });
+        }
+
         if (id === userInfo.id && pw === userInfo.pw) {
             // access token 발급
             const accessToken = jwt.sign(
