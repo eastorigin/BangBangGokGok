@@ -1,0 +1,77 @@
+.notification {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 5px;
+    border-radius: 5px;
+    margin-left: 10px;
+}
+
+.banner {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 10p;
+    align-items: center;
+}
+body {
+    min-width: 100%;
+}
+.resize-image {
+    max-width: 400px; /* 원하는 최대 너비로 조정 */
+    max-height: 600px; /* 원하는 최대 높이로 조정 */
+}
+
+.container-out {
+    /* background-color: green; */
+    margin-top: 60px;
+    width: 100%;
+    height: 50px;
+}
+.container-in {
+    display: flex;
+    width: 100%;
+    padding: 20px;
+    justify-content: center;
+    max-height: 450px;
+}
+.card1 {
+    position: relative;
+    flex: 1;
+    background-color: white;
+    max-width: 300px;
+    max-height: 450px;
+    overflow: hidden;
+    border-radius: 2rem;
+    box-shadow: 0px 1rem 0.5rem rgba(0, 0, 0, 0.5);
+
+    /* top: 2.5rem; */
+}
+.container-name {
+    text-align: center;
+}
+.card2 {
+    margin-left: 1%;
+    flex: 1;
+    background-color: white;
+    max-width: 800px;
+    max-height: 450px;
+    overflow: hidden;
+    /* border-radius: 2rem; */
+    /* box-shadow: 0px 1rem 0.5rem rgba(0, 0, 0, 0.5); */
+    overflow-y: auto; /* 세로 스크롤을 허용합니다. */
+
+    /* top: 2.5rem; */
+}
+
+#one_button {
+    height: 90px; /* 높이 조절 */
+    font-size: 16px; /* 글꼴 크기 조절 */
+    background-color: #ffffff;
+    color: #ff6f0f;
+}
+
+#two_button {
+    height: 90px; /* 높이 조절 */
+    font-size: 16px; /* 글꼴 크기 조절 */
+    background-color: #ffffff;
+    color: #ff6f0f;
+}
