@@ -18,7 +18,7 @@
                 <div class="banner">
                         <img src="/static/css/image/chatImage.png" alt="Image 1" class="resize-image">
                 </div>
-            
+                <a id="btn-home">홈으로</a>
             </div>
          <div class="card2 card">
           <% for (let i = 0; i < chatLists.length; i++) { %>
@@ -66,6 +66,9 @@
                     // 로그인된 사용자가 url로 타인의 채팅방 리스트에 접근할 경우
                     window.location.href = '/';
                 }
+                document.getElementById("btn-home").addEventListener("click", function () {
+                    window.location.href = "/";
+            });
 
                 // 오진님 코드
                 //if (response.data) {

@@ -7,11 +7,15 @@ body {
 }
 
 #logo {
-    width: 5px;
+    width: 20px;
     text-decoration: none;
     color: #ff6f0f;
 }
 
+#logo img {
+    width: 100px; /* 원하는 너비로 설정합니다. */
+    height: auto; /* 높이를 자동으로 조정합니다. */
+}
 #btn-search {
     color: black;
     font-size: 25px;
