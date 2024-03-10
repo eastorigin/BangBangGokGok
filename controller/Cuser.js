@@ -17,6 +17,11 @@ exports.postSignin = async (req, res) => {
             where: { id: id },
         });
 
+        if (!userInfoInstance) {
+            // 아이디가 존재하지 않는 경우
+            return res.send({ result: false, message: "존재하지 않는 아이디입니다." });
+        }
+
         // userInfoInstance에서 dataValues 속성을 추출하여 순수한 JavaScript 객체로 변환
         const userInfo = userInfoInstance ? userInfoInstance.dataValues : null;
 
