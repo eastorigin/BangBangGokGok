@@ -10,10 +10,12 @@
     <!-- Header Start -->
     <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
-            <a id="logo" href="/">BBGG</a>
+            <a id="logo" href="/">
+                <img src="/static/css/image/logo.png" alt="BBGG 로고" />
+            </a>
 
             <div id="menu">
-                <a id="btn-chat" href="#">채팅방</a>
+                <a id="btn-chat" href="#"></a>
 
                 <a id="btn-mypage" href="../../posts/list">둘러보기</a>
 
@@ -72,6 +74,7 @@
                     profileButton.href = `/users/mypage/${response.data.id}`;
 
                     const chatButton = document.getElementById("btn-chat");
+                    chatButton.innerHTML = `채팅방`;
                     chatButton.href = `/chats/lists/${response.data.id}`;
                     // userButton.href = `/users/mypage/${response.data.id}`;
                 }

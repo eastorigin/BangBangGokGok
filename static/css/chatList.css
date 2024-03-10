@@ -5,6 +5,20 @@
     border-radius: 5px;
     margin-left: 10px;
 }
+#btn-home {
+    background-color: #ff6f0f;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    width: 120px;
+    padding: 10px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: block; /* 버튼을 블록 레벨 요소로 설정합니다. */
+    margin: 0 auto; /* 좌우 여백을 자동으로 설정하여 가운데 정렬합니다. */
+    cursor: pointer;
+    margin-bottom: 10%;
+}
 
 .banner {
     display: flex;
