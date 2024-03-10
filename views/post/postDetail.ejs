@@ -52,55 +52,6 @@
                 });
             }
         }
-        // 찜 기능
-        async function clickheart(){
-            const accessToken = localStorage.getItem("accessToken");
-            let likeCount = parseInt(document.getElementById("like-count").textContent) || 0;
-
-                    // 클래스를 토글하기 전에 현재 '좋아요' 상태를 확인합니다.
-                    let heart = document.getElementById("heart-icon");
-                    let isLiked = heart.classList.contains("bi-heart-fill");
-
-                    // 클래스를 토글합니다.
-                    heart.classList.toggle("bi-heart");
-                    heart.classList.toggle("bi-heart-fill");
-
-                    // 'isLiked' 변수 업데이트: 만약 'bi-heart-fill' 클래스가 존재한다면, 이제 '좋아요' 상태입니다.
-                    isLiked = !isLiked;
-
-                    // 게시글의 고유 ID를 키로 사용합니다.
-                    const postKey = '<%= postDetail.p_seq %>';
-                    try {
-                        const currentPseq = '<%= postDetail.p_seq %>' // p_seq
-                        
-                        const response = await axios({
-                            method: isLiked ? "POST" : "DELETE", // 'isLiked' 상태에 따라 요청 메소드를 결정합니다.
-                            url: "/likes",
-                            headers: {
-                                Authorization: `Bearer ${accessToken}`,
-                            },
-                            data: {
-                                currentPseq: currentPseq
-                            }
-                        });
-
-                        if (response.status === 200) {
-                            // localStorage에 좋아요 수 업데이트
-                            likeCount = isLiked ? ++likeCount : --likeCount;
-                            localStorage.setItem(`likeCount_${postKey}`, likeCount.toString());
-                            document.getElementById("like-count").textContent = likeCount;
-                        } else {
-                            // 서버에서 요청을 처리하지 못했다면 UI 상태를 이전으로 되돌립니다.
-                            heart.classList.toggle("bi-heart");
-                            heart.classList.toggle("bi-heart-fill");
-                        }
-                    } catch (error) {
-                        console.error("좋아요 상태 변경 에러:", error);
-                        // 에러 발생 시 UI 상태를 이전으로 되돌립니다.
-                        heart.classList.toggle("bi-heart");
-                        heart.classList.toggle("bi-heart-fill");
-                    }
-        }
         (async () => {
             const accessToken = localStorage.getItem("accessToken");
             try {
@@ -112,17 +63,6 @@
                 },
             });
                 currentUserInfo = response.data;
-
-                // 여기에 로컬 스토리지에서 좋아요 수를 불러와 설정하는 코드를 추가
-                const postKey = '<%= postDetail.p_seq %>';
-                const storedLikeCount = localStorage.getItem(`likeCount_${postKey}`);
-                if (storedLikeCount) {
-                    document.getElementById("like-count").textContent = storedLikeCount;
-                    // 좋아요 상태에 따라 하트 아이콘 상태 업데이트
-                    const heartIcon = document.getElementById("heart-icon");
-                    heartIcon.classList.add("bi-heart-fill");
-                    heartIcon.classList.remove("bi-heart");
-                }
 
                 function disableEdit() {
                     document.getElementById("btn_edit").style.display = "none";
@@ -210,6 +150,74 @@
         }
     }
 
+    document.addEventListener('DOMContentLoaded', async function() {
+    await fetchLikesCount(); // 좋아요 수 조회
+    await checkLikeStatus(); // 사용자의 좋아요 상태 확인
+});
+
+async function checkLikeStatus() {
+    const accessToken = localStorage.getItem("accessToken");
+    if (!accessToken) return; // 사용자가 로그인하지 않았다면 체크하지 않음
+
+    try {
+        const response = await axios.get(`/likes/status/${'<%= postDetail.p_seq %>'}`, {
+            headers: { Authorization: `Bearer ${accessToken}` },
+        });
+        if (response.data.isLiked) {
+            // 사용자가 좋아요를 누른 상태라면
+            const heartIcon = document.getElementById("heart-icon");
+            heartIcon.classList.remove("bi-heart");
+            heartIcon.classList.add("bi-heart-fill"); // 채워진 하트로 변경
+        }
+    } catch (error) {
+        console.error('좋아요 상태 조회 실패:', error);
+    }
+}
+
+async function fetchLikesCount() {
+    try {
+        const response = await axios.get(`/likes/${'<%= postDetail.p_seq %>'}`);
+        document.getElementById("like-count").innerText = response.data.likesCount;
+    } catch (error) {
+        console.error('좋아요 수 조회 실패:', error);
+    }
+}
+
+async function clickHeart() {
+    const accessToken = localStorage.getItem("accessToken");
+    if (!accessToken) {
+        alert("좋아요를 누르려면 로그인이 필요합니다.");
+        return;
+    }
+
+    const heartIcon = document.getElementById("heart-icon");
+    const isLiked = heartIcon.classList.contains("bi-heart-fill");
+
+    try {
+        if (isLiked) {
+            // 좋아요 취소 요청
+            await axios.delete('/likes', {
+                headers: { Authorization: `Bearer ${accessToken}` },
+                data: { currentPseq: '<%= postDetail.p_seq %>' }
+            });
+            heartIcon.classList.remove("bi-heart-fill");
+            heartIcon.classList.add("bi-heart"); // 빈 하트로 변경
+        } else {
+            // 좋아요 추가 요청
+            await axios.post('/likes', {
+                currentPseq: '<%= postDetail.p_seq %>'
+            }, {
+                headers: { Authorization: `Bearer ${accessToken}` }
+            });
+            heartIcon.classList.remove("bi-heart");
+            heartIcon.classList.add("bi-heart-fill"); // 채워진 하트로 변경
+        }
+    } catch (error) {
+        console.error('좋아요 처리 실패:', error);
+    }
+
+    fetchLikesCount(); // 좋아요 수 업데이트
+}
     
 </script>
     <body>
@@ -240,7 +248,7 @@
                 <div class="icons">
                         <div class="btn_left">
                             <button class="btn_edit" id="btn_edit" onclick="updatePost('<%= postDetail.p_seq %>')">수정하기</button>
-                            <i class="bi bi-heart" id="heart-icon" onclick="clickheart()"></i>
+                            <i class="bi bi-heart" id="heart-icon" onclick="clickHeart()"></i>
                             <span id="like-count">0</span>    
                         </div>
                         <div class="btn_right">
