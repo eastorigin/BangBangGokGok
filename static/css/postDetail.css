@@ -90,8 +90,6 @@ html {
 #content {
     margin-bottom: 20px;
     resize: vertical;
-    padding-left: 10px;
-    padding-right: 10px;
 }
 
 .icons {
@@ -109,7 +107,8 @@ html {
 }
 
 .btn_chat,
-.btn_edit {
+.btn_edit,
+.btn_delete {
     padding: 10px 20px;
     font-size: 1rem;
     background-color: #ff6f0f;

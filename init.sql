@@ -174,3 +174,5 @@ SELECT * FROM post;
 SELECT * FROM review;
 
 SELECT * FROM likes;
+
+SELECT * FROM user;

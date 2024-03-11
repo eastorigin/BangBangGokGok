@@ -79,6 +79,15 @@
                     chatButton.href = `/chats/lists/${response.data.id}`;
                     // userButton.href = `/users/mypage/${response.data.id}`;
                     const graphContainer = document.getElementById("graphContainer");
+                    const svgWidth = 200; // SVG의 최대 너비
+                    const distanceMaxValue = 100; // distance 값의 최대값
+                    const distanceValue = response.data.distance; // 실제 distance 값
+                    const minBarWidth = 20; // 막대바의 최소 너비
+                    let scaledWidth = (svgWidth * distanceValue) / distanceMaxValue; // 비례식을 사용하여 너비 계산
+                    scaledWidth = Math.max(scaledWidth, minBarWidth); // 계산된 너비와 최소 너비 중 큰 값을 선택
+
+                    const textColor = distanceValue < 30 ? "black" : "white"; // distance 값이 30 미만이면 검은색, 아니면 흰색
+
                     const svgString =
                         '<div class="graph">' +
                         '<svg width="200" height="30">' +
@@ -86,17 +95,21 @@
                         'x="0" ' +
                         'y="0" ' +
                         'width="' +
-                        (response.data.distance + 120) +
-                        '" ' +
+                        scaledWidth +
+                        '" ' + // 계산된 너비 사용
                         'height="30" ' +
-                        (response.data.distance + 80 > 160
+                        (distanceValue > 66
                             ? 'fill="#FF6F0F"'
-                            : response.data.distance + 80 > 120
+                            : distanceValue > 33
                             ? 'fill="#C55A11"'
                             : 'fill="#843C0C"') +
                         "></rect>" +
-                        '<text x="10" y="20" fill="white">' +
-                        (response.data.distance + 80) +
+                        '<text x="' +
+                        (scaledWidth / 2 - 10) +
+                        '" y="20" fill="' +
+                        textColor +
+                        '" font-weight="bold">' +
+                        distanceValue +
                         "km</text>" +
                         "</svg>" +
                         "</div>";
