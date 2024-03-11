@@ -35,6 +35,10 @@ const Post = (Sequelize, DataTypes) => {
                 allowNull: false,
                 defaultValue: false,
             },
+            deal_type: {
+                type: DataTypes.BOOLEAN, // 1: true(구해요), 0: false(해드려요)
+                allowNull: false,
+            },
         },
         {
             tableName: "post",
