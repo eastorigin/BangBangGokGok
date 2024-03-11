@@ -85,6 +85,49 @@
     flex: 2;
     margin-right: 10px;
 }
+
+
+/*별점 평가 관련*/
+.star-rating {
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.star-rating span {
+    color: gold;
+}
+
+.star-rating span:hover,
+.star-rating span.active {
+    color: gold;
+}
+
+.popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-content {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.close-btn {
+    position: relative;
+    font-size: 20px;
+    cursor: pointer;
+    bottom: 60px;
+    left: 315px;
+
 #sendButton {
     font-size: 16px;
     background-color: #ff6f0f; /* 배경색을 파란색으로 설정 */
@@ -97,4 +140,5 @@
 /* 버튼에 마우스를 올렸을 때 배경색을 조금 더 어둡게 만듭니다 */
 #sendButton:hover {
     background-color: darkorange;
+
 }

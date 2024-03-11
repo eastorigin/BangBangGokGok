@@ -28,6 +28,12 @@ const User = (Sequelize, DataTypes) => {
             nickname: {
                 type: DataTypes.STRING(36),
             },
+            distance: {
+                // 평가 점수
+                type: DataTypes.FLOAT,
+                allowNull: false,
+                defaultValue: 0,
+            },
         },
         {
             tableName: "user",

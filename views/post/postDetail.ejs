@@ -24,7 +24,6 @@
                 // 사용자가 취소를 선택한 경우, 함수 종료
                 return;
             }else{
-                console.log('================ 채팅', currentUserInfo);
                 axios.post('/chats/rooms/', { 
                     b_nick: '<%= postDetail.User.nickname %>',
                     b_seq: '<%= postDetail.User.u_seq %>',
@@ -41,8 +40,6 @@
                     console.log("axios 요청 성공", response); // 요청 성공 시 로그
                     if(response.data.c_seq){
                         const apiUrl = `/chats/rooms/${response.data.c_seq}?id=${response.data.id}`;
-                        console.log('6==========', apiUrl);
-                        console.log('API 응답', response.data.c_seq);
                         window.location.href = apiUrl;
                     }
                 })

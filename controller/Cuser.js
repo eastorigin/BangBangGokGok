@@ -160,6 +160,7 @@ exports.postSignup = async (req, res) => {
         email: req.body.email,
         name: req.body.name,
         nickname: req.body.nickname,
+        distance: 0,
     }).then((result) => {
         console.log("회원가입 완료 result 확인", result);
         res.end();

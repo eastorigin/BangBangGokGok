@@ -38,7 +38,7 @@
             </div>
             
         </div>
-
+        
         <div id="chatRoom">
             <div id="chat-title-box"><h1 id="chat-title">
                 <% if (c_title.c_title1 != nickname) { %>
@@ -47,6 +47,18 @@
                             <p><%= c_title.c_title2  %></p>
                             <% } %>
             </h1>
+            <button onclick="openPopup()">매너 평가</button>
+            <!-- 별점 평가 팝업 -->
+            <div class="popup" id="ratingPopup">
+                <span class="close-btn" onclick="closePopup()">X</span>
+                <div class="popup-content">
+                  <h5>상대방과의 대화는 어떠셨나요?</h5>
+                  <div id="star-rating" class="star-rating">
+                    <!-- 별점이 표시될 공간 -->
+                  </div>
+                  <button onclick="submitRating()">평가 제출</button>
+                </div>
+              </div>
         </div>
             <div id="messages">
                 <% messages.forEach(message => { %>
@@ -168,5 +180,70 @@
                 window.location.href = "/chats/lists/<%=id%>"; // 채팅방 목록 페이지로 이동
             });
         </script>
+        <!-- 별점 평가를 위한 JavaScript -->
+  <script>
+    let selectedRating = 0;
+
+    async function openPopup() {
+        let receiverNick = "";
+      if('<%=nickname%>' != '<%=c_title.c_title1%>'){
+        receiverNick = '<%=c_title.c_title1%>';
+      }else{
+        receiverNick = '<%=c_title.c_title2%>';
+      }
+        const response = await axios.post("/reviews/check",{
+            receiverNick: receiverNick,
+            sender: "<%= u_seq %>",
+            score: selectedRating,
+        });
+        if(!response.data.result){
+            alert(response.data.message);
+            closePopup();
+        }else{
+      document.getElementById('ratingPopup').style.display = 'flex';
+      displayStars();
+    }
+}
+
+    function closePopup() {
+      document.getElementById('ratingPopup').style.display = 'none';
+    }
+
+    function setRating(rating) {
+      selectedRating = rating;
+      displayStars();
+    }
+
+    function displayStars() {
+      const starContainer = document.getElementById('star-rating');
+      starContainer.innerHTML = '';
+
+      for (let i = 1; i <= 5; i++) {
+        const star = document.createElement('span');
+        star.innerHTML = (i <= selectedRating) ? '★' : '☆';
+        star.addEventListener('click', () => setRating(i));
+        starContainer.appendChild(star);
+      }
+    }
+
+    async function submitRating() {
+      let receiverNick = "";
+      if('<%=nickname%>' != '<%=c_title.c_title1%>'){
+        receiverNick = '<%=c_title.c_title1%>';
+      }else{
+        receiverNick = '<%=c_title.c_title2%>';
+      }
+      console.log('별', selectedRating);
+      const response = await axios.post("/reviews",{
+            receiverNick: receiverNick,
+            sender: "<%= u_seq %>",
+            score: selectedRating,
+        });
+    alert(response.data.message);
+      // 팝업 닫기
+      closePopup();
+    }
+  </script>
+
     </body>
 </html>
