@@ -37,6 +37,9 @@ app.use("/posts", postRouter);
 const likesRouter = require("./routes/likes");
 app.use("/likes", likesRouter);
 
+const reviewRouter = require("./routes/review");
+app.use("/reviews", reviewRouter);
+
 // 클라이언트가 서버에 socket.io를 통해 접속한다면 발생하는 이벤트
 io.on("connection", (socket) => {
     // socket: 접속한 클라이언트

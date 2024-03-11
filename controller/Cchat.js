@@ -80,7 +80,7 @@ exports.getChatRoom = async (req, res) => {
         console.log("================id", req.query.id);
 
         const user = await User.findOne({
-            attributes: ["u_seq", "nickname"],
+            attributes: ["u_seq", "nickname", "distance"],
             where: { id: req.query.id },
         });
 
@@ -102,7 +102,7 @@ exports.getChatRoom = async (req, res) => {
             attributes: ["c_title1", "c_title2"],
             where: { c_seq: req.params.c_seq },
         });
-        console.log("=========닉네임 확인==========", user.nickname);
+
         res.render("chat/chat", {
             chatLists: chatLists,
             c_seq: req.params.c_seq,
@@ -111,6 +111,7 @@ exports.getChatRoom = async (req, res) => {
             u_seq: user.u_seq,
             id: req.query.id,
             nickname: user.nickname,
+            distance: user.distance,
         });
     } catch (err) {
         res.status(500).send("server error");
