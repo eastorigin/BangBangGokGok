@@ -64,6 +64,7 @@
                 function disableEdit() {
                     document.getElementById("btn_edit").style.display = "none";
                     document.getElementById("btn_delete").style.display = "none";
+                    document.getElementById("is_success").disabled = true;
                     document.getElementById("title").disabled = true;
                     document.getElementById("category").disabled = true;
                     document.getElementById("content").disabled = true;
@@ -96,6 +97,11 @@
                 console.error("사용자 정보 가져오기 에러:", error);
             }
             
+             if('<%= postDetail.is_success %>' === 'true') {
+                    document.getElementById("btn_chat").style.backgroundColor = "gray";
+                    document.getElementById("btn_chat").innerText = "거래완료";    
+                    document.getElementById("btn_chat").disabled = true;
+                }
         })();
     
 
@@ -122,6 +128,7 @@
 
     async function updatePost(postId) {
         try {
+            const is_success = document.getElementById("is_success").value;
             const title = document.getElementById("title").value;
             const category = document.getElementById("category").value;
             const content = document.getElementById("content").value;
@@ -130,7 +137,7 @@
             const response = await axios({
                 method: "PATCH",
                 url: `/posts/detail/${postId}`,
-                data: JSON.stringify({ title, category, content }),
+                data: JSON.stringify({ is_success, title, category, content }),
                 headers: {
                     'Authorization': `Bearer ${accessToken}`,
                     'Content-Type': 'application/json',
@@ -140,6 +147,7 @@
             if (response.status === 200) {
                 alert('게시글이 성공적으로 수정되었습니다.');
                 window.location.href = `/posts/list`;
+                 
             }
         } catch (error) {
             console.error(error);
@@ -232,6 +240,10 @@ async function clickHeart() {
                 <div class="post-header">
                 </div>                   
                 <form id="patchForm">
+                    <select id="is_success" name="is_success">
+                        <option value="false" <%= postDetail.is_success ? 'selected' : '' %>>거래중</option>
+                        <option value="true" <%= postDetail.is_success ? 'selected' : '' %>>거래완료</option>
+                    </select>
                     <input type="text" id="title" name="title" value="<%= postDetail.title %>">
                     <select id="category" name="category">
                         <option value="서울" <%= postDetail.category === '서울' ? 'selected' : '' %>>서울</option>

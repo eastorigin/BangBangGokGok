@@ -33,7 +33,7 @@ const Post = (Sequelize, DataTypes) => {
             is_success: {
                 type: DataTypes.BOOLEAN, // 1: true(거래완료), 0: false(거래안완료)
                 allowNull: false,
-                defaultValue: 0,
+                defaultValue: false,
             },
         },
         {
