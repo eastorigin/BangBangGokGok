@@ -5,6 +5,13 @@ body {
     display: flex;
     justify-content: flex-end;
 }
+
+.navbar {
+    width: 100%;
+    padding-left: 15%;
+    padding-right: 15%;
+}
+
 .graph {
     width: 200px; /* 그래프의 너비 조절 */
     height: 30px; /* 그래프의 높이 조절 */
