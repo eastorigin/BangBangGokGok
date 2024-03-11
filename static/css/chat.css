@@ -126,7 +126,10 @@
 .star-rating span.active {
     color: gold;
 }
-
+.new-text {
+    font-size: 20px;
+    color: #ff6f0f;
+}
 .popup {
     display: none;
     position: fixed;
