@@ -95,7 +95,6 @@ exports.getPostsByKeywordByCategory = async (req, res) => {
             order: [["p_seq", "DESC"]],
         });
         res.render("post/postList", { postList: postsByKeyword });
-        res.render("post/postList");
     } catch (error) {
         res.status(500).send("server error");
     }
@@ -186,7 +185,6 @@ exports.postAccessToken = async (req, res) => {
                 }
                 res.end();
             } catch (error) {
-                console.log("토큰 인증 에러 ::", error);
                 res.send({ result: false, message: "인증된 회원이 아닙니다." });
             }
         } else {
