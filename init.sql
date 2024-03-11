@@ -1,4 +1,4 @@
--- Active: 1707101283066@@127.0.0.1@3306@bbgg_db
+-- Active: 1707102382888@@127.0.0.1@3306@bbgg_db
 
 show DATABASES;
 use prac;
@@ -119,14 +119,14 @@ VALUES ('eee', '1234', 'eee@naver.com', '마마마', '마닉넴');
 
 
 
-INSERT INTO post (u_seq, title, content, date, file, category) 
-VALUES (1, '제목1', '내용내용내용111', '2024-03-03', 'a.png', '서울특별시');
+INSERT INTO post (u_seq, title, content, date, file, category, deal_type) 
+VALUES (1, '제목1', '내용내용내용111', '2024-03-03', 'a.png', '서울특별시', 0);
 
-INSERT INTO post (u_seq, title, content, date, file, category) 
-VALUES (1, '제목2', '내용내용내용222', '2024-03-03', 'aa.png', '제주특별자치도');
+INSERT INTO post (u_seq, title, content, date, file, category, deal_type) 
+VALUES (1, '제목2', '내용내용내용222', '2024-03-03', 'aa.png', '제주특별자치도', 1);
 
-INSERT INTO post (u_seq, title, content, date, file, category) 
-VALUES (2, '제목3', '내용내용내용333', '2024-03-03', 'b.png', '강원도');
+INSERT INTO post (u_seq, title, content, date, file, category, deal_type) 
+VALUES (2, '제목3', '내용내용내용333', '2024-03-03', 'b.png', '강원도', 0);
 
 desc chat;
 INSERT INTO chat (p_seq, u_seq, b_seq, c_title1, c_title2, createdAt, updatedAt, last_user) 
