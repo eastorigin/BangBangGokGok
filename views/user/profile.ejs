@@ -78,7 +78,9 @@
                         >&nbsp;&nbsp;<%=myPosts[i].title%></a
                     >
                     <p class="card2-content">&nbsp;&nbsp;&nbsp;&nbsp;<%=myPosts[i].content%></p>
-                    <p class="card2-date">&nbsp;&nbsp;&nbsp;&nbsp;<%=myPosts[i].date%></p>
+                    <p class="card2-date">
+                        &nbsp;&nbsp;&nbsp;&nbsp;<%=myPosts[i].date.toLocaleDateString('ko-KR')%>
+                    </p>
                 </div>
                 <% } %>
                 <br />
@@ -90,10 +92,10 @@
                         >&nbsp;&nbsp;<%=myLikes[i].title%></a
                     >
                     <p class="card2-content">&nbsp;&nbsp;&nbsp;&nbsp;<%=myLikes[i].content%></p>
-                    <p class="card2-date">&nbsp;&nbsp;&nbsp;&nbsp;<%=myLikes[i].date.toLocaleDateString('ko-KR')%></p>
+                    <p class="card2-date">
+                        &nbsp;&nbsp;&nbsp;&nbsp;<%=myLikes[i].date.toLocaleDateString('ko-KR')%>
+                    </p>
                 </div>
-
-                <hr />
 
                 <% } %>
             </div>
