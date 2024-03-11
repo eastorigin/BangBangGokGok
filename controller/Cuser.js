@@ -231,6 +231,7 @@ exports.getMyPage = async (req, res) => {
             likes.forEach((like) => {
                 result.push(like.Post);
             });
+            console.log(result[0]);
             res.render("user/profile", { data: userInfo, myPosts: myPosts, myLikes: result });
         });
     } catch (error) {
@@ -262,13 +263,13 @@ exports.getMyLike = async (req, res) => {
     try {
         const id = req.params.id;
 
-        const u_seq = await User.findOne({
+        const user = await User.findOne({
             where: { id: id },
         });
 
         let result = [];
         Likes.findAll({
-            where: { u_seq: u_seq.u_seq },
+            where: { u_seq: user.u_seq },
             include: [
                 {
                     model: Post,
@@ -279,7 +280,8 @@ exports.getMyLike = async (req, res) => {
             likes.forEach((like) => {
                 result.push(like.Post);
             });
-            res.render("user/myLike", { data: result, id: id });
+            console.log("??????????????", user);
+            res.render("user/myLike", { data: result, userInfo: user });
         });
     } catch (error) {
         res.status(500).send("server error");
