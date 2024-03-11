@@ -231,21 +231,32 @@ async function clickHeart() {
                 <br>
                 <img src="/uploads/<%= postDetail.file %>" alt="img_main" class="img_main" onerror="this.onerror=null; this.src='/static/css/image/img_default.jpg';"/>
                 <div class="author">작성자: <%= postDetail.User.nickname %>&nbsp;&nbsp;&nbsp;&nbsp;
-                    <svg width="200" height="30">
+                    <svg width="210" height="40">
+                        <!-- 테두리를 위한 더 큰 rect 추가 -->
                         <rect
                             x="0"
                             y="0"
+                            width="210"
+                            height="40"
+                            fill="none"
+                            stroke="black" 
+                            stroke-width="2" 
+                        ></rect>
+                        <!-- 기존 rect 요소, 이전보다 x, y 좌표를 조금씩 옮겨 내부에 위치하도록 조정 -->
+                        <rect
+                            x="5" 
+                            y="5" 
                             width="<%= Math.max(50, postDetail.User.distance * 2) %>"
                             height="30"
                             <%
                             if (postDetail.User.distance > 66) { %> fill="#FF6F0F"
                             <% } else if (postDetail.User.distance > 33) { %> fill="#C55A11"
                             <% } else { %> fill="#843C0C"
-                            <% } %>>
-                        </rect>
-                        <text x="10" y="20" fill="white"><%= postDetail.User.distance %>km</text>
-                    </svg>                
-                </div>
+                            <% } %>
+                        ></rect>
+                        <text x="15" y="25" fill="white"><%= postDetail.User.distance %>km</text>
+                    </svg>
+                                    </div>
             </div>
             <div class="right">
                 <div class="post-header">

@@ -82,7 +82,9 @@
                     const svgWidth = 200; // SVG의 최대 너비
                     const distanceMaxValue = 100; // distance 값의 최대값
                     const distanceValue = response.data.distance; // 실제 distance 값
-                    const scaledWidth = (svgWidth * distanceValue) / distanceMaxValue; // 비례식을 사용하여 너비 계산
+                    const minBarWidth = 20; // 막대바의 최소 너비
+                    let scaledWidth = (svgWidth * distanceValue) / distanceMaxValue; // 비례식을 사용하여 너비 계산
+                    scaledWidth = Math.max(scaledWidth, minBarWidth); // 계산된 너비와 최소 너비 중 큰 값을 선택
 
                     const textColor = distanceValue < 30 ? "black" : "white"; // distance 값이 30 미만이면 검은색, 아니면 흰색
 
@@ -106,7 +108,7 @@
                         (scaledWidth / 2 - 10) +
                         '" y="20" fill="' +
                         textColor +
-                        '">' + // 조건에 따라 텍스트 색상 변경
+                        '" font-weight="bold">' +
                         distanceValue +
                         "km</text>" +
                         "</svg>" +
