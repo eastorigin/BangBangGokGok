@@ -62,7 +62,12 @@ exports.postSignin = async (req, res) => {
                     issuer: "BBGG",
                 }
             );
-            res.send({ result: true, accessToken: accessToken, refreshToken: refreshToken });
+            res.send({
+                result: true,
+                accessToken: accessToken,
+                refreshToken: refreshToken,
+                nickname: userInfo.nickname,
+            });
         } else {
             res.send({ result: false, message: "로그인 정보가 올바르지 않습니다." });
         }

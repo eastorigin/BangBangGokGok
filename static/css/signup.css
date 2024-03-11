@@ -131,3 +131,22 @@ span {
         width: 100%; /* 입력 필드와 버튼의 너비를 100%로 조정 */
     }
 }
+
+/* 모든 input 태그의 placeholder 스타일 지정 */
+.input::placeholder {
+    font-size: 12px; /* 원하는 글씨 크기로 조정 */
+    color: #a8a8a8; /* placeholder 텍스트의 색상을 조정할 수도 있습니다 */
+}
+
+/* 반응형 디자인을 위해 화면 크기에 따라 placeholder 글씨 크기 조정 */
+@media screen and (max-width: 768px) {
+    .input::placeholder {
+        font-size: 10px; /* 화면이 작을 때는 더 작은 글씨 크기로 조정 */
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .input::placeholder {
+        font-size: 8px; /* 더 작은 화면에서는 더 작은 글씨 크기로 조정 */
+    }
+}

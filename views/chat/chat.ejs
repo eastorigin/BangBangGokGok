@@ -5,36 +5,42 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <%-include('../include/head')%>
+
         <link rel="stylesheet" href="/static/css/chat.css" />
         <title>Chat</title>
     </head>
     <body>
+        <%-include('../include/header')%>
+        <div class="container-out">
+        <div class="container-in">
         <div id="chatList">
             <h2>Chat Rooms</h2>
-            <ul>
+            <div>
                 <% for (let i = 0; i < chatLists.length; i++) { %>
-                    <li>
+                    <div id="chatbuttonlist">
                         <% if (chatLists[i].c_title1 != nickname) { %>
-                        <button onclick="goToChatRoom('<%= chatLists[i].c_seq %>', '<%= id %>')">
-                            <%= chatLists[i].c_title1 %>
-                            <% } else { %>
-                            <button onclick="goToChatRoom('<%= chatLists[i].c_seq %>', '<%= id %>')">
-                                <%= chatLists[i].c_title2 %>
-                                <% } %>
-                                <!-- 읽지 않은 메세지의 값이 0이 아니고 last_user 값이 현재 사용자와 다를 때  -->
-                                <% if (chatLists[i].unreadcnt !== 0 && chatLists[i].last_user !== u_seq) { %>
-                                <span class="notification" id="unreadCount_<%= chatLists[i].c_seq %>">
-                                    <%= chatLists[i].unreadcnt %>
-                                </span>
-                                <% } %>
+                            <button class="long-button" onclick="goToChatRoom('<%= chatLists[i].c_seq %>', '<%= id %>')">
+                                <img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTEwMTRfMjIw%2FMDAxNjM0MTM5NDUyMTMw.LQliGvqqaeaScoAJQOYq3WhxapwGyjZjsfPSBMAuiYEg.WRu1NpNPXpJyMesthhuzSfogPnMFihMCGj9917c_PXog.JPEG.empl%2FIMG_7576.jpg&type=a340" style="width: 60px; height: 60px; border-radius: 50%;" alt="이미지_설명"> <%= chatLists[i].c_title1 %>
+                        <% } else { %>
+                            <button class="long-button" onclick="goToChatRoom('<%= chatLists[i].c_seq %>', '<%= id %>')">
+                                <img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTEwMTRfMjIw%2FMDAxNjM0MTM5NDUyMTMw.LQliGvqqaeaScoAJQOYq3WhxapwGyjZjsfPSBMAuiYEg.WRu1NpNPXpJyMesthhuzSfogPnMFihMCGj9917c_PXog.JPEG.empl%2FIMG_7576.jpg&type=a340" style="width: 60px; height: 60px; border-radius: 50%;"alt="이미지_설명"> <%= chatLists[i].c_title2 %>
+                        <% } %>
+                        <!-- 읽지 않은 메세지의 값이 0이 아니고 last_user 값이 현재 사용자와 다를 때  -->
+                        <% if (chatLists[i].unreadcnt !== 0 && chatLists[i].last_user !== u_seq) { %>
+                            <span class="notification" id="unreadCount_<%= chatLists[i].c_seq %>">
+                                <%= chatLists[i].unreadcnt %>
+                            </span>
+                        <% } %>
                             </button>
-                    </li>
-                    <% } %>
-            </ul>
+                    </div>
+                <% } %>
+                
+            </div>
+            
         </div>
         
         <div id="chatRoom">
-            <h1 id="chat-title">
+            <div id="chat-title-box"><h1 id="chat-title">
                 <% if (c_title.c_title1 != nickname) { %>
                     <p><%= c_title.c_title1  %></p>
                         <% } else { %>
@@ -53,6 +59,7 @@
                   <button onclick="submitRating()">평가 제출</button>
                 </div>
               </div>
+        </div>
             <div id="messages">
                 <% messages.forEach(message => { %>
                 <p class="message <%= message.u_seq ==u_seq ? 'my-message' : 'other-message' %>">
@@ -62,12 +69,13 @@
             </div>
             <form id="messageForm">
                 <input type="text" id="messageInput" placeholder="Type your message" />
-                <button type="submit">Send</button>
+                <button id="sendButton" type="submit">Send</button>
             </form>
             <button id="exitButton">Exit</button>
         </div>
-
+    </div>
         <div id="unreadMessages"></div>
+    </div>
         <script>
             (async () => {
                 const accessToken = localStorage.getItem("accessToken");

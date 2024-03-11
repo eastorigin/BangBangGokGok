@@ -5,7 +5,7 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>글 작성</title>
-        <%-include('../include/head')%>
+        <%-include('../include/head')%> <%-include('../include/header')%>
         <link rel="stylesheet" href="/static/css/post.css" />
     </head>
     <body>
@@ -38,7 +38,7 @@
             <br />
             <label for="content"><span>글 내용</span></label>
             <br />
-            <textarea name="content" id="content" cols="110" rows="18"></textarea>
+            <textarea name="content" id="content" cols="500" rows="18"></textarea>
             <br />
             <div class="file" onclick="document.getElementById('file').click();">
                 <span id="file-upload-msg">
