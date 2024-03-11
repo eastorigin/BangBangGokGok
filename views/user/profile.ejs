@@ -19,7 +19,28 @@
                 </div>
                 <div><h2 class="name"><%=data.name%></h2></div>
                 <div><h2 class="id"><%=data.nickname%></h2></div>
-                <div><h2 class="distance"><%=data.distance%>km</h2></div>
+                <div class="centered-graph">
+                    <div class="graph">
+                        <svg width="200" height="30">
+                            <rect
+                                x="0"
+                                y="0"
+                                width="<%= data.distance + 120 %>"
+                                height="30"
+                                <%
+                                if
+                                (data.distance
+                                +
+                                80
+                            >
+                                160) { %> fill="#FF6F0F" <% } else if (data.distance + 80 > 120) {
+                                %> fill="#C55A11" <% } else { %> fill="#843C0C" <% } %> >
+                            </rect>
+                            <text x="10" y="20" fill="white"><%= data.distance + 80 %>km</text>
+                        </svg>
+                    </div>
+                </div>
+
                 <br />
                 <br />
                 <div class="button-group">
