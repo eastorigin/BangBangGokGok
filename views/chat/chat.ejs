@@ -211,7 +211,6 @@
     }else{
         receiverNick = '<%=c_title[1]%>';
     }
-    console.log('별', selectedRating);
     const response = await axios.post("/reviews",{
             receiverNick: receiverNick,
             sender: "<%= user.u_seq %>",

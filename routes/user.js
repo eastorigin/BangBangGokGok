@@ -1,28 +1,20 @@
-// 유저 관련 라우터
 const express = require("express");
 const controller = require("../controller/Cuser");
 const router = express.Router();
-// 유효성 검증
 const { body } = require("express-validator");
 
-// GET /users/signin
 router.get("/signin", controller.getSignin);
 
-// POST /users/signin
 router.post("/signin", controller.postSignin);
 
-// POST /users/accesstoken
 router.post("/accesstoken", controller.postAccessToken);
 
-// 회원가입 요청
 router.get("/signup", controller.getSignup);
 
-// 회원가입 중복 확인
 router.post("/check-duplicate", controller.checkDuplicate);
 
 router.get("/profile", controller.example);
 
-// 회원가입 처리
 router.post(
     "/signup",
     [
@@ -70,19 +62,14 @@ router.post(
     controller.postSignup
 );
 
-// GET /users/profile/:id
 router.get("/profile/:id", controller.getProfile);
 
-// 프로필 수정
 router.patch("/profile", controller.patchProfile);
 
-// GET /users/mypage/:id
 router.get("/mypage/:id", controller.getMyPage);
 
-// GET /users/mypost/:id
 router.get("/mypost/:id", controller.getMyPost);
 
-// GET /users/mylike/:id
 router.get("/mylike/:id", controller.getMyLike);
 
 module.exports = router;

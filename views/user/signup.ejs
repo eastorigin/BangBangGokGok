@@ -141,7 +141,6 @@
                     .then((res) => {
                         if (res.data.errors) {
                             for (i = 0; i < res.data.errors.length; i++) {
-                                console.log(res.data.errors[i].msg);
                                 alert(res.data.errors[i].msg);
                             }
                         } else {
@@ -150,7 +149,6 @@
                         }
                     })
                     .catch((error) => {
-                        console.error("회원가입 에러", error);
                         alert("회원가입 중 오류가 발생했습니다. 나중에 다시 시도해주세요.");
                     });
             }
@@ -174,10 +172,19 @@
                         }
                     })
                     .catch((error) => {
-                        console.error(error);
                         alert("서버 오류가 발생했습니다.");
                     });
             }
+            document.addEventListener("DOMContentLoaded", function () {
+                document
+                    .querySelector("form[name=signupForm]")
+                    .addEventListener("keypress", function (event) {
+                        if (event.key === "Enter") {
+                            event.preventDefault();
+                            signup();
+                        }
+                    });
+            });
         </script>
     </body>
 </html>

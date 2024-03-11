@@ -19,10 +19,10 @@
                 </div>
                 <a id="btn-home">홈으로</a>
             </div>
-         <div class="card2 card">
-          <% for (let i = 0; i < chatLists.length; i++) { %>
-           <% if (chatLists[i].c_title1 != user.nickname) { %>
-          <button id="one_button" onclick="goToChatRoom('<%= chatLists[i].c_seq %>', '<%= user.id %>')">
+        <div class="card2 card">
+        <% for (let i = 0; i < chatLists.length; i++) { %>
+        <% if (chatLists[i].c_title1 != user.nickname) { %>
+        <button id="one_button" onclick="goToChatRoom('<%= chatLists[i].c_seq %>', '<%= user.id %>')">
             <%= chatLists[i].c_title1 %>
             <% } else { %>
             <button id="two_button" onclick="goToChatRoom('<%= chatLists[i].c_seq %>', '<%= user.id %>')">
@@ -35,9 +35,9 @@
                 <% } %>
             </button>
 
-           <% } %>
+        <% } %>
             </div>
-         </div>
+        </div>
         </div>
 </body>
 <script>

@@ -37,7 +37,9 @@
                     </div>
                     <div id="userbox1">
                         <p class="card2-title">&nbsp;&nbsp;작성 날짜</p>
-                        <p class="card2-date">&nbsp;&nbsp;<%=data[i].date.toLocaleDateString('ko-KR')%></p>
+                        <p class="card2-date">
+                            &nbsp;&nbsp;<%=data[i].date.toLocaleDateString('ko-KR')%>
+                        </p>
                     </div>
                     <hr />
                     <% } %>
@@ -51,7 +53,6 @@
                 let data = "";
                 if (!accessToken) {
                     window.location.href = "/users/signin";
-                    // data = '<a href="/users/signin">로그인</a>';
                 } else {
                     const response = await axios({
                         method: "POST",
@@ -61,20 +62,17 @@
                         },
                     });
                     if (response.data.id != "<%= userInfo.id %>") {
-                        // 로그인된 사용자가 url로 접근한 경우
                         window.location.href = "/";
                     }
                     if (response.userInfo) {
-                        // 사용자 이름을 포함한 데이터 생성
                         data = `
                     <p>${response.data.name}님 환영합니다.</p>
                     <button type="button" onclick="signout()">로그아웃</button>`;
                     }
                 }
-                // info.innerHTML = data; // 로그인 버튼 나오도록 하기
             })();
             document.getElementById("btn-back").addEventListener("click", function () {
-                window.history.back(); // 뒤로가기 기능을 수행합니다.
+                window.history.back();
             });
         </script>
     </body>
