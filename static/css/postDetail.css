@@ -43,6 +43,11 @@ html {
 .author {
     font-size: 16px;
     color: #333;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 5px;
+    width: 70%;
 }
 
 .post-header {
@@ -85,6 +90,8 @@ html {
 #content {
     margin-bottom: 20px;
     resize: vertical;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .icons {
@@ -102,11 +109,20 @@ html {
 }
 
 .btn_chat,
-.btn_edit,
-.btn_delete {
+.btn_edit {
     padding: 10px 20px;
     font-size: 1rem;
     background-color: #ff6f0f;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn_delete {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: red;
     color: white;
     border: none;
     border-radius: 5px;
@@ -140,4 +156,21 @@ html {
     border-radius: 5px;
     width: 20%;
     height: 30%;
+}
+
+.green {
+    color: green;
+    font-weight: bold;
+}
+.blue {
+    color: blue;
+    font-weight: bold;
+}
+.yellow {
+    color: yellow;
+    font-weight: bold;
+}
+.orange {
+    color: #ff6f0f;
+    font-weight: bold;
 }

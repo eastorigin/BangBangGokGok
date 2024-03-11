@@ -220,9 +220,13 @@ async function clickHeart() {
         <div class="container">
             <div class="left">
                 <button type="button" id="btn-back" onclick="window.history.back();">이전으로</button>
+                <br>
                 <img src="/uploads/<%= postDetail.file %>" alt="img_main" class="img_main" onerror="this.onerror=null; this.src='/static/css/image/img_default.jpg';"/>
-                <div class="author">작성자: <%= postDetail.User.nickname %></div>
-                <div class="distance"><%= data.distance %></div>
+                <div class="author">작성자: <%= postDetail.User.nickname %>&nbsp;&nbsp;&nbsp;&nbsp;<span class="<%= 
+                    postDetail.User.distance < 25 ? 'green' : 
+                    postDetail.User.distance < 50 ? 'blue' : 
+                    postDetail.User.distance < 75 ? 'yellow' : 
+                    'orange' %>"><%= postDetail.User.distance %>km</span></div>
             </div>
             <div class="right">
                 <div class="post-header">
