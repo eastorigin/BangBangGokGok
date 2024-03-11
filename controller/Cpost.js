@@ -120,8 +120,6 @@ exports.postPosts = async (req, res) => {
         // const file = req.file ? req.file.filename : ""; // 업로드된 파일명
         const { title, content, file, category, deal_type } = req.body;
 
-        console.log("====================", deal_type);
-
         const newPost = await Post.create({
             title,
             content,
