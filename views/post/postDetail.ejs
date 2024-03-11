@@ -225,6 +225,7 @@ async function clickHeart() {
                 <button type="button" id="btn-back" onclick="window.history.back();">이전으로</button>
                 <img src="/uploads/<%= postDetail.file %>" alt="img_main" class="img_main" onerror="this.onerror=null; this.src='/static/css/image/img_default.jpg';"/>
                 <div class="author">작성자: <%= postDetail.User.nickname %></div>
+                <div class="distance"><%= data.distance %></div>
             </div>
             <div class="right">
                 <div class="post-header">
