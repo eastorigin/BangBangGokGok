@@ -3,6 +3,7 @@ const Post = require("../models").Post;
 const User = require("../models").User;
 const { Op } = require("sequelize");
 const jwt = require("jsonwebtoken");
+const { Sequelize } = require("../models");
 
 // GET /posts/list 게시글 목록 (전체 지역)
 exports.getPostsList = async (req, res) => {
@@ -47,16 +48,24 @@ exports.getPostsByCategory = async (req, res) => {
 // GET /posts/list/search?keyword=검색어
 exports.getPostsByKeyword = async (req, res) => {
     try {
+        const startTime = new Date(); // 시작 시간 기록
+
         console.log(req.query);
         const { keyword } = req.query;
+        console.log("keyword", keyword);
         const postsByKeyword = await Post.findAll({
-            where: {
-                [Op.or]: [
-                    { title: { [Op.like]: `%${keyword}%` } },
-                    { content: { [Op.like]: `%${keyword}%` } },
-                    { category: { [Op.like]: `%${keyword}%` } },
-                ],
-            },
+            where: Sequelize.literal(
+                `MATCH(title, content, category) AGAINST('${keyword}*' IN BOOLEAN MODE)`
+            ),
+            // 아래 주석 삭제하지 마세요. (like % 와 비교하기 위함)
+            // {
+            //     [Op.or]: [
+            //         { title: { [Op.like]: `%${keyword}%` } },
+            //         { content: { [Op.like]: `%${keyword}%` } },
+            //         { category: { [Op.like]: `%${keyword}%` } },
+            //     ],
+            // },
+
             include: [
                 {
                     model: User,
@@ -65,8 +74,14 @@ exports.getPostsByKeyword = async (req, res) => {
             ],
             order: [["p_seq", "DESC"]],
         });
+
+        const endTime = new Date(); // 종료 시간 기록
+        const executionTime = endTime - startTime; // 실행 시간 계산 (밀리초 단위)
+        console.log(`Execution time: ${executionTime}ms`);
+
         res.render("post/postList", { postList: postsByKeyword });
     } catch (error) {
+        console.error(error);
         res.status(500).send("server error");
     }
 };
@@ -80,11 +95,9 @@ exports.getPostsByKeywordByCategory = async (req, res) => {
         const postsByKeyword = await Post.findAll({
             where: {
                 category: category,
-                [Op.or]: [
-                    { title: { [Op.like]: `%${keyword}%` } },
-                    { content: { [Op.like]: `%${keyword}%` } },
-                    { category: { [Op.like]: `%${keyword}%` } },
-                ],
+                [Op.or]: Sequelize.literal(
+                    `MATCH(title, content, category) AGAINST('${keyword}*' IN BOOLEAN MODE)`
+                ),
             },
             include: [
                 {

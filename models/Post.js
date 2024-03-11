@@ -44,6 +44,13 @@ const Post = (Sequelize, DataTypes) => {
             tableName: "post",
             freezeTableName: true,
             timestamps: false,
+            indexes: [
+                {
+                    type: "FULLTEXT",
+                    fields: ["title", "content", "category"],
+                    parser: "ngram",
+                },
+            ],
         }
     );
 };
