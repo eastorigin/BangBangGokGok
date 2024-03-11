@@ -5,6 +5,28 @@ body {
     display: flex;
     justify-content: flex-end;
 }
+.graph {
+    width: 200px; /* 그래프의 너비 조절 */
+    height: 30px; /* 그래프의 높이 조절 */
+    border: 1px solid #ccc; /* 그래프 테두리 스타일 */
+    position: relative; /* 내부 요소를 포지셔닝하기 위해 */
+}
+.centered-graph {
+    display: flex;
+    justify-content: center;
+}
+
+.bar {
+    height: 100%;
+    background-color: #fffae0; /* 그래프 색상 */
+}
+
+.distance {
+    position: absolute;
+    top: 50%; /* 수직 가운데 정렬 */
+    transform: translateY(-50%);
+    right: 5px; /* 오른쪽에 위치 */
+}
 
 #logo {
     width: 20px;
@@ -69,20 +91,10 @@ body {
     top: calc(100% + 30px);
     width: 400px;
     height: 400px;
-    background: #fff;
-    box-shadow: 0 50px 50px rgba(0, 0, 0, 0.1);
+    background-color: transparent;
+    /* box-shadow: 0 50px 50px rgba(0, 0, 0, 0.1); */
     transition: 0.5s;
     z-index: 9999;
-}
-.submenu::before {
-    content: "";
-    position: absolute;
-    right: 35px;
-    top: -8px;
-    width: 20px;
-    height: 20px;
-    background: #fff;
-    transform: rotate(45deg);
 }
 .submenu.active {
     opacity: 1;
@@ -119,9 +131,9 @@ body {
 .profile-card {
     flex: 1;
     margin-right: 20px;
-    background-color: yellow;
+    background-color: white;
     width: 300px;
-    height: 450px;
+    height: 400px;
     overflow: hidden;
     border-radius: 2rem;
     box-shadow: 0px 1rem 0.5rem rgba(0, 0, 0, 0.5);
@@ -162,7 +174,7 @@ body {
 }
 
 #btn-profile {
-    background-color: rgb(255, 248, 156);
+    background-color: #ff6f0f;
     color: white;
     border: none;
     border-radius: 5px;

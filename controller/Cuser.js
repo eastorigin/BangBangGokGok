@@ -101,6 +101,7 @@ exports.postAccessToken = async (req, res) => {
                         id: userInfo.id,
                         nickname: userInfo.nickname,
                         u_seq: userInfo.u_seq,
+                        distance: userInfo.distance,
                     });
                 }
                 res.end();

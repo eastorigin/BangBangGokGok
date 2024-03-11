@@ -29,8 +29,9 @@
                         <div class="profile-profile"></div>
                     </div>
                     <div><h2 id="profile-name"></h2></div>
-                    <div><h2 id="profile-id"></h2></div>
-                    <div><h2 id="profile-email"></h2></div>
+                    <br />
+                    <div id="graphContainer" class="centered-graph"></div>
+                    <br />
                     <br />
                     <a id="btn-profile">Mypage</a>
                 </div>
@@ -77,6 +78,29 @@
                     chatButton.innerHTML = `채팅방`;
                     chatButton.href = `/chats/lists/${response.data.id}`;
                     // userButton.href = `/users/mypage/${response.data.id}`;
+                    const graphContainer = document.getElementById("graphContainer");
+                    const svgString =
+                        '<div class="graph">' +
+                        '<svg width="200" height="30">' +
+                        "<rect " +
+                        'x="0" ' +
+                        'y="0" ' +
+                        'width="' +
+                        (response.data.distance + 120) +
+                        '" ' +
+                        'height="30" ' +
+                        (response.data.distance + 80 > 160
+                            ? 'fill="#FF6F0F"'
+                            : response.data.distance + 80 > 120
+                            ? 'fill="#C55A11"'
+                            : 'fill="#843C0C"') +
+                        "></rect>" +
+                        '<text x="10" y="20" fill="white">' +
+                        (response.data.distance + 80) +
+                        "km</text>" +
+                        "</svg>" +
+                        "</div>";
+                    graphContainer.innerHTML = svgString;
                 }
             }
             // info.innerHTML = data; // 로그인 버튼 나오도록 하기

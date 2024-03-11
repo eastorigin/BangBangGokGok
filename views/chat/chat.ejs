@@ -41,8 +41,8 @@
         
         <div id="chatRoom">
             <div id="chat-title-box"><h1 id="chat-title">
-                <% if (c_title.c_title1 != user.nickname) { %>
-                    <p><%= c_title.c_title1  %></p>
+                <% if (c_title.c_title1 != nickname) { %>
+                    <p id="kmtitle"><%= c_title.c_title1  %></p>
                         <% } else { %>
                             <p><%= c_title.c_title2  %></p>
                             <% } %>
@@ -91,10 +91,20 @@
                             Authorization: `Bearer ${accessToken}`,
                         },
                     });
+                    if (response.data.result) {
+    const kmtitle = document.getElementById("kmtitle");
+    const newTextNode = document.createElement("span");
+    newTextNode.textContent = ` ${response.data.distance+80}km`;
+    newTextNode.classList.add("new-text"); // 새로운 텍스트에 해당하는 클래스 추가
+    kmtitle.appendChild(newTextNode);
+}
+
                     if(response.data.id != '<%= id %>'){
                         // 로그인된 사용자가 url로 타인의 채팅방 리스트에 접근할 경우
                         window.location.href = '/';
                     }
+
+
                     
                 }
             })();
