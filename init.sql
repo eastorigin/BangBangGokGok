@@ -1,4 +1,4 @@
--- Active: 1707101296801@@127.0.0.1@3306@sesac
+-- Active: 1707101283066@@127.0.0.1@3306@bbgg_db
 
 show DATABASES;
 use prac;
@@ -166,3 +166,11 @@ VALUES (9, 1,now());
 INSERT INTO likes (p_seq, u_seq, created_at) 
 VALUES (5, 1,now());
 SELECT * FROM likes where u_seq=4 ORDER BY created_at DESC;
+
+SELECT * FROM review;
+
+SELECT * FROM post;
+
+SELECT * FROM review;
+
+SELECT * FROM likes;
