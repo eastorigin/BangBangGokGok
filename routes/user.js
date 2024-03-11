@@ -32,7 +32,7 @@ router.post(
             .withMessage("아이디를 입력해주세요.")
             .bail()
             .isLength({ min: 4 })
-            .withMessage("아이디를 4글자 이상 입력해주세요.")
+            .withMessage("아이디를 7글자 이상 입력해주세요.")
             .bail(),
         body("userPw")
             .trim()

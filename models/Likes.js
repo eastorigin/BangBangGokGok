@@ -1,4 +1,3 @@
-// 좋아요 관련 모델
 const Likes = (Sequelize, DataTypes) => {
     return Sequelize.define(
         "Likes",
@@ -18,7 +17,6 @@ const Likes = (Sequelize, DataTypes) => {
                 allowNull: false,
             },
         },
-
         {
             tableName: "likes",
             freezeTableName: true,
