@@ -71,8 +71,10 @@ body {
 .id {
     text-align: center;
 }
-.email {
+.distance {
     text-align: center;
+    font-size: 12px;
+    color: #ff6f0f;
 }
 
 #btn-edit {

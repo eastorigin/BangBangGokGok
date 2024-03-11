@@ -1,4 +1,4 @@
--- Active: 1707101283066@@127.0.0.1@3306@bbgg_db
+-- Active: 1707101296801@@127.0.0.1@3306@sesac
 
 show DATABASES;
 use prac;
@@ -8,6 +8,7 @@ drop DATABASE sesac;
 create DATABASE sesac DEFAULT CHARACTER set utf8 COLLATE utf8_general_ci;
 use sesac;
 
+DROP TABLE review;
 DROP TABLE likes;
 DROP TABLE post;
 DROP TABLE user;
