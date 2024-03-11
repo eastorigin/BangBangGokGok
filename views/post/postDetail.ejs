@@ -132,12 +132,13 @@
             const title = document.getElementById("title").value;
             const category = document.getElementById("category").value;
             const content = document.getElementById("content").value;
+            const deal_type = document.getElementById("deal").value;
             const accessToken = localStorage.getItem("accessToken");
 
             const response = await axios({
                 method: "PATCH",
                 url: `/posts/detail/${postId}`,
-                data: JSON.stringify({ is_success, title, category, content }),
+                data: JSON.stringify({ is_success, title, category, content, deal_type }),
                 headers: {
                     'Authorization': `Bearer ${accessToken}`,
                     'Content-Type': 'application/json',
@@ -266,6 +267,10 @@ async function clickHeart() {
                         <select id="is_success" name="is_success">
                             <option value="false" <%= postDetail.is_success ? 'selected' : '' %>>거래중</option>
                             <option value="true" <%= postDetail.is_success ? 'selected' : '' %>>거래완료</option>
+                        </select>
+                        <select id="deal" name="deal">
+                            <option value="false" <%= postDetail.deal_type ? 'selected' : '' %>>사드려요</option>
+                            <option value="true" <%= postDetail.deal_type ? 'selected' : '' %>>구해요</option>
                         </select>
                         <span><%= postDetail.date.toLocaleDateString('ko-KR') %></span>
                     </div>
