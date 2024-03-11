@@ -251,10 +251,13 @@ async function clickHeart() {
                 <div class="post-header">
                 </div>                   
                 <form id="patchForm">
-                    <select id="is_success" name="is_success">
-                        <option value="false" <%= postDetail.is_success ? 'selected' : '' %>>거래중</option>
-                        <option value="true" <%= postDetail.is_success ? 'selected' : '' %>>거래완료</option>
-                    </select>
+                    <div id="date_container">
+                        <select id="is_success" name="is_success">
+                            <option value="false" <%= postDetail.is_success ? 'selected' : '' %>>거래중</option>
+                            <option value="true" <%= postDetail.is_success ? 'selected' : '' %>>거래완료</option>
+                        </select>
+                        <span><%= postDetail.date.toLocaleDateString('ko-KR') %></span>
+                    </div>
                     <input type="text" id="title" name="title" value="<%= postDetail.title %>">
                     <select id="category" name="category">
                         <option value="서울" <%= postDetail.category === '서울' ? 'selected' : '' %>>서울</option>

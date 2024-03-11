@@ -157,3 +157,8 @@ html {
     width: 20%;
     height: 30%;
 }
+
+#date_container {
+    display: flex;
+    justify-content: space-between;
+}
