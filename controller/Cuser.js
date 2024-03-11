@@ -1,5 +1,6 @@
 const User = require("../models").User;
 const Likes = require("../models").Likes;
+const Post = require("../models").Post;
 const jwt = require("jsonwebtoken");
 exports.example = (req, res) => {
     res.render("user/profile");
@@ -117,7 +118,6 @@ exports.postAccessToken = async (req, res) => {
 
 // 유효성 검증
 const { validationResult } = require("express-validator");
-const { Post } = require("../models");
 
 // 회원가입 요청시, 회원가입 페이지로 이동
 exports.getSignup = (req, res) => {
@@ -259,12 +259,21 @@ exports.getMyLike = async (req, res) => {
             where: { id: id },
         });
 
-        const likes = await Likes.findAll({
+        let result = [];
+        Likes.findAll({
             where: { u_seq: u_seq.u_seq },
-            order: [["l_seq", "DESC"]], // 최신순 정렬하여 반환
+            include: [
+                {
+                    model: Post,
+                },
+            ],
+        }).then((likes) => {
+            likes.forEach((like) => {
+                result.push(like.Post);
+            });
+            console.log("result 확인0", result[0]);
+            res.render("user/myLike", { data: result, id: id });
         });
-
-        res.render("user/myLike", { data: likes, id: id });
     } catch (error) {
         res.status(500).send("server error");
     }
