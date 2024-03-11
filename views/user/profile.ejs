@@ -28,18 +28,16 @@
                             <rect
                                 x="0"
                                 y="0"
-                                width="<%= data.distance + 120 %>"
+                                width="<%= Math.max(50, data.distance * 2) %>"
                                 height="30"
                                 <%
                                 if
                                 (data.distance
-                                +
-                                80
                             >
-                                160) { %> fill="#FF6F0F" <% } else if (data.distance + 80 > 120) {
-                                %> fill="#C55A11" <% } else { %> fill="#843C0C" <% } %> >
+                                66) { %> fill="#FF6F0F" <% } else if (data.distance > 33) { %>
+                                fill="#C55A11" <% } else { %> fill="#843C0C" <% } %>>
                             </rect>
-                            <text x="10" y="20" fill="white"><%= data.distance + 80 %>km</text>
+                            <text x="10" y="20" fill="white"><%= data.distance %>km</text>
                         </svg>
                     </div>
                 </div>
@@ -74,6 +72,7 @@
                 <p id="userbox-title">&nbsp;&nbsp;글 목록</p>
                 <br />
                 <% for(let i = 0; i < myPosts.length ;i++){ %>
+
                 <div id="cardbox2">
                     <a a href="../../posts/detail/<%=myPosts[i].p_seq %>" class="card2-title"
                         >&nbsp;&nbsp;<%=myPosts[i].title%></a
@@ -91,8 +90,11 @@
                         >&nbsp;&nbsp;<%=myLikes[i].title%></a
                     >
                     <p class="card2-content">&nbsp;&nbsp;&nbsp;&nbsp;<%=myLikes[i].content%></p>
-                    <p class="card2-date">&nbsp;&nbsp;&nbsp;&nbsp;<%=myLikes[i].date%></p>
+                    <p class="card2-date">&nbsp;&nbsp;&nbsp;&nbsp;<%=myLikes[i].date.toLocaleDateString('ko-KR')%></p>
                 </div>
+
+                <hr />
+
                 <% } %>
             </div>
         </div>

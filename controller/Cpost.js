@@ -95,7 +95,6 @@ exports.getPostsByKeywordByCategory = async (req, res) => {
             order: [["p_seq", "DESC"]],
         });
         res.render("post/postList", { postList: postsByKeyword });
-        res.render("post/postList");
     } catch (error) {
         res.status(500).send("server error");
     }
@@ -149,11 +148,6 @@ exports.getPostsDetail = async (req, res) => {
                 },
             ],
         });
-        console.log(postDetail);
-        // res.render("post/postDetail", {
-        //     postDetail: postDetail,
-        //     imgSrc: postDetail.file ? `/uploads/${postDetail.file}` : null,
-        // });
         res.render("post/postDetail", { postDetail: postDetail });
     } catch (error) {
         console.log(error);
@@ -191,7 +185,6 @@ exports.postAccessToken = async (req, res) => {
                 }
                 res.end();
             } catch (error) {
-                console.log("토큰 인증 에러 ::", error);
                 res.send({ result: false, message: "인증된 회원이 아닙니다." });
             }
         } else {
@@ -207,9 +200,10 @@ exports.postAccessToken = async (req, res) => {
 exports.patchPostsDetail = async (req, res) => {
     try {
         const { p_seq } = req.params;
-        const { title, content, file, category } = req.body;
+        const { is_success, title, content, file, category } = req.body;
         const updatedPost = await Post.update(
             {
+                is_success,
                 title,
                 content,
                 file,

@@ -19,7 +19,7 @@
                         src="/static/css/image/region/region_0.png"
                         alt="전체지역이미지" /><span></span
                 ></a>
-                <a href="/posts/서울특별시" class=""
+                <a href="/posts/서울" class=""
                     ><img
                         src="/static/css/image/region/region_1.png"
                         alt="서울지역이미지" /><span></span
@@ -34,15 +34,15 @@
                         src="/static/css/image/region/region_3.png"
                         alt="강원도지역이미지" /><span></span
                 ></a>
-                <a href="/posts/충청남도" class=""
-                    ><img
-                        src="/static/css/image/region/region_4.png"
-                        alt="충청남도지역이미지" /><span></span
-                ></a>
                 <a href="/posts/충청북도" class=""
                     ><img
                         src="/static/css/image/region/region_5.png"
                         alt="충청북도지역이미지" /><span></span
+                ></a>
+                <a href="/posts/충청남도" class=""
+                    ><img
+                        src="/static/css/image/region/region_4.png"
+                        alt="충청남도지역이미지" /><span></span
                 ></a>
                 <a href="/posts/전라북도" class=""
                     ><img
@@ -54,15 +54,15 @@
                         src="/static/css/image/region/region_7.png"
                         alt="전라남도지역이미지" /><span></span
                 ></a>
-                <a href="/posts/경상남도" class=""
-                    ><img
-                        src="/static/css/image/region/region_8.png"
-                        alt="경상남도지역이미지" /><span></span
-                ></a>
                 <a href="/posts/경상북도" class=""
                     ><img
                         src="/static/css/image/region/region_9.png"
                         alt="경상북도지역이미지" /><span></span
+                ></a>
+                <a href="/posts/경상남도" class=""
+                    ><img
+                        src="/static/css/image/region/region_8.png"
+                        alt="경상남도지역이미지" /><span></span
                 ></a>
                 <a href="/posts/제주도" class=""
                     ><img
@@ -91,7 +91,12 @@
                 <% for(let i = 0; i < postList.length ;i++){ %>
                 <div class="post">
                     <a href="/posts/detail/<%=postList[i].p_seq %>">
-                        <img src="/static/css/image/placeholder.png" alt="Placeholder Image" />
+                        <img
+                            src="/uploads/<%= postList[i].file %>"
+                            alt="Placeholder Image"
+                            class="thumbnail"
+                            onerror="this.onerror=null; this.src='/static/css/image/placeholder.png';"
+                        />
                         <div class="title"><%=postList[i].title %></div>
                         <div class="category"><%=postList[i].category%></div>
                         <div class="author"><%=postList[i].User.nickname%></div>

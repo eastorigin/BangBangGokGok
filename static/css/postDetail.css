@@ -47,7 +47,7 @@ html {
     border: 1px solid #ddd;
     border-radius: 5px;
     padding: 5px;
-    width: 70%;
+    width: 80%;
 }
 
 .post-header {
@@ -158,19 +158,7 @@ html {
     height: 30%;
 }
 
-.green {
-    color: green;
-    font-weight: bold;
-}
-.blue {
-    color: blue;
-    font-weight: bold;
-}
-.yellow {
-    color: yellow;
-    font-weight: bold;
-}
-.orange {
-    color: #ff6f0f;
-    font-weight: bold;
+#date_container {
+    display: flex;
+    justify-content: space-between;
 }

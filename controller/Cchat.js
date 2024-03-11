@@ -30,49 +30,6 @@ exports.getChats = async (req, res) => {
     }
 };
 
-// 채팅 목록 페이지 (토큰 인증용)
-// exports.getChats = async (req, res) => {
-//     try {
-//         if (req.headers.authorization) {
-//             const accessToken = req.headers.authorization.split(" ")[1];
-//             try {
-//                 const auth = jwt.verify(accessToken, process.env.ACCESS_SECRET);
-//                 console.log("==============채팅 목록 접근", auth);
-
-//                 if (auth) {
-//                     const chatLists = await Chat.findAll({
-//                         where: {
-//                             [Op.or]: [{ u_seq: auth.u_seq }, { b_seq: auth.u_seq }],
-//                         },
-//                         order: [["c_seq", "DESC"]],
-//                     });
-
-//                     console.log("============채팅방 목록 확인", chatLists);
-
-//                     // 추가: 렌더링 전에 응답 전송
-//                     return res.render("chat/chatList.ejs", {
-//                         chatLists: chatLists,
-//                         u_seq: auth.u_seq,
-//                         id: auth.id,
-//                     });
-//                 } else {
-//                     console.log("로그인이 필요합니다.");
-//                     return res.status(401).send({ result: false, message: "로그인이 필요합니다." });
-//                 }
-//             } catch (error) {
-//                 console.log("토큰 인증 에러 ::", error);
-//                 return res.status(401).send({ result: false, message: "인증된 회원이 아닙니다." });
-//             }
-//         } else {
-//             console.log("리다이렉트");
-//             return res.redirect("/users/signin");
-//         }
-//     } catch (error) {
-//         console.log("서버 에러 ::", error);
-//         return res.status(500).send("server error");
-//     }
-// };
-
 // 채팅방 상세
 exports.getChatRoom = async (req, res) => {
     try {
@@ -114,61 +71,6 @@ exports.getChatRoom = async (req, res) => {
         res.status(500).send("server error");
     }
 };
-
-// 채팅방 상세 페이지 (토큰 인증용)
-// exports.getChatRoom2 = async (req, res) => {
-//     try {
-//         if (req.headers.authorization) {
-//             const accessToken = req.headers.authorization.split(" ")[1];
-
-//             try {
-//                 const auth = jwt.verify(accessToken, process.env.ACCESS_SECRET);
-//                 console.log("채팅방 상세========", auth);
-//                 console.log("==========채팅방 들어오는지 확인", req.params.c_seq);
-//                 if (auth) {
-//                     try {
-//                         // 채팅방 목록 불러오기
-//                         const chatLists = await Chat.findAll({
-//                             where: {
-//                                 [Op.or]: [{ u_seq: auth.u_seq }, { b_seq: auth.u_seq }],
-//                             },
-//                             order: [["c_seq", "DESC"]],
-//                         });
-
-//                         // 이전 대화 메세지 불러오기
-//                         const messages = await Message.findAll({
-//                             where: { c_seq: req.params.c_seq },
-//                         });
-
-//                         // 해당 채팅방 제목 불러오기
-//                         const c_title = await Chat.findOne({
-//                             attributes: ["c_title1", "c_title2"],
-//                             where: { c_seq: req.params.c_seq },
-//                         });
-
-//                         res.render("chat/chat", {
-//                             chatLists: chatLists,
-//                             c_seq: req.params.c_seq,
-//                             c_title: c_title,
-//                             messages: messages,
-//                             u_seq: auth.u_seq,
-//                             id: auth.id,
-//                         });
-//                     } catch (error) {
-//                         console.log("====================error", error);
-//                     }
-//                 } else {
-//                     res.redirect("/users/signin");
-//                 }
-//             } catch (error) {
-//                 console.log("토큰 인증 에러 ::", error);
-//                 res.send({ result: false, message: "인증된 회원이 아닙니다." });
-//             }
-//         }
-//     } catch (err) {
-//         res.status(500).send("server error");
-//     }
-// };
 
 // 채팅방 생성하기2(사용자 인증 포함)
 exports.createChatRoom2 = async (req, res) => {
@@ -213,7 +115,6 @@ exports.createChatRoom2 = async (req, res) => {
                     }
                 }
             } catch (error) {
-                console.log("토큰 인증 에러 ::", error);
                 res.send({ result: false, message: "인증된 회원이 아닙니다." });
             }
         } else {
