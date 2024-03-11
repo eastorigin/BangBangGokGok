@@ -1,4 +1,3 @@
-// 리뷰 관련 모델
 const Review = (Sequelize, DataTypes) => {
     return Sequelize.define(
         "Review",
@@ -10,12 +9,10 @@ const Review = (Sequelize, DataTypes) => {
                 autoIncrement: true,
             },
             u_seq: {
-                // 평가 받는 유저 seq
                 type: DataTypes.INTEGER,
                 allowNull: false,
             },
             sender: {
-                // 평가 하는 사람 seq
                 type: DataTypes.INTEGER,
                 allowNull: false,
             },

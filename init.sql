@@ -1,4 +1,4 @@
--- Active: 1707102382888@@127.0.0.1@3306@bbgg_db
+-- Active: 1707101286054@@127.0.0.1@3306@prac
 
 show DATABASES;
 use prac;
@@ -97,9 +97,8 @@ VALUES (1,4,3,'test123','sfdssffd', now(), now(), 4);
 INSERT INTO chat (p_seq, u_seq, b_seq, c_title1, c_title2, createdAt, updatedAt, last_user) 
 VALUES (2,1,1,'testid1','fgdfgdfgd', now(), now(), 1);
 
--- sfdssffd
 SELECT * FROM user;
-
+SELECT * FROM chat;
 DESC post;
 
 INSERT INTO user (id, pw, email, name, nickname) 

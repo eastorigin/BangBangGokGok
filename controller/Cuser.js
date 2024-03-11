@@ -1,6 +1,8 @@
 const User = require("../models").User;
 const Likes = require("../models").Likes;
 const Post = require("../models").Post;
+const Chat = require("../models").Chat;
+const { Op } = require("sequelize");
 const jwt = require("jsonwebtoken");
 exports.example = (req, res) => {
     res.render("user/profile");
@@ -181,6 +183,44 @@ exports.getProfile = async (req, res) => {
 // 프로필 정보 수정
 exports.patchProfile = async (req, res) => {
     try {
+        const user = await User.findOne({
+            where: {
+                id: req.body.id,
+            },
+            attributes: ["u_seq", "nickname"],
+        });
+
+        const chatLists = await Chat.findAll({
+            where: {
+                [Op.or]: [{ u_seq: user.u_seq }, { b_seq: user.u_seq }],
+            },
+        });
+        for (i = 0; i < chatLists.length; i++) {
+            if (chatLists[i].c_title1 == user.nickname) {
+                await Chat.update(
+                    {
+                        c_title1: req.body.nickname,
+                    },
+                    {
+                        where: {
+                            c_seq: chatLists[i].c_seq,
+                        },
+                    }
+                );
+            } else {
+                await Chat.update(
+                    {
+                        c_title2: req.body.nickname,
+                    },
+                    {
+                        where: {
+                            c_seq: chatLists[i].c_seq,
+                        },
+                    }
+                );
+            }
+        }
+
         await User.update(
             {
                 nickname: req.body.nickname,
@@ -192,6 +232,7 @@ exports.patchProfile = async (req, res) => {
                 },
             }
         );
+
         res.send(true);
     } catch (error) {
         res.status(500).send("server error");
