@@ -18,8 +18,8 @@
 }
 
 .container-out {
-    /* background-color: green; */
-    width: 100%;
+    width: 1200px;
+    margin: auto;
 }
 #chatList {
     flex: 1;
