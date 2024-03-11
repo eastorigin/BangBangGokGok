@@ -267,6 +267,7 @@ exports.getMyLike = async (req, res) => {
                     model: Post,
                 },
             ],
+            order: [["l_seq", "DESC"]], // 최신순 정렬하여 반환
         }).then((likes) => {
             likes.forEach((like) => {
                 result.push(like.Post);
