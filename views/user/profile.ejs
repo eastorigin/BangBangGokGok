@@ -30,9 +30,7 @@
                                 y="0"
                                 width="<%= Math.max(50, data.distance * 2) %>"
                                 height="30"
-                                <%
-                                if
-                                (data.distance
+                                <%if(data.distance
                             >
                                 66) { %> fill="#FF6F0F" <% } else if (data.distance > 33) { %>
                                 fill="#C55A11" <% } else { %> fill="#843C0C" <% } %>>
@@ -96,15 +94,9 @@
                         &nbsp;&nbsp;&nbsp;&nbsp;<%=myLikes[i].date.toLocaleDateString('ko-KR')%>
                     </p>
                 </div>
-
                 <% } %>
             </div>
         </div>
-
-        <!-- <h1><%#=data.name%></h1>
-<h1><%#=data.id%></h1>
-<h1><%#=data.email%></h1>
-<h1><%#=data.nickname%></h1> -->
         <script>
             (async () => {
                 const accessToken = localStorage.getItem("accessToken");
@@ -122,13 +114,9 @@
                         },
                     });
                     if (response.data.id != "<%=data.id%>") {
-                        // 로그인된 사용자가 url로 타인의 마이페이지에 접근할 경우
                         window.location.href = "/";
                     }
                     if (response.data.result) {
-                        // 사용자 이름을 포함한 데이터 생성
-
-                        // 로그인 버튼을 로그아웃 버튼으로 변경
                         const editButton = document.getElementById("btn-edit");
                         editButton.href = `/users/profile/${response.data.id}`;
 
@@ -139,7 +127,6 @@
                         likeButton.href = `/users/mylike/${response.data.id}`;
                     }
                 }
-                // info.innerHTML = data; // 로그인 버튼 나오도록 하기
             })();
         </script>
     </body>
