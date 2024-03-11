@@ -118,7 +118,9 @@ exports.postPosts = async (req, res) => {
 
         // const { title, content, category } = req.body;
         // const file = req.file ? req.file.filename : ""; // 업로드된 파일명
-        const { title, content, file, category } = req.body;
+        const { title, content, file, category, deal_type } = req.body;
+
+        console.log("====================", deal_type);
 
         const newPost = await Post.create({
             title,
@@ -126,6 +128,7 @@ exports.postPosts = async (req, res) => {
             file, // 파일명 저장
             category,
             u_seq,
+            deal_type,
         });
         res.json(newPost);
     } catch (error) {
@@ -200,7 +203,7 @@ exports.postAccessToken = async (req, res) => {
 exports.patchPostsDetail = async (req, res) => {
     try {
         const { p_seq } = req.params;
-        const { is_success, title, content, file, category } = req.body;
+        const { is_success, title, content, file, category, deal_type } = req.body;
         const updatedPost = await Post.update(
             {
                 is_success,
@@ -208,6 +211,7 @@ exports.patchPostsDetail = async (req, res) => {
                 content,
                 file,
                 category,
+                deal_type,
             },
             {
                 where: { p_seq: p_seq },

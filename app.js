@@ -129,7 +129,7 @@ app.post("/upload", uploadDetail.single("file"), async (req, res) => {
         const filename = req.file ? req.file.filename : "";
         const filepath = req.file ? req.file.path : "";
 
-        const { title, content, category } = req.body;
+        const { title, content, category, deal_type } = req.body;
         if (!title || !content || !category) {
             return res.status(400).send("Missing required fields.");
         }
@@ -141,6 +141,7 @@ app.post("/upload", uploadDetail.single("file"), async (req, res) => {
             file: filename, // 파일명 저장 (파일이 없으면 빈 문자열 저장)
             category,
             u_seq,
+            deal_type,
         });
 
         res.status(201).send(post);

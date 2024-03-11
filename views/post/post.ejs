@@ -34,6 +34,11 @@
                 <option value="경상남도">경상남도</option>
                 <option value="제주도">제주도</option>
             </select>
+            <label for="deal"><span>거래 분류</span></label>
+            <select id="deal" name="deal">
+                <option value="true">구해요</option>
+                <option value="false">해드려요</option>
+            </select>
 
             <br />
             <label for="content"><span>글 내용</span></label>
@@ -69,6 +74,7 @@
                 formData.append("title", form.title.value);
                 formData.append("content", form.content.value);
                 formData.append("category", form.category.value);
+                formData.append("deal_type", form.deal.value);
 
                 // 파일이 있는 경우에만 추가
                 if (form.file.files.length > 0) {
