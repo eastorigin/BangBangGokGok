@@ -18,7 +18,7 @@
             <div>
                 <% for (let i = 0; i < chatLists.length; i++) { %>
                     <div id="chatbuttonlist">
-                        <% if (chatLists[i].c_title1 != nickname) { %>
+                        <% if (chatLists[i].c_title1 != user.nickname) { %>
                             <button class="long-button" onclick="goToChatRoom('<%= chatLists[i].c_seq %>', '<%= id %>')">
                                 <img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTEwMTRfMjIw%2FMDAxNjM0MTM5NDUyMTMw.LQliGvqqaeaScoAJQOYq3WhxapwGyjZjsfPSBMAuiYEg.WRu1NpNPXpJyMesthhuzSfogPnMFihMCGj9917c_PXog.JPEG.empl%2FIMG_7576.jpg&type=a340" style="width: 60px; height: 60px; border-radius: 50%;" alt="이미지_설명"> <%= chatLists[i].c_title1 %>
                         <% } else { %>
@@ -26,7 +26,7 @@
                                 <img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTEwMTRfMjIw%2FMDAxNjM0MTM5NDUyMTMw.LQliGvqqaeaScoAJQOYq3WhxapwGyjZjsfPSBMAuiYEg.WRu1NpNPXpJyMesthhuzSfogPnMFihMCGj9917c_PXog.JPEG.empl%2FIMG_7576.jpg&type=a340" style="width: 60px; height: 60px; border-radius: 50%;"alt="이미지_설명"> <%= chatLists[i].c_title2 %>
                         <% } %>
                         <!-- 읽지 않은 메세지의 값이 0이 아니고 last_user 값이 현재 사용자와 다를 때  -->
-                        <% if (chatLists[i].unreadcnt !== 0 && chatLists[i].last_user !== u_seq) { %>
+                        <% if (chatLists[i].unreadcnt !== 0 && chatLists[i].last_user !== user.u_seq) { %>
                             <span class="notification" id="unreadCount_<%= chatLists[i].c_seq %>">
                                 <%= chatLists[i].unreadcnt %>
                             </span>
@@ -62,7 +62,7 @@
         </div>
             <div id="messages">
                 <% messages.forEach(message => { %>
-                <p class="message <%= message.u_seq ==u_seq ? 'my-message' : 'other-message' %>">
+                <p class="message <%= message.u_seq == user.u_seq ? 'my-message' : 'other-message' %>">
                     <%= message.content %>
                 </p>
                 <% }); %>
@@ -106,23 +106,6 @@
 
 
                     
-                    // 오진님 코드
-                    //if (response.data.result) {
-                    //    u_seq = "<%= u_seq %>";
-                    //    c_title1 = "<%= c_title.c_title1 %>";
-                    //    c_title2 = "<%= c_title.c_title2 %>";
-                    //    if (response.data.u_seq == u_seq) {
-                    //        const chatTitle = document.getElementById("chat-title");
-                    //        chatTitle.textContent = c_title2;
-                    //        const chatList = document.getElementById("chat-list");
-                    //        chatList.textContent = c_title2;
-                    //    } else {
-                    //        const chatTitle = document.getElementById("chat-title");
-                    //       chatTitle.textContent = c_title1;
-                    //        const chatList = document.getElementById("chat-list");
-                    //        chatList.textContent = c_title1;
-                    //    }
-                    //}
                 }
             })();
         </script>
@@ -137,9 +120,9 @@
         <script>
             const socket = io();
 
-            joinUser("<%= c_seq %>", "<%= u_seq %>"); // 클라이언트가 접속하면 채팅방/유저 번호를 서버에게 송신
+            joinUser("<%= c_seq %>", "<%= user.u_seq %>"); // 클라이언트가 접속하면 채팅방/유저 번호를 서버에게 송신
 
-            readMessage("<%= c_seq %>", "<%= u_seq %>");
+            readMessage("<%= c_seq %>", "<%= user.u_seq %>");
             // 메세지를 읽었을 때 호출되는 함수
             function readMessage(c_seq, u_seq) {
                 socket.emit("readMessage", { c_seq, u_seq });
@@ -161,12 +144,12 @@
                     socket.emit("sendMessage", {
                         c_seq: "<%= c_seq %>",
                         content,
-                        u_seq: "<%= u_seq %>",
+                        u_seq: "<%= user.u_seq %>",
                         isread: 0,
                     });
                     messageInput.value = "";
                 }
-                readMessage("<%= c_seq %>", "<%= u_seq %>");
+                readMessage("<%= c_seq %>", "<%= user.u_seq %>");
             });
 
             // 메세지 수신 이벤트: 서버 -> 클라이언트
@@ -175,7 +158,7 @@
                 const p = document.createElement("p");
 
                 p.className = `message ${
-                    message.u_seq === "<%= u_seq %>" ? "my-message" : "other-message"
+                    message.u_seq === "<%= user.u_seq %>" ? "my-message" : "other-message"
                 }`;
                 p.textContent = message.content;
                 messagesDiv.appendChild(p);
@@ -196,14 +179,14 @@
 
     async function openPopup() {
         let receiverNick = "";
-      if('<%=nickname%>' != '<%=c_title.c_title1%>'){
+      if('<%=user.nickname%>' != '<%=c_title.c_title1%>'){
         receiverNick = '<%=c_title.c_title1%>';
       }else{
         receiverNick = '<%=c_title.c_title2%>';
       }
         const response = await axios.post("/reviews/check",{
             receiverNick: receiverNick,
-            sender: "<%= u_seq %>",
+            sender: "<%= user.u_seq %>",
             score: selectedRating,
         });
         if(!response.data.result){
@@ -238,7 +221,7 @@
 
     async function submitRating() {
       let receiverNick = "";
-      if('<%=nickname%>' != '<%=c_title.c_title1%>'){
+      if('<%=user.nickname%>' != '<%=c_title.c_title1%>'){
         receiverNick = '<%=c_title.c_title1%>';
       }else{
         receiverNick = '<%=c_title.c_title2%>';
@@ -246,7 +229,7 @@
       console.log('별', selectedRating);
       const response = await axios.post("/reviews",{
             receiverNick: receiverNick,
-            sender: "<%= u_seq %>",
+            sender: "<%= user.u_seq %>",
             score: selectedRating,
         });
     alert(response.data.message);
