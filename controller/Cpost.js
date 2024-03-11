@@ -149,11 +149,6 @@ exports.getPostsDetail = async (req, res) => {
                 },
             ],
         });
-        console.log(postDetail);
-        // res.render("post/postDetail", {
-        //     postDetail: postDetail,
-        //     imgSrc: postDetail.file ? `/uploads/${postDetail.file}` : null,
-        // });
         res.render("post/postDetail", { postDetail: postDetail });
     } catch (error) {
         console.log(error);
@@ -207,9 +202,10 @@ exports.postAccessToken = async (req, res) => {
 exports.patchPostsDetail = async (req, res) => {
     try {
         const { p_seq } = req.params;
-        const { title, content, file, category } = req.body;
+        const { is_success, title, content, file, category } = req.body;
         const updatedPost = await Post.update(
             {
+                is_success,
                 title,
                 content,
                 file,
