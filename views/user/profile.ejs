@@ -51,7 +51,9 @@
                 <% for(let i = 0; i < myPosts.length ;i++){ %>
                 <p class="card2-title">&nbsp;&nbsp;<%=myPosts[i].title%></p>
                 <p class="card2-content">&nbsp;&nbsp;&nbsp;&nbsp;<%=myPosts[i].content%></p>
-                <p class="card2-date">&nbsp;&nbsp;&nbsp;&nbsp;<%=myPosts[i].date%></p>
+                <p class="card2-date">
+                    &nbsp;&nbsp;&nbsp;&nbsp;<%=myPosts[i].date.toLocaleDateString('ko-KR')%>
+                </p>
                 <hr />
                 <% } %>
             </div>
