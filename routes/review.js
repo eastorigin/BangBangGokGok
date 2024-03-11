@@ -1,5 +1,5 @@
 const express = require("express");
-const controller = require("../controller/Crivew");
+const controller = require("../controller/Creview");
 const router = express.Router();
 
 router.post("/", controller.postReview);

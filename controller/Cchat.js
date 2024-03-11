@@ -76,9 +76,6 @@ exports.getChats = async (req, res) => {
 // 채팅방 상세
 exports.getChatRoom = async (req, res) => {
     try {
-        // const id = req.query.id; // 현재 접속 유저
-        console.log("================id", req.query.id);
-
         const user = await User.findOne({
             attributes: ["u_seq", "nickname", "distance"],
             where: { id: req.query.id },
@@ -108,10 +105,8 @@ exports.getChatRoom = async (req, res) => {
             c_seq: req.params.c_seq,
             c_title: c_title,
             messages: messages,
-            u_seq: user.u_seq,
+            user: user,
             id: req.query.id,
-            nickname: user.nickname,
-            distance: user.distance,
         });
     } catch (err) {
         res.status(500).send("server error");
@@ -182,7 +177,6 @@ exports.createChatRoom2 = async (req, res) => {
                 const auth = jwt.verify(accessToken, process.env.ACCESS_SECRET);
                 if (auth) {
                     const { b_seq, u_seq, b_nick, u_nick, id, p_seq } = req.body;
-                    const c_title = [u_nick, b_nick];
 
                     // 이미 존재하는 채팅방인지 확인 후, 존재한다면 그 채팅방을 열기
                     const check = await Chat.findOne({
@@ -194,11 +188,8 @@ exports.createChatRoom2 = async (req, res) => {
                         },
                     });
                     if (check) {
-                        // 이미 존재하는 채팅방이 있을 경우, 해당 채팅방 열기
-                        // console.log("==========이미 존재하는 채팅방", check.c_seq, check.u_seq);
                         return res.send({ c_seq: check.c_seq, u_seq: check.u_seq, id: auth.id });
                     } else {
-                        console.log("=========기존에 채팅방이 존재하지 않습니다.", auth);
                         // 채팅방이 없을 경우, 새로 생성
                         await Chat.create({
                             c_seq: null,
@@ -210,8 +201,6 @@ exports.createChatRoom2 = async (req, res) => {
                             unreadcnt: 0,
                             last_user: u_seq,
                         }).then(async (result) => {
-                            console.log("생성된 채팅방의 c_seq 확인", result.c_seq);
-
                             // 채팅 생성과 동시에 채팅방 오픈하기
                             return res.send({
                                 c_seq: result.c_seq,

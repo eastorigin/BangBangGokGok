@@ -79,7 +79,6 @@ exports.postSignin = async (req, res) => {
 
 exports.postAccessToken = async (req, res) => {
     try {
-        console.log("===================postAccessToken", req.headers.authorization);
         if (req.headers.authorization) {
             const accessToken = req.headers.authorization.split(" ")[1];
 
@@ -118,6 +117,7 @@ exports.postAccessToken = async (req, res) => {
 
 // 유효성 검증
 const { validationResult } = require("express-validator");
+const { compareSync } = require("bcrypt");
 
 // 회원가입 요청시, 회원가입 페이지로 이동
 exports.getSignup = (req, res) => {
@@ -128,8 +128,6 @@ exports.getSignup = (req, res) => {
 exports.checkDuplicate = async (req, res) => {
     try {
         const { field, value } = req.body;
-
-        console.log("회원가입 중복 체크", field, value);
 
         // 해당 옵션(아이디, 이메일, 닉네임)의 값과 동일한 값을 가지는 유저가 있는지 확인
         const userInfoInstance = await User.findOne({
@@ -162,7 +160,6 @@ exports.postSignup = async (req, res) => {
         nickname: req.body.nickname,
         distance: 0,
     }).then((result) => {
-        console.log("회원가입 완료 result 확인", result);
         res.end();
     });
 };
@@ -174,7 +171,6 @@ exports.getProfile = async (req, res) => {
         const userInfo = await User.findOne({
             where: { id: id },
         });
-        console.log("프로필 페이지 접속 유저 확인", userInfo);
         res.render("user/profileEdit", { data: userInfo });
     } catch (error) {
         res.status(500).send("server error");
@@ -218,14 +214,24 @@ exports.getMyPage = async (req, res) => {
             order: [["p_seq", "DESC"]],
         });
 
-        // 관심 목록 최신순 3개
-        const myLikes = await Likes.findAll({
-            where: { u_seq: userInfo.u_seq },
-            limit: 3,
-            order: [["l_seq", "DESC"]],
-        });
+        let result = [];
 
-        res.render("user/profile", { data: userInfo, myPosts: myPosts, myLikes: myLikes }); // 마이페이지에서의 페이지 이동이 일어날 때 id 값을 전송하며 이동하기 위함
+        // 관심 목록 최신순 3개
+        Likes.findAll({
+            where: { u_seq: userInfo.u_seq },
+            include: [
+                {
+                    model: Post,
+                },
+            ],
+            order: [["l_seq", "DESC"]], // 최신순 정렬
+            limit: 3,
+        }).then((likes) => {
+            likes.forEach((like) => {
+                result.push(like.Post);
+            });
+            res.render("user/profile", { data: userInfo, myPosts: myPosts, myLikes: result });
+        });
     } catch (error) {
         res.status(500).send("server error");
     }
@@ -267,12 +273,11 @@ exports.getMyLike = async (req, res) => {
                     model: Post,
                 },
             ],
-            order: [["l_seq", "DESC"]], // 최신순 정렬하여 반환
+            order: [["l_seq", "DESC"]], // 최신순 정렬
         }).then((likes) => {
             likes.forEach((like) => {
                 result.push(like.Post);
             });
-            console.log("result 확인0", result[0]);
             res.render("user/myLike", { data: result, id: id });
         });
     } catch (error) {
