@@ -218,11 +218,11 @@ async function clickHeart() {
 
     fetchLikesCount(); // 좋아요 수 업데이트
 }
-    
 </script>
     <body>
         <div class="container">
             <div class="left">
+                <button type="button" id="btn-back" onclick="window.history.back();">이전으로</button>
                 <img src="/uploads/<%= postDetail.file %>" alt="img_main" class="img_main" onerror="this.onerror=null; this.src='/static/css/image/img_default.jpg';"/>
                 <div class="author">작성자: <%= postDetail.User.nickname %></div>
             </div>

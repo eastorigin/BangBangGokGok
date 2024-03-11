@@ -132,3 +132,12 @@ html {
     display: flex;
     align-items: center; /* 하트 아이콘과 like-count를 수직 중앙 정렬 */
 }
+
+#btn-back {
+    background-color: #ff6f0f;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    width: 20%;
+    height: 30%;
+}
