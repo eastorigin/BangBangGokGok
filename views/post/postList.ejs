@@ -91,7 +91,12 @@
                 <% for(let i = 0; i < postList.length ;i++){ %>
                 <div class="post">
                     <a href="/posts/detail/<%=postList[i].p_seq %>">
-                        <img src="/static/css/image/placeholder.png" alt="Placeholder Image" />
+                        <img
+                            src="/uploads/<%= postList[i].file %>"
+                            alt="Placeholder Image"
+                            class="thumbnail"
+                            onerror="this.onerror=null; this.src='/static/css/image/placeholder.png';"
+                        />
                         <div class="title"><%=postList[i].title %></div>
                         <div class="category"><%=postList[i].category%></div>
                         <div class="author"><%=postList[i].User.nickname%></div>
