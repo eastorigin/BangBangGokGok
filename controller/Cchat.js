@@ -107,6 +107,8 @@ exports.getChatRoom = async (req, res) => {
             messages: messages,
             user: user,
             id: req.query.id,
+            nickname: user.nickname,
+            distnace: user.distance,
         });
     } catch (err) {
         res.status(500).send("server error");
