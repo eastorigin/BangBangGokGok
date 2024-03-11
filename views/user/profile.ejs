@@ -17,8 +17,11 @@
                 <div class="banner">
                     <div class="profile"></div>
                 </div>
+                <br />
                 <div><h2 class="name"><%=data.name%></h2></div>
                 <div><h2 class="id"><%=data.nickname%></h2></div>
+                <br />
+                <br />
                 <div class="centered-graph">
                     <div class="graph">
                         <svg width="200" height="30">
@@ -43,18 +46,55 @@
                 <br />
                 <div class="button-group">
                     <a id="btn-edit">Edit</a>
-                    <a id="btn-myBoard">내가 쓴 글</a>
+                    <a id="btn-myBoard">글목록</a>
+                    <a id="btn-myLike">찜목록</a>
                 </div>
+                <br />
+                <br />
             </div>
             <div class="card2 card">
                 <br />
+                <p id="userbox-title">&nbsp;&nbsp;내 정보</p>
+                <br />
+                <div id="userbox1">
+                    <p class="card2-title">&nbsp;&nbsp;이름</p>
+                    <p class="userbox1-name">&nbsp;&nbsp;<%=data.name%></p>
+                </div>
+                <div id="userbox1">
+                    <p class="card2-title">&nbsp;&nbsp;닉네임</p>
+                    <p class="card2-content">&nbsp;&nbsp;&nbsp;&nbsp;<%=data.nickname%></p>
+                </div>
+                <div id="userbox1">
+                    <p class="card2-title">&nbsp;&nbsp;이메일</p>
+                    <p class="card2-date">&nbsp;&nbsp;&nbsp;&nbsp;<%=data.email%></p>
+                </div>
+                <br />
+                <p id="userbox-title">&nbsp;&nbsp;글 목록</p>
+                <br />
                 <% for(let i = 0; i < myPosts.length ;i++){ %>
-                <p class="card2-title">&nbsp;&nbsp;<%=myPosts[i].title%></p>
-                <p class="card2-content">&nbsp;&nbsp;&nbsp;&nbsp;<%=myPosts[i].content%></p>
-                <p class="card2-date">
-                    &nbsp;&nbsp;&nbsp;&nbsp;<%=myPosts[i].date.toLocaleDateString('ko-KR')%>
-                </p>
+
+                <div id="cardbox2">
+                    <a a href="../../posts/detail/<%=myPosts[i].p_seq %>" class="card2-title"
+                        >&nbsp;&nbsp;<%=myPosts[i].title%></a
+                    >
+                    <p class="card2-content">&nbsp;&nbsp;&nbsp;&nbsp;<%=myPosts[i].content%></p>
+                    <p class="card2-date">&nbsp;&nbsp;&nbsp;&nbsp;<%=myPosts[i].date%></p>
+                </div>
+                <% } %>
+                <br />
+                <p id="userbox-title">&nbsp;&nbsp;찜 목록</p>
+                <br />
+                <% for(let i = 0; i < myLikes.length ;i++){ %>
+                <div id="cardbox3">
+                    <a a href="../../posts/detail/<%=myLikes[i].p_seq %>" class="card2-title"
+                        >&nbsp;&nbsp;<%=myLikes[i].title%></a
+                    >
+                    <p class="card2-content">&nbsp;&nbsp;&nbsp;&nbsp;<%=myLikes[i].content%></p>
+                    <p class="card2-date">&nbsp;&nbsp;&nbsp;&nbsp;<%=myLikes[i].date.toLocaleDateString('ko-KR')%></p>
+                </div>
+
                 <hr />
+
                 <% } %>
             </div>
         </div>
@@ -92,6 +132,9 @@
 
                         const boardButton = document.getElementById("btn-myBoard");
                         boardButton.href = `/users/mypost/${response.data.id}`;
+
+                        const likeButton = document.getElementById("btn-myLike");
+                        likeButton.href = `/users/mylike/${response.data.id}`;
                     }
                 }
                 // info.innerHTML = data; // 로그인 버튼 나오도록 하기

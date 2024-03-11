@@ -1,32 +1,81 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
+        <title>방방곡곡</title>
         <%-include('../include/head')%>
+        <link rel="stylesheet" href="/static/css/myLike.css" />
     </head>
     <body>
-        <h1>관심 목록 렌더링</h1>
-    </body>
-    <script>
-        (async () => {
-            const accessToken = localStorage.getItem("accessToken");
-            if (!accessToken) {
-                window.location.href = "/users/signin";
-            } else {
-                const response = await axios({
-                    method: "POST",
-                    url: "/users/accesstoken",
-                    headers: {
-                        Authorization: `Bearer ${accessToken}`,
-                    },
-                });
-                if (response.data.id != "<%= id %>") {
-                    // 로그인된 사용자가 url로 접근한 경우
-                    window.location.href = "/";
+        <%-include('../include/header')%>
+        <div class="container-out">
+            <div><h3 class="container-name"><%=userInfo.nickname%>님 찜목록</h3></div>
+            <div class="container-in">
+                <div class="card1 card">
+                    <div class="banner">
+                        <div class="profile"></div>
+                    </div>
+                    <div><h2 class="name"><%=userInfo.name%></h2></div>
+                    <div><h2 class="id"><%=userInfo.nickname%></h2></div>
+                    <br />
+                    <br />
+                    <a id="btn-back">뒤로가기</a>
+                </div>
+                <div class="card2 card">
+                    <br />
+                    <% for(let i = 0; i < data.length ;i++){ %>
+                    <div id="userbox1">
+                        <p class="card2-title">&nbsp;&nbsp;글 제목</p>
+                        <a href="../../posts/detail/<%=data[i].p_seq %>" class="card2-title2"
+                            >&nbsp;&nbsp;<%=data[i].title%></a
+                        >
+                    </div>
+                    <div id="userbox1">
+                        <p class="card2-title">&nbsp;&nbsp;글 내용</p>
+                        <p class="card2-content">&nbsp;&nbsp;<%=data[i].content%></p>
+                    </div>
+                    <div id="userbox1">
+                        <p class="card2-title">&nbsp;&nbsp;글 내용</p>
+                        <p class="card2-date">&nbsp;&nbsp;<%=data[i].date%></p>
+                    </div>
+                    <hr />
+                    <% } %>
+                </div>
+            </div>
+        </div>
+        <script>
+            (async () => {
+                const accessToken = localStorage.getItem("accessToken");
+
+                let data = "";
+                if (!accessToken) {
+                    window.location.href = "/users/signin";
+                    // data = '<a href="/users/signin">로그인</a>';
+                } else {
+                    const response = await axios({
+                        method: "POST",
+                        url: "/users/accesstoken",
+                        headers: {
+                            Authorization: `Bearer ${accessToken}`,
+                        },
+                    });
+                    if (response.data.id != "<%= userInfo.id %>") {
+                        // 로그인된 사용자가 url로 접근한 경우
+                        window.location.href = "/";
+                    }
+                    if (response.userInfo) {
+                        // 사용자 이름을 포함한 데이터 생성
+                        data = `
+                    <p>${response.data.name}님 환영합니다.</p>
+                    <button type="button" onclick="signout()">로그아웃</button>`;
+                    }
                 }
-            }
-        })();
-    </script>
+                // info.innerHTML = data; // 로그인 버튼 나오도록 하기
+            })();
+            document.getElementById("btn-back").addEventListener("click", function () {
+                window.history.back(); // 뒤로가기 기능을 수행합니다.
+            });
+        </script>
+    </body>
 </html>
