@@ -222,11 +222,22 @@ async function clickHeart() {
                 <button type="button" id="btn-back" onclick="window.history.back();">이전으로</button>
                 <br>
                 <img src="/uploads/<%= postDetail.file %>" alt="img_main" class="img_main" onerror="this.onerror=null; this.src='/static/css/image/img_default.jpg';"/>
-                <div class="author">작성자: <%= postDetail.User.nickname %>&nbsp;&nbsp;&nbsp;&nbsp;<span class="<%= 
-                    postDetail.User.distance < 25 ? 'green' : 
-                    postDetail.User.distance < 50 ? 'blue' : 
-                    postDetail.User.distance < 75 ? 'yellow' : 
-                    'orange' %>"><%= postDetail.User.distance %>km</span></div>
+                <div class="author">작성자: <%= postDetail.User.nickname %>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <svg width="200" height="30">
+                        <rect
+                            x="0"
+                            y="0"
+                            width="<%= Math.max(50, postDetail.User.distance * 2) %>"
+                            height="30"
+                            <%
+                            if (postDetail.User.distance > 66) { %> fill="#FF6F0F"
+                            <% } else if (postDetail.User.distance > 33) { %> fill="#C55A11"
+                            <% } else { %> fill="#843C0C"
+                            <% } %>>
+                        </rect>
+                        <text x="10" y="20" fill="white"><%= postDetail.User.distance %>km</text>
+                    </svg>                
+                </div>
             </div>
             <div class="right">
                 <div class="post-header">
@@ -259,5 +270,6 @@ async function clickHeart() {
                         </div>
                 </div>
             </div>
+            
     </body>
 </html>

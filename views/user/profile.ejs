@@ -25,18 +25,16 @@
                             <rect
                                 x="0"
                                 y="0"
-                                width="<%= data.distance + 120 %>"
+                                width="<%= Math.max(50, data.distance * 2) %>"
                                 height="30"
                                 <%
                                 if
                                 (data.distance
-                                +
-                                80
                             >
-                                160) { %> fill="#FF6F0F" <% } else if (data.distance + 80 > 120) {
-                                %> fill="#C55A11" <% } else { %> fill="#843C0C" <% } %> >
+                                66) { %> fill="#FF6F0F" <% } else if (data.distance > 33) { %>
+                                fill="#C55A11" <% } else { %> fill="#843C0C" <% } %>>
                             </rect>
-                            <text x="10" y="20" fill="white"><%= data.distance + 80 %>km</text>
+                            <text x="10" y="20" fill="white"><%= data.distance %>km</text>
                         </svg>
                     </div>
                 </div>
