@@ -4,7 +4,7 @@ const controller = require("../controller/Cpost");
 const router = express.Router();
 
 // GET /posts/list
-router.get("/list", controller.getPostsList);
+router.get("/list", controller.checkCache, controller.getPostsList);
 
 // GET /posts/:category
 router.get("/:category", controller.getPostsByCategory);
