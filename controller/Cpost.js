@@ -3,6 +3,38 @@ const Post = require("../models").Post;
 const User = require("../models").User;
 const { Op } = require("sequelize");
 const jwt = require("jsonwebtoken");
+const { Sequelize } = require("../models");
+
+//Redis 설정
+const redis = require("redis");
+const redisClient = redis.createClient({
+    url: `redis://${process.env.REDIS_USERNAME}:${process.env.REDIS_PASSWORD}@${process.env.REDIS_HOST}:${process.env.REDIS_PORT}/0`,
+    legacyMode: true, // 반드시 설정 !!
+});
+redisClient.on("connect", () => {
+    console.info("Redis connected!");
+});
+redisClient.on("error", (err) => {
+    console.error("Redis Client Error", err);
+});
+redisClient.connect().then();
+const redisCli = redisClient.v4;
+
+// 캐시 체크를 위한 미들웨어
+exports.checkCache = async (req, res, next) => {
+    try {
+        const value = await redisCli.get("postList"); // Redis에서 postList 키를 이용하여 데이터를 가져옴
+        if (value) {
+            // Redis에 저장된 데이터가 존재하면 클라이언트에 바로 응답
+            const postList = JSON.parse(value);
+            return res.render("post/postList", { postList });
+        }
+        // Redis에 저장된 데이터가 없으면 다음 미들웨어 실행
+        next();
+    } catch (error) {
+        next(error);
+    }
+};
 
 // GET /posts/list 게시글 목록 (전체 지역)
 exports.getPostsList = async (req, res) => {
@@ -16,8 +48,11 @@ exports.getPostsList = async (req, res) => {
                 },
             ],
         });
-        console.log(postList);
-        res.render("post/postList", { postList: postList });
+
+        // 데이터를 렌더링하기 전에 Redis에 저장
+        await redisCli.set("postList", JSON.stringify(postList)); // 캐시 저장
+
+        res.render("post/postList", { postList });
     } catch (error) {
         res.status(500).send("server error");
     }
@@ -49,16 +84,24 @@ exports.getPostsByCategory = async (req, res) => {
 // GET /posts/list/search?keyword=검색어
 exports.getPostsByKeyword = async (req, res) => {
     try {
+        const startTime = new Date(); // 시작 시간 기록
+
         console.log(req.query);
         const { keyword } = req.query;
+        console.log("keyword", keyword);
         const postsByKeyword = await Post.findAll({
-            where: {
-                [Op.or]: [
-                    { title: { [Op.like]: `%${keyword}%` } },
-                    { content: { [Op.like]: `%${keyword}%` } },
-                    { category: { [Op.like]: `%${keyword}%` } },
-                ],
-            },
+            where: Sequelize.literal(
+                `MATCH(title, content, category) AGAINST('${keyword}*' IN BOOLEAN MODE)`
+            ),
+            // 아래 주석 삭제하지 마세요. (like % 와 비교하기 위함)
+            // {
+            //     [Op.or]: [
+            //         { title: { [Op.like]: `%${keyword}%` } },
+            //         { content: { [Op.like]: `%${keyword}%` } },
+            //         { category: { [Op.like]: `%${keyword}%` } },
+            //     ],
+            // },
+
             include: [
                 {
                     model: User,
@@ -67,8 +110,14 @@ exports.getPostsByKeyword = async (req, res) => {
             ],
             order: [["p_seq", "DESC"]],
         });
+
+        const endTime = new Date(); // 종료 시간 기록
+        const executionTime = endTime - startTime; // 실행 시간 계산 (밀리초 단위)
+        console.log(`Execution time: ${executionTime}ms`);
+
         res.render("post/postList", { postList: postsByKeyword });
     } catch (error) {
+        console.error(error);
         res.status(500).send("server error");
     }
 };
@@ -82,11 +131,9 @@ exports.getPostsByKeywordByCategory = async (req, res) => {
         const postsByKeyword = await Post.findAll({
             where: {
                 category: category,
-                [Op.or]: [
-                    { title: { [Op.like]: `%${keyword}%` } },
-                    { content: { [Op.like]: `%${keyword}%` } },
-                    { category: { [Op.like]: `%${keyword}%` } },
-                ],
+                [Op.or]: Sequelize.literal(
+                    `MATCH(title, content, category) AGAINST('${keyword}*' IN BOOLEAN MODE)`
+                ),
             },
             include: [
                 {

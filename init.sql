@@ -1,5 +1,6 @@
 -- Active: 1707101296801@@127.0.0.1@3306@sesac
 
+
 show DATABASES;
 use prac;
 show TABLES;
@@ -97,9 +98,8 @@ VALUES (1,4,3,'test123','sfdssffd', now(), now(), 4);
 INSERT INTO chat (p_seq, u_seq, b_seq, c_title1, c_title2, createdAt, updatedAt, last_user) 
 VALUES (2,1,1,'testid1','fgdfgdfgd', now(), now(), 1);
 
--- sfdssffd
 SELECT * FROM user;
-
+SELECT * FROM chat;
 DESC post;
 
 INSERT INTO user (id, pw, email, name, nickname) 
@@ -180,21 +180,21 @@ SELECT * FROM user;
 INSERT INTO post (u_seq, title, content, date, file, category, is_success, deal_type) 
 VALUES (1, '이케아', '이케아 갈건데 대리구매 원하시는 분 계신가요', '2024-03-11', 'hy01.jpg', '경기도', 0, 0);
 
-INSERT INTO post (u_seq, title, content, date, file, category, is_success, deal_type) 
-VALUES (1, '세븐일레븐X펩시 팝업스토어 대리구매해주실 분', "서울 송파구에서 열리는 세븐일레븐X팝업 스토어에서 원하는 굿즈 택배로 보내주실 분 구합니다.", '2024-03-05', 'hy02.jpg', '서울' 0, 0);
+INSERT INTO post (u_seq, title, content, date, file, category, is_success, deal_type)
+VALUES (1, '세븐일레븐X펩시 팝업스토어 대리구매해주실 분', "서울 송파구에서 열리는 세븐일레븐X팝업 스토어에서 원하는 굿즈 택배로 보내주실 분 구합니다.", '2024-03-05', 'hy02.jpg', '서울' 0, 1);
 
 INSERT INTO post (u_seq, title, content, date, file, category, is_success, deal_type) 
-VALUES (1, 'GRBK 하우스 오브 비일상 팝업스토어 대리구매', '강남구에서 열리는 GRBK 하우스 팝업에서 그래놀라 사서 보내주실 분 찾아요', '2024-03-05', 'hy03.jpg', '서울' 0, 0);
+VALUES (3, 'GRBK 하우스 오브 비일상 팝업스토어 대리구매', '강남구에서 열리는 GRBK 하우스 팝업에서 그래놀라 사서 보내주실 분 찾아요', '2024-03-05', 'hy03.jpg', '서울' 0, 1);
 
 
 INSERT INTO post (u_seq, title, content, date, file, category, is_success, deal_type) 
-VALUES (1, '멜린앤게츠 팝업스토어', '성동구에서 열리는 멜린앤게츠 팝업스토어 대리구매 해주실 분 채팅 부탁드립니다', '2024-03-06', 'hy04.jpg', '서울', 0, 0);
+VALUES (4, '멜린앤게츠 팝업스토어', '성동구에서 열리는 멜린앤게츠 팝업스토어 대리구매 해주실 분 채팅 부탁드립니다', '2024-03-06', 'hy04.jpg', '서울', 0, 1);
 
 INSERT INTO post (u_seq, title, content, date, file, category, is_success, deal_type) 
-VALUES (1, '부산바다샌드 ', '부산바다샌드 택배로 보내주실 분 채팅주세요', '2024-03-05', 'hy05.jpg', '경상남도', 0, 1);
+VALUES (2, '부산바다샌드 ', '부산바다샌드 택배로 보내주실 분 채팅주세요', '2024-03-05', 'hy05.jpg', '경상남도', 0, 1);
 
 INSERT INTO post (u_seq, title, content, date, file, category, is_success, deal_type) 
-VALUES (1, '대구 납작프렌드 팝업스토어', '납작만두 먹고싶어요..', '2024-03-06', 'hy06.jpg', '경상북도', 0, 1);
+VALUES (3, '대구 납작프렌드 팝업스토어', '납작만두 먹고싶어요..', '2024-03-06', 'hy06.jpg', '경상북도', 0, 1);
 
 INSERT INTO post (u_seq, title, content, date, file, category, is_success, deal_type) 
 VALUES (6, '판교 호감샌드 보내드려요', '판교 호감샌드 드시고 싶으신 분 채팅주세요!', '2024-03-08', 'hy07.jpg', '서울', 0, 0);

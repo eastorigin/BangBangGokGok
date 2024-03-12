@@ -1,4 +1,3 @@
-<!-- 채팅방 목록 ejs -->
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -11,35 +10,34 @@
     </head>
     <body>
         <div class="container-out">
-            <div><h3 class="container-name"><%=nickname%> Chat Room List</h3></div>
+            <div><h3 class="container-name"><%=user.nickname%> Chat Room List</h3></div>
 
         <div class="container-in">
             <div class="card1 card">
                 <div class="banner">
-                        <img src="/static/css/image/chatImage.png" alt="Image 1" class="resize-image">
+                        <img src="/static/image/chatImage.png" alt="Image 1" class="resize-image">
                 </div>
                 <a id="btn-home">홈으로</a>
             </div>
-         <div class="card2 card">
-          <% for (let i = 0; i < chatLists.length; i++) { %>
-           <% if (chatLists[i].c_title1 != nickname) { %>
-          <button id="one_button" onclick="goToChatRoom('<%= chatLists[i].c_seq %>', '<%= id %>')">
+        <div class="card2 card">
+        <% for (let i = 0; i < chatLists.length; i++) { %>
+        <% if (chatLists[i].c_title1 != user.nickname) { %>
+        <button id="one_button" onclick="goToChatRoom('<%= chatLists[i].c_seq %>', '<%= user.id %>')">
             <%= chatLists[i].c_title1 %>
             <% } else { %>
-            <button id="two_button" onclick="goToChatRoom('<%= chatLists[i].c_seq %>', '<%= id %>')">
+            <button id="two_button" onclick="goToChatRoom('<%= chatLists[i].c_seq %>', '<%= user.id %>')">
                 <%= chatLists[i].c_title2 %>
                 <% } %>
-                <!-- 읽지 않은 메세지의 값이 0이 아니고 last_user 값이 현재 사용자와 다를 때  -->
-                <% if (chatLists[i].unreadcnt !== 0 && chatLists[i].last_user !== u_seq) { %>
+                <% if (chatLists[i].unreadcnt !== 0 && chatLists[i].last_user !== user.u_seq) { %>
                 <span class="notification" id="unreadCount_<%= chatLists[i].c_seq %>">
                     <%= chatLists[i].unreadcnt %>
                 </span>
                 <% } %>
             </button>
 
-           <% } %>
+        <% } %>
             </div>
-         </div>
+        </div>
         </div>
 </body>
 <script>
@@ -63,32 +61,12 @@
                     },
                 });
 
-                if(response.data.id != '<%= id %>'){
-                    // 로그인된 사용자가 url로 타인의 채팅방 리스트에 접근할 경우
+                if(response.data.id != '<%= user.id %>'){
                     window.location.href = '/';
                 }
                 document.getElementById("btn-home").addEventListener("click", function () {
                     window.location.href = "/";
             });
-
-                // 오진님 코드
-                //if (response.data) {
-                //    u_seq = "<%= u_seq %>";
-                //    c_title1 = "<%= chatLists.c_title1 %>";
-                //    c_title2 = "<%= chatLists.c_title2 %>";
-                //    console.log("=====", response.data.nickname);
-                //    if (response.data.u_seq == u_seq) {
-                //        const chatTitle = document.getElementById("chat-title");
-                //        chatTitle.textContent = c_title2;
-                //       const chatList = document.getElementById("chat-list");
-                //        chatList.textContent = c_title2;
-                //    } else {
-                //        const chatTitle = document.getElementById("chat-title");
-                //        chatTitle.textContent = c_title1;
-                //        const chatList = document.getElementById("chat-list");
-                //        chatList.textContent = c_title1;
-                //    }
-                //}
             }
         })();
     </script>

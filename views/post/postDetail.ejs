@@ -69,6 +69,7 @@
                     document.getElementById("title").disabled = true;
                     document.getElementById("category").disabled = true;
                     document.getElementById("content").disabled = true;
+                    document.getElementById("deal").disabled = true;
                 }
 
                 function disableHeart() {
@@ -231,7 +232,7 @@ async function clickHeart() {
             <div class="left">
                 <button type="button" id="btn-back" onclick="window.history.back();">이전으로</button>
                 <br>
-                <img src="/uploads/<%= postDetail.file %>" alt="img_main" class="img_main" onerror="this.onerror=null; this.src='/static/css/image/img_default.jpg';"/>
+                <img src="/uploads/<%= postDetail.file %>" alt="img_main" class="img_main" onerror="this.onerror=null; this.src='/static/image/img_default.jpg';"/>
                 <div class="author">작성자: <%= postDetail.User.nickname %>&nbsp;&nbsp;&nbsp;&nbsp;
                     <svg width="210" height="40">
                         <!-- 테두리를 위한 더 큰 rect 추가 -->

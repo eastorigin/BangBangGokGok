@@ -5,7 +5,6 @@ exports.postReview = async (req, res) => {
     try {
         const { receiverNick, sender, score } = req.body;
 
-        // 평가 받는 유저
         const receiver = await User.findOne({
             where: { nickname: receiverNick },
         });
@@ -31,12 +30,10 @@ exports.checkReview = async (req, res) => {
     try {
         const { receiverNick, sender, score } = req.body;
 
-        // 평가 받는 유저
         const receiver = await User.findOne({
             where: { nickname: receiverNick },
         });
 
-        // 기존에 했던 평가가 있는지 확인
         const check = await Review.findOne({
             where: { u_seq: receiver.u_seq, sender: sender },
         });
