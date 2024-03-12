@@ -74,6 +74,7 @@ exports.getPostsByCategory = async (req, res) => {
             ],
             order: [["p_seq", "DESC"]],
         });
+
         res.render("post/postList", { postList: postListByCategory });
     } catch (error) {
         res.status(500).send("server error");

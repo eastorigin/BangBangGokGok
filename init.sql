@@ -1,4 +1,5 @@
--- Active: 1707101283066@@127.0.0.1@3306@bbgg_db
+-- Active: 1707101296801@@127.0.0.1@3306@sesac
+
 
 show DATABASES;
 use prac;
@@ -179,7 +180,7 @@ SELECT * FROM user;
 INSERT INTO post (u_seq, title, content, date, file, category, is_success, deal_type) 
 VALUES (1, '이케아', '이케아 갈건데 대리구매 원하시는 분 계신가요', '2024-03-11', 'hy01.jpg', '경기도', 0, 0);
 
-INSERT INTO post (u_seq, title, content, date, file, category, is_success, deal_type) 
+INSERT INTO post (u_seq, title, content, date, file, category, is_success, deal_type)
 VALUES (1, '세븐일레븐X펩시 팝업스토어 대리구매해주실 분', "서울 송파구에서 열리는 세븐일레븐X팝업 스토어에서 원하는 굿즈 택배로 보내주실 분 구합니다.", '2024-03-05', 'hy02.jpg', '서울' 0, 1);
 
 INSERT INTO post (u_seq, title, content, date, file, category, is_success, deal_type) 

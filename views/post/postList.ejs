@@ -88,6 +88,7 @@
                 <a id="btn-post" type="submit" href="../../posts"> 글쓰기 </a>
             </div>
             <div class="image-container">
+                <!-- <div class="list"> -->
                 <% for(let i = 0; i < postList.length ;i++){ %>
                 <div class="post">
                     <a href="/posts/detail/<%=postList[i].p_seq %>">
@@ -114,7 +115,9 @@
                     </a>
                 </div>
                 <% } %>
+                <!-- </div> -->
             </div>
+            <div class="listPage"></div>
         </div>
         <script>
             function search() {
@@ -129,6 +132,59 @@
                     const url = `/posts/search/${category}?keyword=` + encodeURIComponent(input);
                     document.location.href = url;
                 }
+            }
+
+            let thisPage = 1;
+            const limit = 6; //화면에 생기는 게시물 숫자 변경 필요함
+            const list = document.querySelectorAll(".image-container .post");
+
+            function loadItem() {
+                const beginGet = (thisPage - 1) * limit;
+                const endGet = thisPage * limit - 1;
+                list.forEach((item, key) => {
+                    if (key >= beginGet && key <= endGet) {
+                        item.style.display = "block";
+                    } else {
+                        item.style.display = "none";
+                    }
+                });
+                listPage();
+            }
+
+            loadItem();
+
+            function listPage() {
+                const count = Math.ceil(list.length / limit);
+                document.querySelector(".listPage").innerHTML = "";
+
+                if (thisPage != 1) {
+                    const prev = document.createElement("li");
+                    prev.innerText = "PREV";
+                    prev.setAttribute("onclick", "changePage(" + (thisPage - 1) + ")");
+                    document.querySelector(".listPage").appendChild(prev);
+                }
+
+                for (let i = 1; i <= count; i++) {
+                    const newPage = document.createElement("li");
+                    newPage.innerText = i;
+                    if (i == thisPage) {
+                        newPage.classList.add("active");
+                    }
+                    newPage.setAttribute("onclick", "changePage(" + i + ")");
+                    document.querySelector(".listPage").appendChild(newPage);
+                }
+
+                if (thisPage != count) {
+                    let next = document.createElement("li");
+                    next.innerText = "NEXT";
+                    next.setAttribute("onclick", "changePage(" + (thisPage + 1) + ")");
+                    document.querySelector(".listPage").appendChild(next);
+                }
+            }
+
+            function changePage(i) {
+                thisPage = i;
+                loadItem();
             }
         </script>
     </body>
