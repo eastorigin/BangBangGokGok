@@ -41,7 +41,7 @@
                 <% if (c_title[0] != user.nickname) { %>
                     <p id="kmtitle"><%= c_title[0]  %></p>
                         <% } else { %>
-                            <p><%= c_title[1]  %></p>
+                            <p id="kmtitle"><%= c_title[1]  %></p>
                             <% } %>
             </h1>
             <button id="mannerButton" onclick="openPopup()">매너 평가</button>
