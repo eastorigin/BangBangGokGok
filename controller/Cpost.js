@@ -85,10 +85,7 @@ exports.getPostsByCategory = async (req, res) => {
 exports.getPostsByKeyword = async (req, res) => {
     try {
         const startTime = new Date(); // 시작 시간 기록
-
-        console.log(req.query);
         const { keyword } = req.query;
-        console.log("keyword", keyword);
         const postsByKeyword = await Post.findAll({
             where: Sequelize.literal(
                 `MATCH(title, content, category) AGAINST('${keyword}*' IN BOOLEAN MODE)`
@@ -117,7 +114,6 @@ exports.getPostsByKeyword = async (req, res) => {
 
         res.render("post/postList", { postList: postsByKeyword });
     } catch (error) {
-        console.error(error);
         res.status(500).send("server error");
     }
 };
@@ -125,7 +121,6 @@ exports.getPostsByKeyword = async (req, res) => {
 // GET /posts/search/category?keyword=검색어
 exports.getPostsByKeywordByCategory = async (req, res) => {
     try {
-        console.log(req.query);
         const { keyword } = req.query;
         const { category } = req.params;
         const postsByKeyword = await Post.findAll({
@@ -159,7 +154,6 @@ exports.postPosts = async (req, res) => {
     try {
         // 클라이언트로부터 JWT 토큰을 받아옴
         const accessToken = req.headers.authorization.split(" ")[1];
-        console.log("accessToken: ", accessToken);
 
         // JWT 토큰을 검증하고 토큰에 포함된 사용자 정보를 추출
         const decodedToken = jwt.verify(accessToken, process.env.ACCESS_SECRET);
@@ -200,22 +194,17 @@ exports.getPostsDetail = async (req, res) => {
         });
         res.render("post/postDetail", { postDetail: postDetail });
     } catch (error) {
-        console.log(error);
         res.status(500).send("server error");
     }
 };
 
 exports.postAccessToken = async (req, res) => {
     try {
-        console.log(req.headers.authorization);
         if (req.headers.authorization) {
             const accessToken = req.headers.authorization.split(" ")[1];
 
             try {
-                console.log("accessToken : ", accessToken);
-
                 const auth = jwt.verify(accessToken, process.env.ACCESS_SECRET);
-                console.log("auth : ", auth);
 
                 const userInfoInstance = await User.findOne({
                     where: { id: auth.id },
@@ -241,7 +230,6 @@ exports.postAccessToken = async (req, res) => {
             res.redirect("/users/signin");
         }
     } catch (error) {
-        console.log("POST /accesstoken", error);
         res.status(500).send("server error");
     }
 };
@@ -279,7 +267,6 @@ exports.deletePostsDetail = async (req, res) => {
                 p_seq,
             },
         });
-        console.log(isDeleted);
         if (isDeleted) {
             res.send("삭제 성공");
         } else {

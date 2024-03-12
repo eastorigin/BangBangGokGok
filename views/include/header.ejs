@@ -40,7 +40,6 @@
     </nav>
     <!-- Header End -->
     <script>
-        // 유저 정보
         (async () => {
             const info = document.getElementById("info");
             const accessToken = localStorage.getItem("accessToken");
@@ -57,9 +56,6 @@
                     },
                 });
                 if (response.data.result) {
-                    // 사용자 이름을 포함한 데이터 생성
-
-                    // 로그인 버튼을 로그아웃 버튼으로 변경
                     const loginButton = document.getElementById("btn-login");
                     loginButton.innerHTML = "logout";
                     loginButton.removeAttribute("href"); // 로그인 링크 제거
@@ -119,46 +115,9 @@
             // info.innerHTML = data; // 로그인 버튼 나오도록 하기
         })();
 
-        //async function chatList() {
-        //    const accessToken = localStorage.getItem("accessToken");
-        //    const chatButton = document.getElementById("btn-chat");
-        //    console.log("===========클릭");
-        //    if (!accessToken) {
-        //        chatButton.href = "#";
-        //    } else {
-        //        const response = await axios({
-        //            method: "POST",
-        //           url: "/users/accesstoken",
-        //           headers: {
-        //               Authorization: `Bearer ${accessToken}`,
-        //            },
-        //        });
-        //        const requestData = {
-        //            id: response.data.id,
-        //        };
-        //        const id = response.data.id;
-        //       const apiUrl = `/chats/lists/${id}`;
-        //        const headers = {
-        //            Authorization: `Bearer ${accessToken}`,
-        //        };
-
-        //        console.log("apiUrl", apiUrl);
-        //      fetch(apiUrl, {
-        //            method: "GET",
-        //            headers: headers,
-        //        }).then((data) => {
-        //            console.log("API 응답:", data.url);
-        // window.location.href = data.url;
-        //        });
-        //    }
-        //}
-
         function signout() {
             // 로컬 스토리지에서 jwt 정보 삭제
             localStorage.clear();
-
-            // 새로고침으로 뷰 화면 변경
-            // document.location.href="../../../#";
             document.location.reload();
         }
         let profile = document.getElementById("btn-user");
