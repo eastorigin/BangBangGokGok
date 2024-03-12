@@ -12,17 +12,14 @@
     <script>
         // 유저 정보
         let currentUserInfo = {};
-        // 채팅
+
         function createChat(){
             const accessToken = localStorage.getItem("accessToken");
             if (!accessToken) {
-                // 로그인되어 있지 않은 경우, 로그인 확인 메시지 표시
                 const confirmLogin = confirm("채팅을 하려면 로그인이 필요합니다. 로그인하시겠습니까?");
                 if (confirmLogin) {
-                    // 사용자가 확인을 선택한 경우, 로그인 페이지로 이동
                     window.location.href = "/users/signin";
                 }
-                // 사용자가 취소를 선택한 경우, 함수 종료
                 return;
             }else{
                 axios.post('/chats/rooms/', { 
@@ -38,14 +35,12 @@
                     },
                 })
                 .then((response)=> {
-                    console.log("axios 요청 성공", response); // 요청 성공 시 로그
                     if(response.data.c_seq){
                         const apiUrl = `/chats/rooms/${response.data.c_seq}?id=${response.data.id}`;
                         window.location.href = apiUrl;
                     }
                 })
                 .catch(function(error) {
-                    console.error("Error:", error);
                     alert('채팅방 생성에 실패했습니다.');
                 });
             }
@@ -123,7 +118,6 @@
                 window.location.href = '/posts/list';
             }
         } catch (error) {
-            console.error(error);
             alert('게시글 삭제에 실패했습니다.');
             }
         }
@@ -153,7 +147,6 @@
                  
             }
         } catch (error) {
-            console.error(error);
             alert('게시글 수정에 실패했습니다.');
         }
     }
@@ -165,17 +158,16 @@
 
 async function checkLikeStatus() {
     const accessToken = localStorage.getItem("accessToken");
-    if (!accessToken) return; // 사용자가 로그인하지 않았다면 체크하지 않음
+    if (!accessToken) return;
 
     try {
         const response = await axios.get(`/likes/status/${'<%= postDetail.p_seq %>'}`, {
             headers: { Authorization: `Bearer ${accessToken}` },
         });
         if (response.data.isLiked) {
-            // 사용자가 좋아요를 누른 상태라면
             const heartIcon = document.getElementById("heart-icon");
             heartIcon.classList.remove("bi-heart");
-            heartIcon.classList.add("bi-heart-fill"); // 채워진 하트로 변경
+            heartIcon.classList.add("bi-heart-fill");
         }
     } catch (error) {
         console.error('좋아요 상태 조회 실패:', error);

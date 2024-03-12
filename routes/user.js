@@ -13,8 +13,6 @@ router.get("/signup", controller.getSignup);
 
 router.post("/check-duplicate", controller.checkDuplicate);
 
-router.get("/profile", controller.example);
-
 router.post(
     "/signup",
     [
