@@ -1,7 +1,7 @@
 {
     "name": "bangbanggokgok",
     "version": "1.0.0",
-    "description": "",
+    "description": "대리구매 중개 사이트",
     "main": "app.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
@@ -9,8 +9,7 @@
         "start:watch": "cross-env NODE_ENV=prod pm2 start app.js --watch",
         "dev": "cross-env NODE_ENV=development nodemon app.js"
     },
-    "keywords": [],
-    "author": "",
+    "author": "BBGG",
     "license": "ISC",
     "dependencies": {
         "axios": "^1.6.7",
