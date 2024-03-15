@@ -113,7 +113,6 @@ app.post("/upload", uploadDetail.single("file"), async (req, res) => {
 
         // 파일 업로드 처리가 필수가 아닌 경우, 파일 정보가 없어도 처리를 계속 진행
         const filename = req.file ? req.file.filename : "";
-        const filepath = req.file ? req.file.path : "";
 
         const { title, content, category, deal_type } = req.body;
         if (!title || !content || !category) {

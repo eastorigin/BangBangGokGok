@@ -71,6 +71,8 @@
             </div>
             <br />
             <br />
+            <input type="checkbox" id="hideCompleted" onclick="isCompletedChecked()" /> 거래완료
+            상품 숨기기
             <div id="post-header">
                 <form class="d-flex" role="search">
                     <input
@@ -119,6 +121,16 @@
             <div class="listPage"></div>
         </div>
         <script>
+            (() => {
+                const currentUrl = decodeURIComponent(window.location.pathname);
+                const segments = currentUrl.split("/");
+                const last = segments.pop();
+                if (last === "filter") {
+                    // 거래완료 필터링 체크박스 체크 유지
+                    const hideCompletedCheckbox = document.getElementById("hideCompleted");
+                    hideCompletedCheckbox.checked = true;
+                }
+            })();
             function search() {
                 const input = document.getElementById("search-input").value;
                 const currentPath = window.location.pathname; // 현재 경로 가져오기
@@ -184,6 +196,20 @@
             function changePage(i) {
                 thisPage = i;
                 loadItem();
+            }
+
+            function isCompletedChecked() {
+                const hideCompletedCheckbox = document.getElementById("hideCompleted");
+                if (hideCompletedCheckbox.checked) {
+                    const currentUrl = decodeURIComponent(window.location.pathname); // URL 인코딩된 문자열을 원래의 문자열로 변환
+                    const segments = currentUrl.split("/");
+                    const category = segments.pop();
+                    window.location.href = `/posts/${category}/filter`;
+                } else {
+                    const currentUrl = decodeURIComponent(window.location.pathname);
+                    const newUrl = currentUrl.replace("/filter", ""); // 경로 마지막에 붙은 /filter 제거
+                    window.location.href = newUrl;
+                }
             }
         </script>
     </body>
