@@ -1,4 +1,3 @@
-// 게시글 관련 모델
 const Post = (Sequelize, DataTypes) => {
     return Sequelize.define(
         "Post",

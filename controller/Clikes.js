@@ -36,10 +36,9 @@ exports.deleteLikes = async (req, res) => {
 };
 
 // controller/Clikes.js에 좋아요 수 조회 컨트롤러 함수 추가
-
 exports.getLikesCount = async (req, res) => {
     try {
-        const p_seq = req.params.p_seq; // URL에서 게시물 ID를 가져옵니다.
+        const p_seq = req.params.p_seq;
         const likesCount = await Likes.count({
             where: { p_seq: p_seq },
         });

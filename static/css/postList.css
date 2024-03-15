@@ -20,16 +20,13 @@
 .image-container {
     display: flex;
     flex-wrap: wrap;
-    /* justify-content: space-between; */
     align-items: flex-start;
     padding: 10%;
-    /* justify-content: center; */
 }
 .image-container .post {
     width: 23%;
     margin-bottom: 20px;
     padding: 15px;
-    /* float: left; */
 }
 .image-container .post a {
     display: block;
@@ -137,16 +134,15 @@ td {
 .iconSection {
     display: flex;
     justify-content: space-evenly;
-    /* 요소가 넘칠 경우 다음 줄에 배치합니다. */
 }
 
 .iconSection a {
-    margin: 10px; /* 이미지 간격을 조정합니다. */
+    margin: 10px;
 }
 
 .iconSection img {
-    width: 50px; /* 원하는 너비로 설정 */
-    height: auto; /* 높이는 자동으로 조절됩니다. */
+    width: 50px;
+    height: auto;
 }
 
 .listPage {
