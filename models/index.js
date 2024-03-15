@@ -1,8 +1,7 @@
 "use strict";
 
 const Sequelize = require("sequelize");
-console.log("crossenv", process.env.NODE_ENV); // prod or development
-// const config = require(__dirname + "/../config/config.js")["prod"];
+console.log("crossenv", process.env.NODE_ENV);
 let config;
 if (process.env.NODE_ENV) {
     // npm run dev, npm start
@@ -22,7 +21,6 @@ const PostModel = require("./Post")(sequelize, Sequelize);
 const LikesModel = require("./Likes")(sequelize, Sequelize);
 const ReviewModel = require("./Review")(sequelize, Sequelize);
 
-// User:Post = 1:N
 UserModel.hasMany(PostModel, {
     sourceKey: "u_seq",
     foreignKey: "u_seq",
@@ -32,7 +30,6 @@ PostModel.belongsTo(UserModel, {
     foreignKey: "u_seq",
 });
 
-// User:Chat = 1:N
 UserModel.hasMany(ChatModel, {
     sourceKey: "u_seq",
     foreignKey: "u_seq",
@@ -42,7 +39,6 @@ ChatModel.belongsTo(UserModel, {
     foreignKey: "u_seq",
 });
 
-// User:Message = 1:N
 UserModel.hasMany(MessageModel, {
     sourceKey: "u_seq",
     foreignKey: "u_seq",
@@ -52,7 +48,6 @@ MessageModel.belongsTo(UserModel, {
     foreignKey: "u_seq",
 });
 
-// Chat:Message = 1:N
 ChatModel.hasMany(MessageModel, {
     sourceKey: "c_seq",
     foreignKey: "c_seq",
@@ -62,7 +57,6 @@ MessageModel.belongsTo(ChatModel, {
     foreignKey: "c_seq",
 });
 
-// User:Likes = 1:N
 UserModel.hasMany(LikesModel, {
     sourceKey: "u_seq",
     foreignKey: "u_seq",
@@ -72,7 +66,6 @@ LikesModel.belongsTo(UserModel, {
     foreignKey: "u_seq",
 });
 
-// Post:Likes = 1:N
 PostModel.hasMany(LikesModel, {
     sourceKey: "p_seq",
     foreignKey: "p_seq",
@@ -82,7 +75,6 @@ LikesModel.belongsTo(PostModel, {
     foreignKey: "p_seq",
 });
 
-// User:Review = 1:N
 UserModel.hasMany(ReviewModel, {
     sourceKey: "u_seq",
     foreignKey: "u_seq",

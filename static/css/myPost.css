@@ -2,7 +2,6 @@ body {
     min-width: 100%;
 }
 .container-out {
-    /* background-color: green; */
     margin-top: 60px;
     width: 100%;
     height: 50px;
@@ -45,10 +44,6 @@ body {
     max-height: 750px;
     overflow: hidden;
     border: none;
-    /* border-radius: 2rem;
-    box-shadow: 0px 1rem 0.5rem rgba(0, 0, 0, 0.5); */
-
-    /* top: 2.5rem; */
 }
 .card2 {
     margin-left: 1%;
@@ -58,10 +53,8 @@ body {
     max-height: 750px;
     overflow: hidden;
     border: none;
-
-    overflow-y: auto; /* 세로 스크롤을 허용합니다. */
-    max-height: 750px; /* 카드의 최대 높이를 설정합니다. 필요에 따라 조절할 수 있습니다. */
-    /* top: 2.5rem; */
+    overflow-y: auto;
+    max-height: 750px;
 }
 
 .name {
@@ -100,8 +93,8 @@ body {
     padding: 10px 10px;
     text-align: center;
     text-decoration: none;
-    display: block; /* 버튼을 블록 레벨 요소로 설정합니다. */
-    margin: 0 auto; /* 좌우 여백을 자동으로 설정하여 가운데 정렬합니다. */
+    display: block;
+    margin: 0 auto;
     cursor: pointer;
     margin-bottom: 10%;
 }

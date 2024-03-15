@@ -26,8 +26,8 @@
     padding: 20px;
     background-color: #ffffff;
     border: 1px solid #000000;
-    overflow-y: auto; /* 세로 스크롤을 허용합니다. */
-    max-height: 90vh; /* 카드의 최대 높이를 설정합니다. 필요에 따라 조절할 수 있습니다. */ /* 테두리 스타일 및 색상을 원하는 대로 조정하세요 */
+    overflow-y: auto;
+    max-height: 90vh;
 }
 
 #chat-title {
@@ -35,14 +35,14 @@
 }
 
 .long-button {
-    width: 100%; /* 버튼의 너비를 100%로 설정하여 부모 요소의 너비에 맞게 확장됩니다. */
+    width: 100%;
     background-color: #ffffff;
     border: 1px solid lightgray;
     text-align: left;
     font-size: 16px;
     display: flex;
     align-items: center;
-    height: 100px; /* 버튼의 높이를 조절합니다. 필요에 따라 원하는 높이로 변경할 수 있습니다. */
+    height: 100px;
 }
 #chat-title-box {
     display: flex;
@@ -67,7 +67,7 @@
 
 .message {
     margin-bottom: 5px;
-    max-width: 80%; /* 가장 큰 폭을 제한하거나 필요에 따라 조절하세요 */
+    max-width: 80%;
     word-wrap: break-word;
     padding: 8px;
     border-radius: 8px;
@@ -75,22 +75,21 @@
 
 .my-message {
     align-self: flex-end;
-    background-color: #ff6f0f; /* 내 메시지 배경 색상 */
+    background-color: #ff6f0f;
     color: white;
 }
 
 #exitButton {
-    background-color: #ff6f0f; /* 내 메시지 배경 색상 */
+    background-color: #ff6f0f;
     color: white;
     border: none;
     margin-top: 5px;
     border-radius: 5px;
 }
 #mannerButton {
-    background-color: #ff6f0f; /* 내 메시지 배경 색상 */
+    background-color: #ff6f0f;
     color: white;
     border: none;
-    /* margin-top: 5px; */
     border-radius: 5px;
     margin-bottom: 20px;
     margin-left: auto;
@@ -98,7 +97,7 @@
 
 .other-message {
     align-self: flex-start;
-    background-color: #ddd; /* 상대방 메시지 배경 색상 */
+    background-color: #ddd;
 }
 
 #messageForm {
@@ -159,14 +158,13 @@
 
 #sendButton {
     font-size: 16px;
-    background-color: #ff6f0f; /* 배경색을 파란색으로 설정 */
-    color: #ffffff; /* 텍스트 색상을 흰색으로 설정 */
-    border: none; /* 테두리 없음 */
-    border-radius: 5px; /* 모서리를 둥글게 만듭니다 */
-    cursor: pointer; /* 마우스를 가져다 대면 포인터가 나타납니다 */
+    background-color: #ff6f0f;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
-/* 버튼에 마우스를 올렸을 때 배경색을 조금 더 어둡게 만듭니다 */
 #sendButton:hover {
     background-color: darkorange;
 }
