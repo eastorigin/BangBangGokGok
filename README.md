@@ -36,3 +36,6 @@
 
 ## 📌기술스택
 ![12기술스택](https://github.com/devjoowon/BangBangGokGok/assets/124244074/17400659-3804-4f09-ba76-e2ee40e746ad)
+
+## 📌ERD
+![erd](https://github.com/devjoowon/BangBangGokGok/assets/124244074/1d563878-cd81-4083-ab05-158731178bfe)
