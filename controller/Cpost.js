@@ -276,3 +276,45 @@ exports.deletePostsDetail = async (req, res) => {
         res.status(500).send("server error");
     }
 };
+
+// GET /posts/:category/filter
+exports.filterPosts = async (req, res) => {
+    try {
+        const { category } = req.params;
+
+        if (category != "list") {
+            const postListByCategory = await Post.findAll({
+                where: {
+                    category: category,
+                    is_success: 0,
+                },
+                include: [
+                    {
+                        model: User,
+                        attributes: ["u_seq", "nickname"],
+                    },
+                ],
+                order: [["p_seq", "DESC"]],
+            });
+
+            res.render("post/postList", { postList: postListByCategory });
+        } else {
+            const postListByCategory = await Post.findAll({
+                where: {
+                    is_success: 0,
+                },
+                include: [
+                    {
+                        model: User,
+                        attributes: ["u_seq", "nickname"],
+                    },
+                ],
+                order: [["p_seq", "DESC"]],
+            });
+
+            res.render("post/postList", { postList: postListByCategory });
+        }
+    } catch (error) {
+        res.status(500).send("server error");
+    }
+};
