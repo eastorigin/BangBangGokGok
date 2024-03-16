@@ -1,4 +1,3 @@
-# BangBangGokGok
 # 🤝기다리지 마시고 방방곡곡 하세요 🤝
 ![bbgg_readme](https://github.com/devjoowon/BangBangGokGok/assets/124244074/0cee1210-ec30-472b-a9c0-7f4b8d9b5e48)
 
