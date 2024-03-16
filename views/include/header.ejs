@@ -73,7 +73,6 @@
                     const chatButton = document.getElementById("btn-chat");
                     chatButton.innerHTML = `채팅방`;
                     chatButton.href = `/chats/lists/${response.data.id}`;
-                    // userButton.href = `/users/mypage/${response.data.id}`;
                     const graphContainer = document.getElementById("graphContainer");
                     const svgWidth = 200; // SVG의 최대 너비
                     const distanceMaxValue = 100; // distance 값의 최대값
@@ -112,7 +111,6 @@
                     graphContainer.innerHTML = svgString;
                 }
             }
-            // info.innerHTML = data; // 로그인 버튼 나오도록 하기
         })();
 
         function signout() {

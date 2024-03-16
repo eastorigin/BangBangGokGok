@@ -36,4 +36,7 @@ router.delete("/detail/:p_seq", controller.deletePostsDetail);
 // PATCH /posts/status
 // router.patch("/status", controller.patchStatus);
 
+// GET /posts/:category/filter
+router.get("/:category/filter", controller.filterPosts);
+
 module.exports = router;

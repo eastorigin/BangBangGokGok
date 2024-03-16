@@ -2,12 +2,6 @@ html {
     height: 100%;
 }
 
-/* body {
-    display: flex;
-    width: 100%;
-    min-height: 100vh;
-    align-items: center;
-} */
 .container-edit {
     display: flex;
     width: 100%;
@@ -62,8 +56,8 @@ span {
 .container {
     border: 1px solid #ebedf4;
     border-radius: 5px;
-    height: auto; /* 높이를 자동으로 조정하여 내용물에 맞춤 */
-    padding-bottom: 20px; /* 아래쪽에 여유 공간 추가 */
+    height: auto;
+    padding-bottom: 20px;
 }
 
 .input {
@@ -89,7 +83,6 @@ span {
     border-radius: 5px;
 }
 
-/* 화면 크기가 1024px 이하일 때 적용할 스타일 */
 @media screen and (max-width: 1024px) {
     .img_profileEdit,
     .profileEditWallPaper {
@@ -105,7 +98,7 @@ span {
     }
 
     #img_profileEdit {
-        width: 50%; /* 이미지 크기 조절 */
+        width: 50%;
         height: auto;
     }
 
@@ -116,14 +109,12 @@ span {
 
     .container,
     #profileEditForm {
-        width: 90%; /* 폼 너비 조절 */
-        /* 높이 조정 제거 또는 수정 */
-        min-height: auto; /* 최소 높이 설정으로 변경 */
-        padding: 10px; /* 작은 화면에서의 내부 여백 조정 */
+        width: 90%;
+        min-height: auto;
+        padding: 10px;
     }
 }
 
-/* 화면 크기가 768px 이하일 때 적용될 스타일 */
 @media (max-width: 768px) {
     .input,
     .btn_check,
@@ -132,6 +123,6 @@ span {
     }
 
     #img_profileEdit {
-        display: none; /* 모바일 화면에서는 이미지를 숨깁니다. */
+        display: none;
     }
 }

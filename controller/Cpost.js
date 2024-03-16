@@ -1,4 +1,3 @@
-// 게시글 관련 컨트롤러
 const Post = require("../models").Post;
 const User = require("../models").User;
 const { Op } = require("sequelize");
@@ -9,7 +8,7 @@ const { Sequelize } = require("../models");
 // const redis = require("redis");
 // const redisClient = redis.createClient({
 //     url: `redis://${process.env.REDIS_USERNAME}:${process.env.REDIS_PASSWORD}@${process.env.REDIS_HOST}:${process.env.REDIS_PORT}/0`,
-//     legacyMode: true, // 반드시 설정 !!
+//     legacyMode: true,
 // });
 // redisClient.on("connect", () => {
 //     console.info("Redis connected!");
@@ -272,6 +271,48 @@ exports.deletePostsDetail = async (req, res) => {
             res.send("삭제 성공");
         } else {
             res.send("삭제 실패");
+        }
+    } catch (error) {
+        res.status(500).send("server error");
+    }
+};
+
+// GET /posts/:category/filter
+exports.filterPosts = async (req, res) => {
+    try {
+        const { category } = req.params;
+
+        if (category != "list") {
+            const postListByCategory = await Post.findAll({
+                where: {
+                    category: category,
+                    is_success: 0,
+                },
+                include: [
+                    {
+                        model: User,
+                        attributes: ["u_seq", "nickname"],
+                    },
+                ],
+                order: [["p_seq", "DESC"]],
+            });
+
+            res.render("post/postList", { postList: postListByCategory });
+        } else {
+            const postListByCategory = await Post.findAll({
+                where: {
+                    is_success: 0,
+                },
+                include: [
+                    {
+                        model: User,
+                        attributes: ["u_seq", "nickname"],
+                    },
+                ],
+                order: [["p_seq", "DESC"]],
+            });
+
+            res.render("post/postList", { postList: postListByCategory });
         }
     } catch (error) {
         res.status(500).send("server error");

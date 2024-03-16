@@ -1,4 +1,3 @@
-// 유저 관련 모델
 const User = (Sequelize, DataTypes) => {
     return Sequelize.define(
         "User",
