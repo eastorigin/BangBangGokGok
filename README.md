@@ -1,7 +1,7 @@
 # 🤝기다리지 마시고 방방곡곡 하세요 🤝
 ![bbgg_readme](https://github.com/devjoowon/BangBangGokGok/assets/124244074/0cee1210-ec30-472b-a9c0-7f4b8d9b5e48)
 
-## 📌프로젝트
+## 📌프로젝트(2024.02.26 ~ 2024.03.13)
 ### 소개
 - 대리구매 중개 사이트 방방곡곡으로 전국 각지의 상품들을 손쉽게 만나보세요.
 - 원하는 상품이 있는 지역 카테고리에서 대리구매를 시작해보세요.
@@ -22,7 +22,7 @@
 ### 상품
 |상품 목록|검색|상품 상세|
 |------|---|---|
-|![07상품목록](https://github.com/devjoowon/BangBangGokGok/assets/124244074/3481b766-2d45-44d5-99b2-a0d8f54dc80a)|![06상품검색](https://github.com/devjoowon/BangBangGokGok/assets/124244074/e1e93585-be6f-46f8-80cc-e4cf1074c25b)|![05상품상세](https://github.com/devjoowon/BangBangGokGok/assets/124244074/0c53bdb9-ba5b-486d-bf0a-ba6925e4b9f2))|
+|![07상품목록](https://github.com/devjoowon/BangBangGokGok/assets/124244074/3481b766-2d45-44d5-99b2-a0d8f54dc80a)|![06상품검색](https://github.com/devjoowon/BangBangGokGok/assets/124244074/e1e93585-be6f-46f8-80cc-e4cf1074c25b)|![05상품상세](https://github.com/devjoowon/BangBangGokGok/assets/124244074/0c53bdb9-ba5b-486d-bf0a-ba6925e4b9f2)|
 
 ### 채팅
 |거래 채팅|회원 평가|
